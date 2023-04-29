@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Post= (props: any) => {
+type PostType = {
+    message: string
+    like: number
+}
+const Post: React.FC<PostType>= (props) => {
     return (
         <div>
             {props.message}

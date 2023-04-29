@@ -5,8 +5,8 @@ const MyPosts= () => {
     return (
         <div>
             My post
-            <Post message='Hi' like='10' />
-            <Post message='Good' like='6' />
+            <Post message={'Hi'} like={0} />
+            <Post message={'Good'} like={6} />
         </div>
     )
 }
