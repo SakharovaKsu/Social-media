@@ -1,4 +1,5 @@
 .header {
+    padding: 44px 64px;
     grid-area: h;
     background-color: bisque;
 }

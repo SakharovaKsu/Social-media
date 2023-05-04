@@ -15,9 +15,11 @@
 }
 
 .item a {
+    text-decoration: none;
     color: #ffffff;
+    font-weight: 600;
 }
 
 .item a.active {
-    color: indigo;
+    color: #091B3D;
 }
