@@ -16,7 +16,7 @@ const App = () => {
               <Navbar />
               <div className='app-wrapper-content'>
                   {/*отрисовка компонента по клику на стриничке*/}
-                  <Route path='/dialogs' component={Dialogs} />
+                  <Route exact path='/dialogs' component={Dialogs} />
                   <Route path='/profile' component={Profile} />
                   <Route path='/news' component={News} />
                   <Route path='/music' component={Music} />
@@ -25,10 +25,5 @@ const App = () => {
       </BrowserRouter>
   );
 }
-
-// Типизируем, что должно попасть в пропс
-// type PageTitlePropsType = {
-//   title: string
-// }
 
 export default App;
