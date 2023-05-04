@@ -10,7 +10,7 @@ import Music from "./components/Music/Music";
 
 const App = () => {
   return (
-      <BrowserRouter> // обромляем весь компонент для route
+      <BrowserRouter> {/*обромляем весь компонент для route*/}
           <div className='app-wrapper'>
              <Header/>
               <Navbar />

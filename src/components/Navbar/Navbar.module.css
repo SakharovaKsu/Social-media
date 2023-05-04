@@ -12,9 +12,12 @@
     list-style-type: none;
     margin: 0;
     padding: 5px 0;
-    color: aliceblue;
 }
 
-.item.active {
+.item a {
+    color: #ffffff;
+}
+
+.item a.active {
     color: indigo;
 }
