@@ -12,10 +12,10 @@ const Navbar = () => {
                     <a href='dialogs'>Messages</a>
                 </li>
                 <li className={s.item}>
-                    <a>News</a>
+                    <a href='news'>News</a>
                 </li>
                 <li className={s.item}>
-                    <a>Music</a>
+                    <a href='music'>Music</a>
                 </li>
             </ul>
         </nav>
