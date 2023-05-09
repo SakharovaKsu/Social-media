@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Post from "./Post/Post";
 
-const MyPosts= () => {
+type PostDataType = {
+    id: number
+    message: string
+    lireCount: number
+}
+const MyPosts = () => {
+    let postData:PostDataType[] = [
+        {id: 1, message: 'Hi', lireCount: 4},
+        {id: 2, message: 'Good', lireCount: 22},
+    ]
+
+    const postsElements = postData.map(posts => <Post message={posts.message} likeCount={posts.lireCount} />)
+
     return (
         <div>
             My post
-            <Post message={'Hi'} like={0} />
-            <Post message={'Good'} like={6} />
+            {postsElements}
         </div>
     )
 }

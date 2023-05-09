@@ -14,8 +14,13 @@
     margin: 0;
 }
 
-.messages {
+.item a {
+    color: #444;
+    text-decoration: none;
+}
 
+.messages {
+    color: #444;
 }
 
 .message {
