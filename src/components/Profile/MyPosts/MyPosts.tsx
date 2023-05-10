@@ -1,18 +1,8 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Post from "./Post/Post";
 
-type PostDataType = {
-    id: number
-    message: string
-    lireCount: number
-}
-const MyPosts = () => {
-    let postData:PostDataType[] = [
-        {id: 1, message: 'Hi', lireCount: 4},
-        {id: 2, message: 'Good', lireCount: 22},
-    ]
-
-    const postsElements = postData.map(posts => <Post message={posts.message} likeCount={posts.lireCount} />)
+const MyPosts = (props:any) => {
+    const postsElements = props.postsData.map((post:any) => <Post key={post.id} message={post.message} likeCount={post.lireCount} />)
 
     return (
         <div>
