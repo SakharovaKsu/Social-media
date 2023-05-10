@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Post from "./Post/Post";
+import {PostPageType} from "../../../redax/state";
 
-const MyPosts = (props:any) => {
-    const postsElements = props.postsData.map((post:any) => <Post key={post.id} message={post.message} likeCount={post.lireCount} />)
+const MyPosts:FC<PostPageType> = (props) => {
+    const postsElements = props.postsData.map(post => <Post key={post.id} message={post.message} likeCount={post.likeCount} />)
 
     return (
         <div>

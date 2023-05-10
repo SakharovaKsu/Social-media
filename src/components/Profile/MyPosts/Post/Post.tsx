@@ -1,10 +1,11 @@
 import React from 'react';
-const Post: React.FC<any>= (props) => {
+import {PostsDataType} from "../../../../redax/state";
+const Post: React.FC<PostsDataType>= (props) => {
     return (
         <div>
             {props.message}
             <div>
-                <span>like {props.like}</span>
+                <span>like {props.likeCount}</span>
             </div>
         </div>
     )
