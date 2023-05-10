@@ -1,0 +1,22 @@
+.item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #FEF8EC;
+    border-radius: 16px;
+    list-style-type: none;
+    margin: 0 0 16px 0;
+    padding: 16px;
+    min-width: 240px;
+}
+
+.item a {
+    color: #091B3D;
+    text-decoration: none;
+}
+
+.img {
+    width: 32px;
+    height: auto;
+    border-radius: 8px;
+}

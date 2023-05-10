@@ -1,28 +1,17 @@
 .dialogs {
     display: grid;
     grid-template-columns: 2fr 10fr;
-    padding: 20px;
+    padding: 40px;
 }
 
 .list {
     padding: 0;
-    margin: 0;
+    margin: 0 56px 0 0;
 }
 
-.item {
-    list-style-type: none;
-    margin: 0;
-}
-
-.item a {
-    color: #444;
-    text-decoration: none;
-}
-
-.messages {
-    color: #444;
-}
-
-.message {
-
+.messagesList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
 }

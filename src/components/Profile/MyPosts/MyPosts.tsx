@@ -3,7 +3,7 @@ import Post from "./Post/Post";
 import {PostPageType} from "../../../redax/state";
 
 const MyPosts:FC<PostPageType> = (props) => {
-    const postsElements = props.postsData.map(post => <Post key={post.id} message={post.message} likeCount={post.likeCount} />)
+    const postsElements = props.postsData.map(post => <Post message={post.message} likeCount={post.likeCount}  id={post.id}/>)
 
     return (
         <div>
