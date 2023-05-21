@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
-import {PostPageType} from "../../../redax/state";
+import {AddPropsType, PostPageType} from "../../../redax/state";
 
-const MyPosts:FC<PostPageType> = (props) => {
+const MyPosts:FC<AddPropsType> = (props) => {
     const postsElements =
-        props.postsData.map(
+        props.state.postPage.postsData.map(
             post => <Post message={post.message} likeCount={post.likeCount}  id={post.id}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
@@ -12,7 +12,7 @@ const MyPosts:FC<PostPageType> = (props) => {
     const addPost = () => {
        const text = newPostElement.current?.value
        //  const text = newPostElement && newPostElement.current && newPostElement.current.value
-        alert(text)
+        props.addPosts(text)
     }
 
     return (

@@ -1,5 +1,3 @@
-import {RefObject} from "react";
-
 export type DialogsDataType = {
     id: number
     name: string
@@ -31,6 +29,11 @@ export type StateType = {
     postPage: PostPageType
 }
 
+export type AddPropsType = {
+    state: StateType
+    addPosts: (postMassage: string) => void
+}
+
 export let state: StateType = {
     dialogsPage: {
         dialogsData: [
@@ -56,4 +59,13 @@ export let state: StateType = {
             {id: 2, message: 'Good', likeCount: 22},
         ]
     }
+}
+
+export const addPost = (postMassage: string) => {
+    let newPost = {
+        id: 6,
+        message: postMassage,
+        likeCount: 0
+    }
+    state.postPage.postsData.push(newPost)
 }

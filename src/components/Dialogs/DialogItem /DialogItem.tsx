@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import s from "./DialogItem.module.css";
 import {NavLink} from "react-router-dom";
-import {dialogsDataType} from "../../../redax/state";
+import {DialogsDataType} from "../../../redax/state";
 
-const DialogItem:FC<dialogsDataType> = (props) => {
+const DialogItem:FC<DialogsDataType> = (props) => {
     return (
         <li className={s.item}>
             <img className={s.img} src={props.src} />
