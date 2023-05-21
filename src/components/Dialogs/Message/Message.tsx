@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from "./Message.module.css";
+import {MessageDataType} from "../../../redax/state";
 
-const Message = (props: any) => {
+const Message:FC<MessageDataType> = (props) => {
     return <div className={s.message}>{props.message}</div>
 };
 

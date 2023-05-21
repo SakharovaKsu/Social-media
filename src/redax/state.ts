@@ -1,10 +1,12 @@
-export type dialogsDataType = {
+import {RefObject} from "react";
+
+export type DialogsDataType = {
     id: number
     name: string
     src: string
 }
 
-type  messageDataType = {
+export type MessageDataType = {
     id: number
     message: string
 }
@@ -16,8 +18,8 @@ export type PostsDataType = {
 }
 
 export type DialogsPageType = {
-    dialogsData: dialogsDataType[]
-    messageData: messageDataType[]
+    dialogsData: DialogsDataType[]
+    messageData: MessageDataType[]
 }
 
 export type PostPageType = {
