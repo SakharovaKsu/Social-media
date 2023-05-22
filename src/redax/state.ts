@@ -69,3 +69,11 @@ export const addPost = (postMassage: string) => {
     }
     state.postPage.postsData.push(newPost)
 }
+
+export const addMessage = (massage: string) => {
+    let newMessage = {
+        id: 6,
+        message: massage
+    }
+    state.dialogsPage.messageData.push(newMessage)
+}

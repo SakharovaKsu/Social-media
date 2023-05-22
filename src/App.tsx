@@ -7,9 +7,15 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {AddPropsType} from "./redax/state";
+import {StateType} from "./redax/state";
 
-const App:FC<AddPropsType> = (props) => {
+
+type AppProps = {
+    state: StateType
+    addPost: (postMassage: string) => void
+    addMessage: (message: string) => void
+}
+const App: FC<AppProps> = (props) => {
 
     const dialogsData = props.state.dialogsPage.dialogsData;
     const messageData = props.state.dialogsPage.messageData;
@@ -19,20 +25,23 @@ const App:FC<AddPropsType> = (props) => {
         <BrowserRouter> {/*обрамляем весь компонент для route*/}
             <div className='app-wrapper'>
                 <Header/>
-                <Navbar />
+                <Navbar/>
                 <div className='app-wrapper-content'>
                     {/*отрисовка компонента по клику на страничке*/}
-                    <Route exact path='/dialogs' render={() => <Dialogs dialogsData={dialogsData} messageData={messageData} />} />
+                    <Route exact path='/dialogs'
+                           render={() => <Dialogs dialogsData={dialogsData}
+                                                  messageData={messageData}
+                                                  addMessage={props.addMessage}/>}/>
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route path='/profile'
                            render={() =>
-                               <Profile postsData={postsData} addPost={props.addPosts} />} />
-                    <Route path='/news' component={News} />
-                    <Route path='/music' component={Music} />
-              </div>
-          </div>
-      </BrowserRouter>
-  );
+                               <Profile postsData={postsData} addPost={props.addPost}/>}/>
+                    <Route path='/news' component={News}/>
+                    <Route path='/music' component={Music}/>
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

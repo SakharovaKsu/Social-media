@@ -2,14 +2,19 @@ import React, {FC} from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {AddPropsType} from "../../redax/state";
-const Profile:FC<AddPropsType> = (props) => {
+import { PostsDataType} from "../../redax/state";
+
+type Props = {
+    postsData: PostsDataType[]
+    addPost: (postMassage: string) => void
+}
+const Profile:FC<Props> = (props) => {
     return (
         <div className={s.content}>
             <ProfileInfo />
             <MyPosts
-                postsData={props.state.postPage.postsData}
-                addPost={props.addPosts}/>
+                postsData={props.postsData}
+                addPost={props.addPost}/>
         </div>
     )
 }
