@@ -1,11 +1,16 @@
 import React from 'react';
-import {PostsDataType} from "../../../../redax/state";
-const Post: React.FC<PostsDataType>= (props) => {
+
+type PostType = {
+    id: number
+    message: string
+    likeCount: number
+}
+const Post: React.FC<PostType>= ({message, likeCount, id}) => {
     return (
-        <div>
-            {props.message}
+        <div key={id}>
+            {message}
             <div>
-                <span>like {props.likeCount}</span>
+                <span>like{likeCount}</span>
             </div>
         </div>
     )

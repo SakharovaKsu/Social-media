@@ -1,14 +1,14 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
-import {AddPropsType, PostPageType, PostsDataType} from "../../../redax/state";
+import {PostsDataType} from "../../../redax/state";
 
 
-type Props = {
+type MyPostsType = {
     postsData: PostsDataType[]
     addPost:(postMassage: string) => void
 }
 
-const MyPosts:FC<Props> = (props) => {
+const MyPosts:FC<MyPostsType> = (props) => {
     const postsElements =
         props.postsData.map(
             post => <Post message={post.message} likeCount={post.likeCount} id={post.id}/>)

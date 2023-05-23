@@ -7,10 +7,11 @@ import TextArea from "./TextArea/TextArea";
 
 
 type DialogsType = {
-    messageData: MessageDataType
-    dialogsData: DialogsDataType
+    messageData: MessageDataType[]
+    dialogsData: DialogsDataType[]
+    addMessage: (message: string) => void
 }
-const Dialogs:FC<DialogsType> = ({messageData, dialogsData}) => {
+const Dialogs:FC<DialogsType> = ({messageData, dialogsData, addMessage}) => {
 
     const dialogsElements = dialogsData.map(dialog =>
         <DialogItem name={dialog.name} id={dialog.id} src={dialog.src}/>);
@@ -23,7 +24,7 @@ const Dialogs:FC<DialogsType> = ({messageData, dialogsData}) => {
             <ul className={s.list}>{ dialogsElements }</ul>
             <div>
                 <div className={s.messagesList}>{ messagesElements }</div>
-                <TextArea name={'Отправить'}/>
+                <TextArea name={'Отправить'} addMessage={addMessage}/>
             </div>
         </div>
     )
