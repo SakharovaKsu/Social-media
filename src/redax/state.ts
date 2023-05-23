@@ -1,3 +1,5 @@
+import {renderEntireTree} from "../render";
+
 export type DialogsDataType = {
     id: number
     name: string
@@ -68,6 +70,7 @@ export const addPost = (postMassage: string) => {
         likeCount: 0
     }
     state.postPage.postsData.push(newPost)
+    renderEntireTree(state)
 }
 
 export const addMessage = (massage: string) => {
@@ -76,4 +79,5 @@ export const addMessage = (massage: string) => {
         message: massage
     }
     state.dialogsPage.messageData.push(newMessage)
+    renderEntireTree(state)
 }
