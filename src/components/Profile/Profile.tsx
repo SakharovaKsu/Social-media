@@ -2,19 +2,22 @@ import React, {FC} from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import { PostsDataType} from "../../redux/state";
+import {PostPageType} from "../../redux/state";
 
-type Props = {
-    postsData: PostsDataType[]
-    addPost: (postMassage: string) => void
+type ProfileType = {
+    postData: PostPageType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
-const Profile:FC<Props> = (props) => {
+const Profile:FC<ProfileType> = ({postData, addPost, updateNewPostText}) => {
     return (
         <div className={s.content}>
             <ProfileInfo />
             <MyPosts
-                postsData={props.postsData}
-                addPost={props.addPost}/>
+                postData={postData}
+                addPost={addPost}
+                newPostText={postData.newPostText}
+                updateNewPostText={updateNewPostText}/>
         </div>
     )
 }

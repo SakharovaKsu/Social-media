@@ -12,14 +12,15 @@ import {StateType} from "./redux/state";
 
 type AppProps = {
     state: StateType
-    addPost: (postMassage: string) => void
+    addPost: () => void
     addMessage: (message: string) => void
+    updateNewPostText: (newText: string) => void
 }
 const App: FC<AppProps> = (props) => {
 
     const dialogsData = props.state.dialogsPage.dialogsData;
     const messageData = props.state.dialogsPage.messageData;
-    const postsData = props.state.postPage.postsData;
+    const postData = props.state.postPage;
 
     return (
         <BrowserRouter> {/*обрамляем весь компонент для route*/}
@@ -35,7 +36,9 @@ const App: FC<AppProps> = (props) => {
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route path='/profile'
                            render={() =>
-                               <Profile postsData={postsData} addPost={props.addPost}/>}/>
+                               <Profile postData={postData}
+                                        addPost={props.addPost}
+                                        updateNewPostText={props.updateNewPostText}/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                 </div>

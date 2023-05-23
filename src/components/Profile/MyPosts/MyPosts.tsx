@@ -1,31 +1,35 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
-import {PostsDataType} from "../../../redux/state";
-
+import {PostPageType} from "../../../redux/state";
 
 type MyPostsType = {
-    postsData: PostsDataType[]
-    addPost:(postMassage: string) => void
+    postData: PostPageType
+    addPost:() => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
-const MyPosts:FC<MyPostsType> = (props) => {
+const MyPosts:FC<MyPostsType> = ({postData, addPost, newPostText, updateNewPostText}) => {
     const postsElements =
-        props.postsData.map(
+        postData.postsData.map(
             post => <Post message={post.message} likeCount={post.likeCount} id={post.id}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
 
-    const addPost = () => {
-       const text = newPostElement.current?.value
-       //  const text = newPostElement && newPostElement.current && newPostElement.current.value
-      props.addPost(text ? text : '')
+    const newPost = () => {
+        addPost()
+    }
+
+    const onPostChange = () => {
+        const text = newPostElement.current?.value
+        updateNewPostText(text ? text : '')
     }
 
     return (
         <div>
             <h2>My post</h2>
-            <textarea ref={newPostElement}></textarea>
-            <button onClick={addPost}>Add post</button>
+            <textarea ref={newPostElement} value={newPostText} onChange={onPostChange} />
+            <button onClick={newPost}>Add post</button>
             {postsElements}
         </div>
     )

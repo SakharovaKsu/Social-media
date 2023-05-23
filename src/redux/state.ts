@@ -24,6 +24,7 @@ export type DialogsPageType = {
 
 export type PostPageType = {
     postsData: PostsDataType[]
+    newPostText: string
 }
 
 export type StateType = {
@@ -59,17 +60,25 @@ export let state: StateType = {
         postsData: [
             {id: 1, message: 'Hi', likeCount: 4},
             {id: 2, message: 'Good', likeCount: 22},
-        ]
+        ],
+        newPostText: 'Why emptiness?'
     }
 }
 
-export const addPost = (postMassage: string) => {
-    let newPost = {
+export const addPost = () => {
+    const newPost = {
         id: 6,
-        message: postMassage,
+        message: state.postPage.newPostText,
         likeCount: 0
     }
-    state.postPage.postsData.push(newPost)
+    state.postPage.postsData.push(newPost) // добавляем текст из инпута
+    state.postPage.newPostText = '' // обнуляем инпут
+    renderEntireTree(state)
+}
+
+// новый текст в инпуте
+export const updateNewPostText = (newText: string) => {
+    state.postPage.newPostText = newText
     renderEntireTree(state)
 }
 
