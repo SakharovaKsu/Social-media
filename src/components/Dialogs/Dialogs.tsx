@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem /DialogItem";
 import Message from "./Message/Message";
-import {DialogsDataType, MessageDataType} from "../../redax/state";
+import {DialogsDataType, MessageDataType} from "../../redux/state";
 import TextArea from "./TextArea/TextArea";
 
 

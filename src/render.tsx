@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from "./App";
-import {addPost, addMessage, StateType} from "./redax/state";
+import {addPost, addMessage, StateType} from "./redux/state";
 
 type RenderEntireTreeType = {
     state: StateType

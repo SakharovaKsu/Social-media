@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import { PostsDataType} from "../../redax/state";
+import { PostsDataType} from "../../redux/state";
 
 type Props = {
     postsData: PostsDataType[]
