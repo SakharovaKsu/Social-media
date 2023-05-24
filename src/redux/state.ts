@@ -16,6 +16,7 @@ export type MessageDataType = {
 export type PostsDataType = {
     id: number
     message: string
+    src: string
     likeCount: number
 }
 
@@ -60,10 +61,18 @@ export let state: StateType = {
 
     postPage: {
         postsData: [
-            {id: 1, message: 'Hi', likeCount: 4},
-            {id: 2, message: 'Good', likeCount: 22},
+            {
+                id: 1,
+                message: 'Global Travel And Vacations Luxury Travel On A Tight Budget',
+                src: 'https://i.ibb.co/6w8wDCj/MyPost-1.jpg',
+                likeCount: 1000},
+            {
+                id: 2,
+                message: 'A morning bike trip to the mountains is the best rest from the bustle of the city',
+                src: 'https://i.ibb.co/xLPQLDG/MyPost-2.jpg',
+                likeCount: 232},
         ],
-        newPostText: 'Why emptiness?'
+        newPostText: 'That tell interesting'
     }
 }
 
@@ -71,6 +80,7 @@ export const addPost = () => {
     const newPost = {
         id: 6,
         message: state.postPage.newPostText,
+        src: ' ',
         likeCount: 0
     }
     state.postPage.postsData.push(newPost) // добавляем текст из инпута

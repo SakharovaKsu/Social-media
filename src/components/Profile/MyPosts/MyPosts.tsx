@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
 import {PostPageType} from "../../../redux/state";
+import s from "./MyPosts.module.css";
 
 type MyPostsType = {
     postData: PostPageType
@@ -10,9 +11,10 @@ type MyPostsType = {
 }
 
 const MyPosts:FC<MyPostsType> = ({postData, addPost, newPostText, updateNewPostText}) => {
+
     const postsElements =
         postData.postsData.map(
-            post => <Post message={post.message} likeCount={post.likeCount} id={post.id}/>)
+            post => <Post message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
 
@@ -27,10 +29,12 @@ const MyPosts:FC<MyPostsType> = ({postData, addPost, newPostText, updateNewPostT
 
     return (
         <div>
-            <h2>My post</h2>
-            <textarea ref={newPostElement} value={newPostText} onChange={onPostChange} />
-            <button onClick={newPost}>Add post</button>
+            <h2 className={s.title}>My post</h2>
             {postsElements}
+            <div className={s.wrapper}>
+                <textarea className={s.textarea} ref={newPostElement} value={newPostText} onChange={onPostChange} />
+                <button className={s.button} onClick={newPost}>Add post</button>
+            </div>
         </div>
     )
 }
