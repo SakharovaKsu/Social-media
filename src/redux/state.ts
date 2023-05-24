@@ -1,4 +1,6 @@
-import {renderEntireTree} from "../render";
+let renderEntireTree = () => {
+    console.log('render')
+}
 
 export type DialogsDataType = {
     id: number
@@ -73,13 +75,13 @@ export const addPost = () => {
     }
     state.postPage.postsData.push(newPost) // добавляем текст из инпута
     state.postPage.newPostText = '' // обнуляем инпут
-    renderEntireTree(state)
+    renderEntireTree()
 }
 
 // новый текст в инпуте
 export const updateNewPostText = (newText: string) => {
     state.postPage.newPostText = newText
-    renderEntireTree(state)
+    renderEntireTree()
 }
 
 export const addMessage = (massage: string) => {
@@ -88,5 +90,9 @@ export const addMessage = (massage: string) => {
         message: massage
     }
     state.dialogsPage.messageData.push(newMessage)
-    renderEntireTree(state)
+    renderEntireTree()
+}
+
+export const subscribe = (observer: any) => {
+    let renderEntireTree = observer
 }
