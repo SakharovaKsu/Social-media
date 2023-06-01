@@ -24,7 +24,7 @@ const Dialogs:FC<DialogsType> = ({messageData, dialogsData, addMessage}) => {
             <ul className={s.list}>{ dialogsElements }</ul>
             <div>
                 <div className={s.messagesList}>{ messagesElements }</div>
-                <TextArea name={'Отправить'} addMessage={addMessage}/>
+                <TextArea name={'Send'} addMessage={addMessage}/>
             </div>
         </div>
     )
