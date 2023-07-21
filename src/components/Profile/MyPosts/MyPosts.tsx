@@ -5,12 +5,13 @@ import s from "./MyPosts.module.css";
 
 type MyPostsType = {
     postData: PostPageType
-    addPost:() => void
+    // addPost:() => void
     newPostText: string
-    updateNewPostText: (newText: string) => void
+    // updateNewPostText: (newText: string) => void
+    dispatch: (action: any) => void
 }
 
-const MyPosts:FC<MyPostsType> = ({postData, addPost, newPostText, updateNewPostText}) => {
+const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
 
     const postsElements =
         postData.postsData.map(
@@ -19,12 +20,19 @@ const MyPosts:FC<MyPostsType> = ({postData, addPost, newPostText, updateNewPostT
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
 
     const newPost = () => {
-        addPost()
+        dispatch({type: 'ADD-POST'})
+        // addPost()
     }
 
     const onPostChange = () => {
         const text = newPostElement.current?.value
-        updateNewPostText(text ? text : '')
+        const action = {type: 'UPDATE-NEW-POST-TEXT', newText: text}
+
+        if(text) {
+            dispatch(action)
+        }
+        // dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text})
+        // updateNewPostText(text ? text : '')
     }
 
     return (

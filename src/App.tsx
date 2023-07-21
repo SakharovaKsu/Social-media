@@ -7,14 +7,15 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {StateType} from "./redux/state";
+import {StateType, store} from './redux/state';
 
 
 type AppProps = {
     state: StateType
-    addPost: () => void
-    addMessage: (message: string) => void
-    updateNewPostText: (newText: string) => void
+    // addPost: () => void
+    // addMessage: (message: string) => void
+    // updateNewPostText: (newText: string) => void
+    dispatch: (action: any) => void
 }
 const App: FC<AppProps> = (props) => {
 
@@ -32,13 +33,17 @@ const App: FC<AppProps> = (props) => {
                     <Route exact path='/dialogs'
                            render={() => <Dialogs dialogsData={dialogsData}
                                                   messageData={messageData}
-                                                  addMessage={props.addMessage}/>}/>
+                                                  dispatch={store.dispatch.bind(store)}
+                                                  // addMessage={props.addMessage}
+                           />}/>
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route path='/profile'
                            render={() =>
                                <Profile postData={postData}
-                                        addPost={props.addPost}
-                                        updateNewPostText={props.updateNewPostText}/>}/>
+                                        dispatch={store.dispatch.bind(store)}
+                                        // addPost={props.addPost}
+                                        // updateNewPostText={props.updateNewPostText}
+                               />}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                 </div>

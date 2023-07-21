@@ -6,18 +6,21 @@ import {PostPageType} from "../../redux/state";
 
 type ProfileType = {
     postData: PostPageType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    // addPost: () => void
+    // updateNewPostText: (newText: string) => void
+    dispatch: (action: any) => void
 }
-const Profile:FC<ProfileType> = ({postData, addPost, updateNewPostText}) => {
+const Profile:FC<ProfileType> = ({postData, dispatch}) => {
     return (
         <div className={s.content}>
             <ProfileInfo />
             <MyPosts
                 postData={postData}
-                addPost={addPost}
+                // addPost={addPost}
                 newPostText={postData.newPostText}
-                updateNewPostText={updateNewPostText}/>
+                dispatch={dispatch}
+                // updateNewPostText={updateNewPostText}
+            />
         </div>
     )
 }
