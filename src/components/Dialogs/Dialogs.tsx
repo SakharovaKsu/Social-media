@@ -14,10 +14,10 @@ type DialogsType = {
 const Dialogs:FC<DialogsType> = ({messageData, dialogsData, addMessage}) => {
 
     const dialogsElements = dialogsData.map(dialog =>
-        <DialogItem name={dialog.name} id={dialog.id} src={dialog.src}/>);
+        <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
 
 
-    const messagesElements = messageData.map(message => <Message message={message.message} id={message.id}/>)
+    const messagesElements = messageData.map(message => <Message key={message.id} message={message.message} id={message.id}/>)
 
     return (
         <div className={s.dialogs}>

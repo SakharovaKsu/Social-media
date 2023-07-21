@@ -14,7 +14,7 @@ const MyPosts:FC<MyPostsType> = ({postData, addPost, newPostText, updateNewPostT
 
     const postsElements =
         postData.postsData.map(
-            post => <Post message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
+            post => <Post key={post.id} message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
 
