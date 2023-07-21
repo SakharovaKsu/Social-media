@@ -42,12 +42,25 @@ export type StoreType = {
     _state: StateType
     getState: () => StateType
     _callSubscriber: (state: StateType) => void
-    // addPost: () => void
-    // updateNewPostText: (newText: string) => void
-    // addMessage: (massage: string) => void
     subscribe: (observer: (state: StateType) => void) => void
-    dispatch: (action: any) => void
+    dispatch: (action: AllActionType) => void
 }
+
+type AddPostActionType = {
+    type: 'ADD-POST'
+}
+
+type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+
+type AddMessageActionType = {
+    type: 'ADD-MESSAGE'
+    massage: string
+}
+
+export type AllActionType =  AddPostActionType | UpdateNewPostTextActionType | AddMessageActionType
 
 export const store: StoreType = {
     _state: {
@@ -94,39 +107,12 @@ export const store: StoreType = {
         return this._state
     },
 
-    // addPost() {
-    //     const newPost = {
-    //         id: v1(),
-    //         message: this._state.postPage.newPostText,
-    //         src: ' ',
-    //         likeCount: 0
-    //     }
-    //     this._state.postPage.postsData.push(newPost) // добавляем текст из инпута
-    //     this._state.postPage.newPostText = '' // обнуляем инпут
-    //     this._callSubscriber(this._state)
-    // },
-
-    // новый текст в инпуте
-    // updateNewPostText(newText: string) {
-    //     this._state.postPage.newPostText = newText
-    //     this._callSubscriber(this._state)
-    // },
-
-    // addMessage(massage: string) {
-    //     let newMessage = {
-    //         id: v1(),
-    //         message: massage
-    //     }
-    //     this._state.dialogsPage.messageData.push(newMessage)
-    //     this._callSubscriber(this._state)
-    // },
-
     subscribe(observer) {
         this._callSubscriber = observer
     },
 
     dispatch(action) {
-        if (action === 'ADD-POST') {
+        if (action.type === 'ADD-POST') {
             const newPost = {
                 id: v1(),
                 message: this._state.postPage.newPostText,
@@ -136,10 +122,10 @@ export const store: StoreType = {
             this._state.postPage.postsData.push(newPost) // добавляем текст из инпута
             this._state.postPage.newPostText = '' // обнуляем инпут
             this._callSubscriber(this._state)
-        } else if ('UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
             this._state.postPage.newPostText = action.newText
             this._callSubscriber(this._state)
-        } else if ('ADD-MESSAGE') {
+        } else if (action.type === 'ADD-MESSAGE') {
             let newMessage = {
                 id: v1(),
                 message: action.massage

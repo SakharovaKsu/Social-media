@@ -7,21 +7,14 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {StateType, store} from './redux/state';
+import {AllActionType, StateType} from './redux/state';
 
 
 type AppProps = {
-    state: StateType
-    // addPost: () => void
-    // addMessage: (message: string) => void
-    // updateNewPostText: (newText: string) => void
-    dispatch: (action: any) => void
+    store: StateType
+    dispatch: (action: AllActionType) => void
 }
-const App: FC<AppProps> = (props) => {
-
-    const dialogsData = props.state.dialogsPage.dialogsData;
-    const messageData = props.state.dialogsPage.messageData;
-    const postData = props.state.postPage;
+const App: FC<AppProps> = ({store, dispatch}) => {
 
     return (
         <BrowserRouter> {/*обрамляем весь компонент для route*/}
@@ -31,18 +24,15 @@ const App: FC<AppProps> = (props) => {
                 <div className='app-wrapper-content'>
                     {/*отрисовка компонента по клику на страничке*/}
                     <Route exact path='/dialogs'
-                           render={() => <Dialogs dialogsData={dialogsData}
-                                                  messageData={messageData}
-                                                  dispatch={store.dispatch.bind(store)}
-                                                  // addMessage={props.addMessage}
+                           render={() => <Dialogs dialogsData={store.dialogsPage.dialogsData}
+                                                  messageData={store.dialogsPage.messageData}
+                                                  dispatch={dispatch.bind(store)}
                            />}/>
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route path='/profile'
                            render={() =>
-                               <Profile postData={postData}
-                                        dispatch={store.dispatch.bind(store)}
-                                        // addPost={props.addPost}
-                                        // updateNewPostText={props.updateNewPostText}
+                               <Profile postData={store.postPage}
+                                        dispatch={dispatch.bind(store)}
                                />}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>

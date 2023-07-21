@@ -1,14 +1,12 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
-import {PostPageType} from "../../../redux/state";
+import {AllActionType, PostPageType} from '../../../redux/state';
 import s from "./MyPosts.module.css";
 
 type MyPostsType = {
     postData: PostPageType
-    // addPost:() => void
     newPostText: string
-    // updateNewPostText: (newText: string) => void
-    dispatch: (action: any) => void
+    dispatch: (action: AllActionType) => void
 }
 
 const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
@@ -21,18 +19,14 @@ const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
 
     const newPost = () => {
         dispatch({type: 'ADD-POST'})
-        // addPost()
     }
 
     const onPostChange = () => {
         const text = newPostElement.current?.value
-        const action = {type: 'UPDATE-NEW-POST-TEXT', newText: text}
 
         if(text) {
-            dispatch(action)
+            dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text})
         }
-        // dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text})
-        // updateNewPostText(text ? text : '')
     }
 
     return (
