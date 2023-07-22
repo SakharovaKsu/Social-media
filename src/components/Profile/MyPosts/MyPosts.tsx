@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
-import {AllActionType, PostPageType} from '../../../redux/state';
+import {addPostAC, AllActionType, PostPageType, updateNewPostTextAC} from '../../../redux/state';
 import s from "./MyPosts.module.css";
 
 type MyPostsType = {
@@ -18,14 +18,14 @@ const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
 
     const newPost = () => {
-        dispatch({type: 'ADD-POST'})
+        dispatch(addPostAC())
     }
 
     const onPostChange = () => {
         const text = newPostElement.current?.value
 
         if(text) {
-            dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text})
+            dispatch(updateNewPostTextAC(text))
         }
     }
 

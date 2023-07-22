@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import s from './TextArea.module.css'
-import {AllActionType} from '../../../redux/state';
+import {addMassageAC, AllActionType} from '../../../redux/state';
 
 type TextAreaType = {
     name: string
@@ -11,10 +11,11 @@ const TextArea:FC<TextAreaType> = ({name, dispatch}) => {
     const newMessageElement = React.createRef<HTMLTextAreaElement>();
 
     const addMessages = () => {
+
         const text = newMessageElement.current?.value
 
         if(text) {
-            dispatch( {type: 'ADD-MESSAGE', massage: text})
+            dispatch(addMassageAC(text))
         }
     }
 
