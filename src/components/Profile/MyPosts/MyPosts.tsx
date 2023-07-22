@@ -34,7 +34,7 @@ const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
             <h2 className={s.title}>My post</h2>
             {postsElements}
             <div className={s.wrapper}>
-                <textarea className={s.textarea} ref={newPostElement} value={newPostText} onChange={onPostChange} />
+                <textarea className={s.textarea} ref={newPostElement} placeholder={'That tell interesting'} value={newPostText} onChange={onPostChange} />
                 <button className={s.button} onClick={newPost}>Add post</button>
             </div>
         </div>

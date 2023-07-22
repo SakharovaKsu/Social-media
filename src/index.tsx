@@ -10,9 +10,6 @@ export const renderEntireTree = (state: StateType) => {
 
     ReactDOM.render(
         <App store={store.getState()}
-             // addPost={store.addPost.bind(store)}
-             // addMessage={store.addMessage.bind(store)}
-             // updateNewPostText={store.updateNewPostText.bind(store)}
              dispatch={store.dispatch.bind(store)}/>,
         document.getElementById('root')
     );

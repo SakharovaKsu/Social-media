@@ -21,6 +21,7 @@ export type PostsDataType = {
 export type DialogsPageType = {
     dialogsData: DialogsDataType[]
     messageData: MessageDataType[]
+    newMessageText: string
 }
 
 export type PostPageType = {
@@ -31,11 +32,6 @@ export type PostPageType = {
 export type StateType = {
     dialogsPage: DialogsPageType
     postPage: PostPageType
-}
-
-export type AddPropsType = {
-    state: StateType
-    addPosts: (postMassage: string) => void
 }
 
 export type StoreType = {
@@ -49,22 +45,9 @@ export type StoreType = {
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 type AddMessageActionType = ReturnType<typeof addMassageAC>
+type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
-export type AllActionType =  AddPostActionType | UpdateNewPostTextActionType | AddMessageActionType
-
-export const addPostAC = () => ({type: 'ADD-POST'} as const)
-export const updateNewPostTextAC = (text: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: text
-    } as const
-}
-export const addMassageAC = (text: string) => {
-    return {
-        type: 'ADD-MESSAGE',
-        massage: text
-    } as const
-}
+export type AllActionType =  AddPostActionType | UpdateNewPostTextActionType | AddMessageActionType | UpdateNewMessageTextActionType
 
 export const store: StoreType = {
     _state: {
@@ -83,7 +66,8 @@ export const store: StoreType = {
                 {id: v1(), message: 'I really love your work, a great job 💪'},
                 {id: v1(), message: 'Thank you, I also love it.'},
                 {id: v1(), message: 'Good morning ☀️'},
-            ]
+            ],
+            newMessageText: ''
         },
 
         postPage: {
@@ -99,7 +83,7 @@ export const store: StoreType = {
                     src: 'https://i.ibb.co/xLPQLDG/MyPost-2.jpg',
                     likeCount: 232},
             ],
-            newPostText: 'That tell interesting'
+            newPostText: ''
         }
     },
 
@@ -132,12 +116,35 @@ export const store: StoreType = {
         } else if (action.type === 'ADD-MESSAGE') {
             let newMessage = {
                 id: v1(),
-                message: action.massage
+                message: this._state.dialogsPage.newMessageText
             }
             this._state.dialogsPage.messageData.push(newMessage)
+            this._state.dialogsPage.newMessageText = ''
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.newText
             this._callSubscriber(this._state)
         }
     }
+}
+
+export const addPostAC = () => ({type: 'ADD-POST'} as const)
+export const updateNewPostTextAC = (text: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: text
+    } as const
+}
+export const addMassageAC = () => {
+    return {
+        type: 'ADD-MESSAGE'
+    } as const
+}
+export const updateNewMessageTextAC = (text: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-TEXT',
+        newText: text
+    } as const
 }
 
 // window.store = store

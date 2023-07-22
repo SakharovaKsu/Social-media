@@ -26,6 +26,7 @@ const App: FC<AppProps> = ({store, dispatch}) => {
                     <Route exact path='/dialogs'
                            render={() => <Dialogs dialogsData={store.dialogsPage.dialogsData}
                                                   messageData={store.dialogsPage.messageData}
+                                                  newMessageText={store.dialogsPage.newMessageText}
                                                   dispatch={dispatch.bind(store)}
                            />}/>
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}

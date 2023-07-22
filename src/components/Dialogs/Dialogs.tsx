@@ -10,9 +10,10 @@ type DialogsType = {
     messageData: MessageDataType[]
     dialogsData: DialogsDataType[]
     dispatch: (action: AllActionType) => void
+    newMessageText: string
 }
 const Dialogs:FC<DialogsType> = ({messageData, dialogsData,
-                                 dispatch}) => {
+                                 dispatch, newMessageText}) => {
 
     const dialogsElements = dialogsData.map(dialog =>
         <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
@@ -27,6 +28,7 @@ const Dialogs:FC<DialogsType> = ({messageData, dialogsData,
                 <div className={s.messagesList}>{ messagesElements }</div>
                 <TextArea name={'Send'}
                           dispatch={dispatch}
+                          newMessageText={newMessageText}
                 />
             </div>
         </div>
