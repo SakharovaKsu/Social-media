@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC} from 'react';
 import s from './TextArea.module.css'
-import {addMassageAC, AllActionType, updateNewMessageTextAC} from '../../../redux/state';
+import {AllActionType} from '../../../redux/state';
+import {addMassageAC, updateNewMessageTextAC} from '../../../redux/dialogsReducer';
 
 type TextAreaType = {
     name: string

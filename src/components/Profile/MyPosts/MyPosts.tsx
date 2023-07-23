@@ -1,7 +1,8 @@
 import React, {FC} from "react";
 import Post from "./Post/Post";
-import {addPostAC, AllActionType, PostPageType, updateNewPostTextAC} from '../../../redux/state';
+import {AllActionType, PostPageType} from '../../../redux/state';
 import s from "./MyPosts.module.css";
+import {addPostAC, updateNewPostTextAC} from '../../../redux/postPageReducer';
 
 type MyPostsType = {
     postData: PostPageType
