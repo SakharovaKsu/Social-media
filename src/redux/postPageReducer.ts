@@ -1,4 +1,4 @@
-import {StateType} from './state';
+import {AllActionType, StateType} from './state';
 import {v1} from 'uuid';
 
 type AddPostActionType = ReturnType<typeof addPostAC>
@@ -6,7 +6,7 @@ type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 export type AllPostActionType =  AddPostActionType | UpdateNewPostTextActionType
 
 
-export const postPageReducer = (state: StateType, action: AllPostActionType ) => {
+export const postPageReducer = (state: StateType, action: AllActionType ): StateType => {
     switch (action.type) {
         case 'ADD-POST': {
             const newPost = {

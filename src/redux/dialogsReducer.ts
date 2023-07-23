@@ -1,12 +1,12 @@
 import {v1} from 'uuid';
-import {StateType} from './state';
+import {AllActionType, StateType} from './state';
 
 type AddMessageActionType = ReturnType<typeof addMassageAC>
 type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
 export type AllDialogsActionType =  AddMessageActionType | UpdateNewMessageTextActionType
 
-export const dialogsReducer = (state: StateType, action: AllDialogsActionType ): StateType => {
+export const dialogsReducer = (state: StateType, action: AllActionType ): StateType => {
     switch (action.type) {
         case 'ADD-MESSAGE': {
             let newMessage = {

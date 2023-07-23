@@ -98,8 +98,8 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        this._state.postPage = postPageReducer(this._state.postPage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state = postPageReducer(this._state, action)
+        this._state = dialogsReducer(this._state, action)
         this._callSubscriber(this._state)
     }
 }
