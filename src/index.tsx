@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from "./App";
-import {StateType, store} from './redux/state';
+import {StateType} from './redux/state';
+import store from './redux/redux-store'
 
 export const renderEntireTree = (state: StateType) => {
     // store.getState() - нужно вызвать, что б получить state, a addPost не вызываем, так как передаем его дальше.
@@ -17,4 +18,9 @@ export const renderEntireTree = (state: StateType) => {
 
 renderEntireTree(store.getState())
 
-store.subscribe(renderEntireTree)
+// Добавляем анонимную функцию, для того что бы добавить туда стейт и перекинуть его в renderEntireTree. Зачем? При изменении стейта нам нужно каждый раз запрашивать его. Мы его повторно не получаем, у нас будет undefined, поэтому и передаем заново - renderEntireTree(state)
+store.subscribe(() => {
+    const state = store.getState()
+    renderEntireTree(state)
+})
+

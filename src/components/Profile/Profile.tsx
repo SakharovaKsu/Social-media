@@ -2,7 +2,8 @@ import React, {FC} from 'react';
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {AllActionType, PostPageType} from '../../redux/state';
+import {AllActionType} from '../../redux/state';
+import {PostPageType} from '../../redux/postPageReducer';
 
 type ProfileType = {
     postData: PostPageType

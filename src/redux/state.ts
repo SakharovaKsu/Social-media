@@ -1,36 +1,6 @@
 import {v1} from 'uuid';
-import {AllPostActionType, postPageReducer} from './postPageReducer';
-import {AllDialogsActionType, dialogsReducer} from './dialogsReducer';
-
-
-export type DialogsDataType = {
-    id: string
-    name: string
-    src: string
-}
-
-export type MessageDataType = {
-    id: string
-    message: string
-}
-
-export type PostsDataType = {
-    id: string
-    message: string
-    src: string
-    likeCount: number
-}
-
-export type DialogsPageType = {
-    dialogsData: DialogsDataType[]
-    messageData: MessageDataType[]
-    newMessageText: string
-}
-
-export type PostPageType = {
-    postsData: PostsDataType[]
-    newPostText: string
-}
+import {AllPostActionType, postPageReducer, PostPageType} from './postPageReducer';
+import {AllDialogsActionType, DialogsPageType, dialogsReducer} from './dialogsReducer';
 
 export type StateType = {
     dialogsPage: DialogsPageType
@@ -98,8 +68,8 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        this._state = postPageReducer(this._state, action)
-        this._state = dialogsReducer(this._state, action)
+        this._state.postPage = postPageReducer(this._state.postPage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._callSubscriber(this._state)
     }
 }

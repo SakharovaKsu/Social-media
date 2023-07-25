@@ -2,8 +2,9 @@ import React, {FC} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem /DialogItem";
 import Message from "./Message/Message";
-import {AllActionType, DialogsDataType, MessageDataType, store} from '../../redux/state';
+import {AllActionType} from '../../redux/state';
 import TextArea from "./TextArea/TextArea";
+import {DialogsDataType, MessageDataType} from '../../redux/dialogsReducer';
 
 
 type DialogsType = {

@@ -1,24 +1,60 @@
 import {v1} from 'uuid';
-import {AllActionType, StateType} from './state';
+import {AllActionType} from './state';
 
 type AddMessageActionType = ReturnType<typeof addMassageAC>
 type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
 export type AllDialogsActionType =  AddMessageActionType | UpdateNewMessageTextActionType
 
-export const dialogsReducer = (state: StateType, action: AllActionType ): StateType => {
+export type DialogsDataType = {
+    id: string
+    name: string
+    src: string
+}
+
+export type MessageDataType = {
+    id: string
+    message: string
+}
+
+export type DialogsPageType = {
+    dialogsData: DialogsDataType[]
+    messageData: MessageDataType[]
+    newMessageText: string
+}
+
+const dialogsPage: DialogsPageType = {
+    dialogsData: [
+        {id: v1(), name: 'Terry McDaniel', src: 'https://i.ibb.co/dMWjm0P/user-1.png'},
+        {id: v1(), name: 'Randy Russell', src: 'https://i.ibb.co/8MbKKLQ/user-3.png'},
+        {id: v1(), name: 'Charlotte Peters', src: 'https://i.ibb.co/258YhJH/user-2.png'},
+        {id: v1(), name: 'Pearl Ward', src: 'https://i.ibb.co/FhnF64b/user-5.png'},
+        {id: v1(), name: 'Martha Gross', src: 'https://i.ibb.co/Xp4HMsd/user-4.png'},
+    ],
+
+        messageData: [
+        {id: v1(), message: 'Hello Linh!'},
+        {id: v1(), message: '👋 Hi Gabriel'},
+        {id: v1(), message: 'I really love your work, a great job 💪'},
+        {id: v1(), message: 'Thank you, I also love it.'},
+        {id: v1(), message: 'Good morning ☀️'},
+    ],
+        newMessageText: ''
+}
+
+export const dialogsReducer = (state = dialogsPage, action: AllActionType ): DialogsPageType => {
     switch (action.type) {
         case 'ADD-MESSAGE': {
             let newMessage = {
                 id: v1(),
-                message: state.dialogsPage.newMessageText
+                message: state.newMessageText
             }
-            state.dialogsPage.messageData.push(newMessage)
-            state.dialogsPage.newMessageText = ''
+            state.messageData.push(newMessage)
+            state.newMessageText = ''
             return state
         }
         case 'UPDATE-NEW-MESSAGE-TEXT': {
-            state.dialogsPage.newMessageText = action.newText
+            state.newMessageText = action.newText
             return state
         }
         default:
