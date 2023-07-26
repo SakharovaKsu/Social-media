@@ -5,13 +5,14 @@ import {addMassageAC, updateNewMessageTextAC} from '../../../redux/dialogsReduce
 
 type TextAreaType = {
     name: string
-    dispatch: (action: AllActionType) => void
+    addMessagesCallback: () => void
+    updateNewMessageTextCallback: (text: string) => void
     newMessageText: string
 }
-const TextArea:FC<TextAreaType> = ({name, dispatch,  newMessageText}) => {
+const TextArea:FC<TextAreaType> = ({name,  newMessageText, addMessagesCallback, updateNewMessageTextCallback}) => {
 
     const addMessages = () => {
-        dispatch(addMassageAC())
+        addMessagesCallback()
     }
 
     const onMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
@@ -19,7 +20,7 @@ const TextArea:FC<TextAreaType> = ({name, dispatch,  newMessageText}) => {
         const text = e.currentTarget.value
 
         if(text) {
-            dispatch(updateNewMessageTextAC(text))
+            updateNewMessageTextCallback(text)
         }
     }
 
@@ -27,9 +28,9 @@ const TextArea:FC<TextAreaType> = ({name, dispatch,  newMessageText}) => {
         const text = e.currentTarget.value
 
         if (e.key === 'Enter') {
-            e.preventDefault();
+            e.preventDefault()
             if (text.trim()) {
-                dispatch(addMassageAC());
+                addMessagesCallback()
             }
         }
     };

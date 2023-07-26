@@ -8,6 +8,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import {StoreType} from './redux/redux-store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 type AppProps = {
@@ -22,15 +23,8 @@ const App: FC<AppProps> = ({store}) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     {/*отрисовка компонента по клику на страничке*/}
-                    {/*<Route exact path='/dialogs'*/}
-                    {/*       render={() => */}
-                    {/*           // <Dialogs dialogsData={store.dialogsPage.dialogsData}*/}
-                    {/*           //                    messageData={store.dialogsPage.messageData}*/}
-                    {/*           //                    newMessageText={store.dialogsPage.newMessageText}*/}
-                    {/*           //                    dispatch={dispatch.bind(store)}/>*/}
-                    {/*           <Dialogs store={store}/>*/}
-                    {/*}/>*/}
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
+                    <Route exact path='/dialogs' render={() => <DialogsContainer store={store}/>}/>
                     <Route path='/profile' render={() => <Profile store={store}/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
