@@ -1,20 +1,19 @@
-import React, {FC} from "react";
-import "./App.css";
-import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
+import React, {FC} from 'react';
+import './App.css';
+import Header from './components/Header/Header';
+import Navbar from './components/Navbar/Navbar';
+import Profile from './components/Profile/Profile';
 import Dialogs from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
-import News from "./components/News/News";
-import Music from "./components/Music/Music";
-import {AllActionType, StateType} from './redux/state';
+import {BrowserRouter, Route} from 'react-router-dom';
+import News from './components/News/News';
+import Music from './components/Music/Music';
+import {StoreType} from './redux/redux-store';
 
 
 type AppProps = {
-    store: StateType
-    dispatch: (action: AllActionType) => void
+    store: StoreType
 }
-const App: FC<AppProps> = ({store, dispatch}) => {
+const App: FC<AppProps> = ({store}) => {
 
     return (
         <BrowserRouter> {/*обрамляем весь компонент для route*/}
@@ -23,18 +22,16 @@ const App: FC<AppProps> = ({store, dispatch}) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     {/*отрисовка компонента по клику на страничке*/}
-                    <Route exact path='/dialogs'
-                           render={() => <Dialogs dialogsData={store.dialogsPage.dialogsData}
-                                                  messageData={store.dialogsPage.messageData}
-                                                  newMessageText={store.dialogsPage.newMessageText}
-                                                  dispatch={dispatch.bind(store)}
-                           />}/>
+                    {/*<Route exact path='/dialogs'*/}
+                    {/*       render={() => */}
+                    {/*           // <Dialogs dialogsData={store.dialogsPage.dialogsData}*/}
+                    {/*           //                    messageData={store.dialogsPage.messageData}*/}
+                    {/*           //                    newMessageText={store.dialogsPage.newMessageText}*/}
+                    {/*           //                    dispatch={dispatch.bind(store)}/>*/}
+                    {/*           <Dialogs store={store}/>*/}
+                    {/*}/>*/}
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
-                    <Route path='/profile'
-                           render={() =>
-                               <Profile postData={store.postPage}
-                                        dispatch={dispatch.bind(store)}
-                               />}/>
+                    <Route path='/profile' render={() => <Profile store={store}/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                 </div>

@@ -1,32 +1,32 @@
-import React, {FC, KeyboardEvent} from 'react';
-import Post from "./Post/Post";
-import {AllActionType} from '../../../redux/state';
-import s from "./MyPosts.module.css";
-import {addPostAC, PostPageType, updateNewPostTextAC} from '../../../redux/postPageReducer';
+import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
+import Post from './Post/Post';
+import s from './MyPosts.module.css';
+import {PostsDataType} from '../../../redux/postPageReducer';
 
 type MyPostsType = {
-    postData: PostPageType
+    postData: PostsDataType[]
     newPostText: string
-    dispatch: (action: AllActionType) => void
+    newPostCallback: () => void
+    onPostChangeCallback: (text: string) => void
 }
 
-const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
+const MyPosts:FC<MyPostsType> = ({postData, newPostText, newPostCallback, onPostChangeCallback}) => {
 
     const postsElements =
-        postData.postsData.map(
+        postData.map(
             post => <Post key={post.id} message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
 
     const newPost = () => {
-        dispatch(addPostAC())
+        newPostCallback()
     }
 
-    const onPostChange = () => {
-        const text = newPostElement.current?.value
+    const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        const text = e.currentTarget.value
 
         if(text) {
-            dispatch(updateNewPostTextAC(text))
+            onPostChangeCallback(text)
         }
     }
 
@@ -35,7 +35,7 @@ const MyPosts:FC<MyPostsType> = ({postData, newPostText, dispatch}) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             if (text.trim()) {
-                dispatch(addPostAC())
+                newPostCallback()
             }
         }
     };

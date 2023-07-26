@@ -10,8 +10,9 @@ export const renderEntireTree = (state: StateType) => {
     // Когда мы отдаем кому-то метод (в нашем случае пропсам), то что б при вызове этого метода не было undefined, то используем такой лайфхак -> store.addPost.bind(store) (через bind мы связываем метод со store)
 
     ReactDOM.render(
-        <App store={store.getState()}
-             dispatch={store.dispatch.bind(store)}/>,
+        // <App store={store.getState()}
+        //      dispatch={store.dispatch.bind(store)}/>,
+        <App store={store}/>,
         document.getElementById('root')
     );
 }
@@ -23,4 +24,3 @@ store.subscribe(() => {
     const state = store.getState()
     renderEntireTree(state)
 })
-
