@@ -42,13 +42,11 @@ export const postPageReducer = (state = postPage, action: AllActionType ): PostP
                 src: ' ',
                 likeCount: 0
             }
-            state.postsData.push(newPost) // добавляем текст из инпута
             state.newPostText = '' // обнуляем инпут
-            return state
+            return {...state, postsData: [...state.postsData, newPost]}
         }
         case 'UPDATE-NEW-POST-TEXT': {
-            state.newPostText = action.newText
-            return state
+            return {...state, newPostText: action.newText}
         }
         default:
             return state

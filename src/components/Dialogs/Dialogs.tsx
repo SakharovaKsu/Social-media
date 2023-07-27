@@ -12,7 +12,7 @@ type DialogsType = {
 }
 
 const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback}) => {
-    console.log(dialogsPage)
+
     const dialogsElements = dialogsPage.dialogsData.map(dialog =>
         <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
 

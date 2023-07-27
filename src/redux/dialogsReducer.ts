@@ -31,8 +31,7 @@ const dialogsPage: DialogsPageType = {
         {id: v1(), name: 'Pearl Ward', src: 'https://i.ibb.co/FhnF64b/user-5.png'},
         {id: v1(), name: 'Martha Gross', src: 'https://i.ibb.co/Xp4HMsd/user-4.png'},
     ],
-
-        messageData: [
+    messageData: [
         {id: v1(), message: 'Hello Linh!'},
         {id: v1(), message: '👋 Hi Gabriel'},
         {id: v1(), message: 'I really love your work, a great job 💪'},
@@ -49,12 +48,10 @@ export const dialogsReducer = (state = dialogsPage, action: AllActionType ): Dia
                 id: v1(),
                 message: state.newMessageText
             }
-            state.messageData.push(newMessage)
             state.newMessageText = ''
-            return state
+            return {...state, messageData: [...state.messageData, newMessage]}
         }
         case 'UPDATE-NEW-MESSAGE-TEXT': {
-            state.newMessageText = action.newText
             return {...state, newMessageText: action.newText}
         }
         default:
