@@ -5,7 +5,6 @@ import App from "./App";
 import {StateType} from './redux/state';
 import store from './redux/redux-store'
 import {Provider} from 'react-redux';
-import {BrowserRouter} from 'react-router-dom';
 
 export const renderEntireTree = (state: StateType) => {
     // store.getState() - нужно вызвать, что б получить state.
@@ -14,12 +13,10 @@ export const renderEntireTree = (state: StateType) => {
     // Provider - обеспечивает доступ к Redux Store для всех компонентов, которые находятся внутри его дочерних элементов.
 
     ReactDOM.render(
-        <BrowserRouter> {/*обрамляем весь компонент для route*/}
-            <Provider store={store}>
-                <App/>,
-                document.getElementById('root')
-            </Provider>
-        </BrowserRouter>
+        <Provider store={store}>
+            <App/>
+        </Provider>,
+        document.getElementById('root')
     );
 }
 

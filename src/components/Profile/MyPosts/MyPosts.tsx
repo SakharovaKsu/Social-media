@@ -1,19 +1,18 @@
 import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
-import {PostsDataType} from '../../../redux/postPageReducer';
+import {PostPageType} from '../../../redux/postPageReducer';
 
 type MyPostsType = {
-    postData: PostsDataType[]
-    newPostText: string
+    postPage: PostPageType
     newPostCallback: () => void
     onPostChangeCallback: (text: string) => void
 }
 
-const MyPosts:FC<MyPostsType> = ({postData, newPostText, newPostCallback, onPostChangeCallback}) => {
+const MyPosts:FC<MyPostsType> = ({postPage, newPostCallback, onPostChangeCallback}) => {
 
     const postsElements =
-        postData.map(
+        postPage.postsData.map(
             post => <Post key={post.id} message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>(); // создаем ссылку и привязываем к textarea
@@ -45,7 +44,7 @@ const MyPosts:FC<MyPostsType> = ({postData, newPostText, newPostCallback, onPost
             <h2 className={s.title}>My post</h2>
             {postsElements}
             <div className={s.wrapper}>
-                <textarea className={s.textarea} ref={newPostElement} placeholder={'That tell interesting'} value={newPostText} onChange={onPostChange} onKeyPress={handleKeyPress}/>
+                <textarea className={s.textarea} ref={newPostElement} placeholder={'That tell interesting'} value={postPage.newPostText} onChange={onPostChange} onKeyPress={handleKeyPress}/>
                 <button className={s.button} onClick={newPost}>Add post</button>
             </div>
         </div>

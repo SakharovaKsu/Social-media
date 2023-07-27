@@ -3,6 +3,8 @@ import {addMassageAC, DialogsPageType, updateNewMessageTextAC} from '../../redux
 import {StoreType} from '../../redux/redux-store';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
+import {StateType} from '../../redux/state';
+import {Dispatch} from 'redux';
 
 // type DialogsType = {
 //     store: StoreType
@@ -32,13 +34,13 @@ import {connect} from 'react-redux';
 // Контейнерную компоненту законектили с компонентой Dialogs
 // Первая функция в connect создает контейнерную компоненту, внутри рендерит презентационную компоненту (Dialogs), и внутрь качестве пропсов передает из функций те свойства, которые ретурнятся в качестве объектов, на выхоже из 2-ой функции получим - <Dialogs dialogsPage={dialogsPage} addMessagesCallback={addMessages} updateNewMessageTextCallback={updateNewMessageText} />
 
-const mapStateToProps = (state: DialogsPageType) => {
+const mapStateToProps = (state: StateType) => {
     return {
-        dialogsPage: state
+        dialogsPage: state.dialogsPage
     }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         addMessagesCallback: () => {
             dispatch(addMassageAC())
