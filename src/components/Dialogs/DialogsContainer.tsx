@@ -1,37 +1,54 @@
 import React, {FC} from 'react';
-import {addMassageAC, updateNewMessageTextAC} from '../../redux/dialogsReducer';
+import {addMassageAC, DialogsPageType, updateNewMessageTextAC} from '../../redux/dialogsReducer';
 import {StoreType} from '../../redux/redux-store';
 import Dialogs from './Dialogs';
+import {connect} from 'react-redux';
 
-type DialogsType = {
-    store: StoreType
-}
-const DialogsContainer:FC<DialogsType> = ({store}) => {
+// type DialogsType = {
+//     store: StoreType
+// }
+// const DialogsContainer:FC<DialogsType> = ({store}) => {
+//
+//     const dialogsPage = store.getState().dialogsPage
+//     const dispatch = store.dispatch.bind(store)
+//
+//     const addMessages = () => {
+//         dispatch(addMassageAC())
+//     }
+//
+//     const updateNewMessageText = (text: string) => {
+//         dispatch(updateNewMessageTextAC(text))
+//     }
+//
+//     return (
+//         <Dialogs
+//             dialogsPage={dialogsPage}
+//             addMessagesCallback={addMessages}
+//             updateNewMessageTextCallback={updateNewMessageText}
+//         />
+//     )
+// }
 
-    const newStore = store.getState()
-    const dialogsData= newStore.dialogsPage.dialogsData
-    const messageData= newStore.dialogsPage.messageData
-    const newMessageText = newStore.dialogsPage.newMessageText
+// Контейнерную компоненту законектили с компонентой Dialogs
+// Первая функция в connect создает контейнерную компоненту, внутри рендерит презентационную компоненту (Dialogs), и внутрь качестве пропсов передает из функций те свойства, которые ретурнятся в качестве объектов, на выхоже из 2-ой функции получим - <Dialogs dialogsPage={dialogsPage} addMessagesCallback={addMessages} updateNewMessageTextCallback={updateNewMessageText} />
 
-    const dispatch = store.dispatch.bind(store)
-
-    const addMessages = () => {
-        dispatch(addMassageAC())
+const mapStateToProps = (state: DialogsPageType) => {
+    return {
+        dialogsPage: state
     }
-
-    const updateNewMessageText = (text: string) => {
-        dispatch(updateNewMessageTextAC(text))
-    }
-
-    return (
-        <Dialogs
-            dialogsData={dialogsData}
-            messageData={messageData}
-            newMessageText={newMessageText}
-            addMessagesCallback={addMessages}
-            updateNewMessageTextCallback={updateNewMessageText}
-        />
-    )
 }
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        addMessagesCallback: () => {
+            dispatch(addMassageAC())
+        },
+        updateNewMessageTextCallback: (text: string) => {
+            dispatch(updateNewMessageTextAC(text))
+        }
+    }
+}
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 export default DialogsContainer;

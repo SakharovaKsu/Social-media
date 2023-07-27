@@ -4,14 +4,22 @@ import './index.css';
 import App from "./App";
 import {StateType} from './redux/state';
 import store from './redux/redux-store'
+import {Provider} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
 
 export const renderEntireTree = (state: StateType) => {
     // store.getState() - нужно вызвать, что б получить state.
     // Когда мы отдаем кому-то метод (в нашем случае пропсам), то что б при вызове этого метода не было undefined, то используем такой лайфхак -> store.dispatch.bind(store) (через bind мы связываем метод со store)
 
+    // Provider - обеспечивает доступ к Redux Store для всех компонентов, которые находятся внутри его дочерних элементов.
+
     ReactDOM.render(
-        <App store={store}/>,
-        document.getElementById('root')
+        <BrowserRouter> {/*обрамляем весь компонент для route*/}
+            <Provider store={store}>
+                <App/>,
+                document.getElementById('root')
+            </Provider>
+        </BrowserRouter>
     );
 }
 

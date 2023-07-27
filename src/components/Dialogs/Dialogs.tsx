@@ -3,22 +3,20 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem /DialogItem';
 import Message from './Message/Message';
 import TextArea from './TextArea/TextArea';
-import {DialogsDataType, MessageDataType} from '../../redux/dialogsReducer';
+import { DialogsPageType} from '../../redux/dialogsReducer';
 
 type DialogsType = {
-    dialogsData: DialogsDataType[]
-    messageData: MessageDataType[]
-    newMessageText: string
+    dialogsPage: DialogsPageType
     addMessagesCallback: () => void
     updateNewMessageTextCallback: (text: string) => void
 }
 
-const Dialogs:FC<DialogsType> = ({dialogsData, messageData, newMessageText, addMessagesCallback, updateNewMessageTextCallback}) => {
+const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback}) => {
 
-    const dialogsElements = dialogsData.map(dialog =>
+    const dialogsElements = dialogsPage.dialogsData.map(dialog =>
         <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
 
-    const messagesElements = messageData.map(message => <Message key={message.id} message={message.message} id={message.id}/>)
+    const messagesElements = dialogsPage.messageData.map(message => <Message key={message.id} message={message.message} id={message.id}/>)
 
     return (
         <div className={s.dialogs}>
@@ -27,7 +25,7 @@ const Dialogs:FC<DialogsType> = ({dialogsData, messageData, newMessageText, addM
                 <div className={s.messagesList}>{ messagesElements }</div>
                 <TextArea
                     name={'Send'}
-                    newMessageText={newMessageText}
+                    newMessageText={dialogsPage.newMessageText}
                     addMessagesCallback={addMessagesCallback}
                     updateNewMessageTextCallback={updateNewMessageTextCallback}
                 />
