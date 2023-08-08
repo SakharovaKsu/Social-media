@@ -52,7 +52,7 @@ export const dialogsReducer = (state = dialogsPage, action: AllActionType ): Dia
             return {...state, messageData: [...state.messageData, newMessage]}
         }
         case 'UPDATE-NEW-MESSAGE-TEXT': {
-            return {...state, newMessageText: action.newText}
+            return {...state, newMessageText: action.payload.text}
         }
         default:
             return state
@@ -67,6 +67,6 @@ export const addMassageAC = () => {
 export const updateNewMessageTextAC = (text: string) => {
     return {
         type: 'UPDATE-NEW-MESSAGE-TEXT',
-        newText: text
+        payload: {text}
     } as const
 }

@@ -46,7 +46,7 @@ export const postPageReducer = (state = postPage, action: AllActionType ): PostP
             return {...state, postsData: [...state.postsData, newPost]}
         }
         case 'UPDATE-NEW-POST-TEXT': {
-            return {...state, newPostText: action.newText}
+            return {...state, newPostText: action.payload.text}
         }
         default:
             return state
@@ -57,6 +57,6 @@ export const addPostAC = () => ({type: 'ADD-POST'} as const)
 export const updateNewPostTextAC = (text: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
-        newText: text
+        payload: {text}
     } as const
 }

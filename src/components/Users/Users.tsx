@@ -1,12 +1,12 @@
 import React from 'react';
 import s from './Music.module.css';
 
-const Music = () => {
+const Users = () => {
     return (
         <div>
-            Music
+            Users
         </div>
     )
 }
 
-export default Music;
+export default Users;
