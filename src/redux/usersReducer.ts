@@ -1,6 +1,4 @@
 import {v1} from 'uuid';
-import {stat} from 'fs';
-
 
 type AllActionType = FollowType | UnfollowType | SetUsersType
 
@@ -21,11 +19,11 @@ export type UserType = {
     location: LocationType
 }
 
-export type InitialStateType = {
+export type InitialStateUsersType = {
     users: UserType[]
 }
 
-export const initialState: InitialStateType = {
+export const initialStateUser: InitialStateUsersType = {
     users: [
         {
             id: v1(),
@@ -65,7 +63,7 @@ export const initialState: InitialStateType = {
     ]
 }
 
-export const usersReducer = (state = initialState, action: AllActionType ): InitialStateType => {
+export const usersReducer = (state = initialStateUser, action: AllActionType ): InitialStateUsersType => {
     switch (action.type) {
         case 'FOLLOW': {
             return {

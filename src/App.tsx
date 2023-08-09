@@ -6,7 +6,7 @@ import Profile from './components/Profile/Profile';
 import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import Users from './components/Users/Users';
+import {UsersContainer} from './components/Users/UsersContainer';
 
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route exact path='/dialogs' render={() => <DialogsContainer/>}/>
                     <Route path='/profile' render={() => <Profile/>}/>
-                    <Route path='/users' render={() => <Users/>}/>
+                    <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/news' component={News}/>
                 </div>
             </div>
