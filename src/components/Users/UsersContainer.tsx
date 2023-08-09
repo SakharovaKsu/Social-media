@@ -2,12 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
 import {Dispatch} from 'redux';
-import {followAC, setUsersAC, unfollowAC} from '../../redux/usersReducer';
+import {followAC, setUsersAC, unfollowAC, UserType} from '../../redux/usersReducer';
 import {StoreType} from '../../redux/redux-store';
 
 const mapStateToProps = (state: StoreType) => {
     return {
-        users: state.usersPage
+        usersPage: state.usersPage
     }
 }
 
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         unfollowCallback: (userId: string) => {
             dispatch(unfollowAC(userId))
         },
-        setUsersCallback: (users: any) => {
+        setUsersCallback: (users: UserType[]) => {
             dispatch(setUsersAC(users))
         }
     }

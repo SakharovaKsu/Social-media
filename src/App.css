@@ -13,3 +13,17 @@ body {
   grid-area: c;
   background-color: #FFF;
 }
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}

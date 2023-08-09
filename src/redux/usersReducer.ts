@@ -1,4 +1,9 @@
 import {v1} from 'uuid';
+import user1 from '../images/avatar-user/user-1.svg';
+import user2 from '../images/avatar-user/user-2.svg';
+import user3 from '../images/avatar-user/user-3.svg';
+import user4 from '../images/avatar-user/user-4.svg';
+import user5 from '../images/avatar-user/user-5.svg';
 
 type AllActionType = FollowType | UnfollowType | SetUsersType
 
@@ -14,7 +19,8 @@ type LocationType = {
 export type UserType = {
     id: string
     name: string
-    src: string
+    src: any
+    status: string
     followed: boolean
     location: LocationType
 }
@@ -28,35 +34,40 @@ export const initialStateUser: InitialStateUsersType = {
         {
             id: v1(),
             name: 'Terry McDaniel',
-            src: 'https://i.ibb.co/dMWjm0P/user-1.png',
+            src: user1,
+            status: 'This headline will attract the right',
             followed: false,
             location: {country: 'Russia', city: 'Moscow'}
         },
         {
             id: v1(),
             name: 'Randy Russell',
-            src: 'https://i.ibb.co/8MbKKLQ/user-3.png',
+            src: user3,
+            status: 'This headline will attract the right',
             followed: false,
             location: {country: 'Russia', city: 'Moscow'}
         },
         {
             id: v1(),
             name: 'Charlotte Peters',
-            src: 'https://i.ibb.co/258YhJH/user-2.png',
+            src: user2,
+            status: 'This headline will attract the right',
             followed: true,
             location: {country: 'Russia', city: 'Moscow'}
         },
         {
             id: v1(),
             name: 'Pearl Ward',
-            src: 'https://i.ibb.co/FhnF64b/user-5.png',
+            src: user5,
+            status: 'This headline will attract the right',
             followed: true,
             location: {country: 'Russia', city: 'Moscow'}
         },
         {
             id: v1(),
             name: 'Martha Gross',
-            src: 'https://i.ibb.co/Xp4HMsd/user-4.png',
+            src: user4,
+            status: 'This headline will attract the right',
             followed: true,
             location: {country: 'Russia', city: 'Moscow'}
         },
@@ -99,7 +110,7 @@ export const unfollowAC = (userId: string) => {
     } as const
 }
 
-export const setUsersAC = (users: any) => {
+export const setUsersAC = (users: UserType[]) => {
     return {
         type: 'SET-USERS',
         payload: {users}
