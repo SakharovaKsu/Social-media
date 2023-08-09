@@ -1,5 +1,10 @@
 import {v1} from 'uuid';
 import {AllActionType} from './state';
+import user1 from '../images/avatar-user/user-1.svg';
+import user2 from '../images/avatar-user/user-2.svg';
+import user3 from '../images/avatar-user/user-3.svg';
+import user4 from '../images/avatar-user/user-4.svg';
+import user5 from '../images/avatar-user/user-5.svg';
 
 type AddMessageActionType = ReturnType<typeof addMassageAC>
 type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
@@ -9,7 +14,7 @@ export type AllDialogsActionType =  AddMessageActionType | UpdateNewMessageTextA
 export type DialogsDataType = {
     id: string
     name: string
-    src: string
+    src: any
 }
 
 export type MessageDataType = {
@@ -25,11 +30,11 @@ export type DialogsPageType = {
 
 const dialogsPage: DialogsPageType = {
     dialogsData: [
-        {id: v1(), name: 'Terry McDaniel', src: 'https://i.ibb.co/dMWjm0P/user-1.png'},
-        {id: v1(), name: 'Randy Russell', src: 'https://i.ibb.co/8MbKKLQ/user-3.png'},
-        {id: v1(), name: 'Charlotte Peters', src: 'https://i.ibb.co/258YhJH/user-2.png'},
-        {id: v1(), name: 'Pearl Ward', src: 'https://i.ibb.co/FhnF64b/user-5.png'},
-        {id: v1(), name: 'Martha Gross', src: 'https://i.ibb.co/Xp4HMsd/user-4.png'},
+        {id: v1(), name: 'Terry McDaniel', src: user1},
+        {id: v1(), name: 'Randy Russell', src: user3},
+        {id: v1(), name: 'Charlotte Peters', src: user2},
+        {id: v1(), name: 'Pearl Ward', src: user5},
+        {id: v1(), name: 'Martha Gross', src: user4},
     ],
     messageData: [
         {id: v1(), message: 'Hello Linh!'},

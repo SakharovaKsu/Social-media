@@ -1,6 +1,6 @@
 .nav {
     grid-area: n;
-    background-color: darkseagreen;
+    background-color: #FFFFFF;
     height: 100vh;
 }
 
@@ -12,12 +12,12 @@
 .item {
     list-style-type: none;
     margin: 0;
-    padding: 5px 0;
+    padding: 15px 0;
 }
 
 .item a {
     text-decoration: none;
-    color: #ffffff;
+    color: #9DA4B1;
     font-weight: 600;
 }
 

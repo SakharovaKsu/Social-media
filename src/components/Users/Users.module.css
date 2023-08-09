@@ -1,0 +1,67 @@
+.users {
+    background-color: #FEF8EC;
+    height: 100%;
+    padding: 64px;
+}
+
+.title {
+    padding-bottom: 32px;
+}
+
+.item {
+    padding: 24px;
+    margin-bottom: 15px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+}
+
+.container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.img {
+    width: 68px;
+    height: 68px;
+    border-radius: 16px;
+}
+
+.name {
+    font-size: 16px;
+}
+
+.text {
+    font-size: 14px;
+    color: #9DA4B1;
+    padding-bottom: 10px;
+}
+
+.description {
+    font-size: 14px;
+}
+
+.boxButton {
+    display: flex;
+    gap: 15px;
+}
+
+.button {
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 40px;
+}
+
+.buttonColor {
+    background-color: #2772F0;
+    color: #fff;
+}
+
+.buttonNoColor {
+    background-color: #ffffff;
+    border: 2px solid #2772F0;
+    color: #2772F0;
+}
+

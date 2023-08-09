@@ -30,48 +30,7 @@ export type InitialStateUsersType = {
 }
 
 export const initialStateUser: InitialStateUsersType = {
-    users: [
-        {
-            id: v1(),
-            name: 'Terry McDaniel',
-            src: user1,
-            status: 'This headline will attract the right',
-            followed: false,
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-        {
-            id: v1(),
-            name: 'Randy Russell',
-            src: user3,
-            status: 'This headline will attract the right',
-            followed: false,
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-        {
-            id: v1(),
-            name: 'Charlotte Peters',
-            src: user2,
-            status: 'This headline will attract the right',
-            followed: true,
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-        {
-            id: v1(),
-            name: 'Pearl Ward',
-            src: user5,
-            status: 'This headline will attract the right',
-            followed: true,
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-        {
-            id: v1(),
-            name: 'Martha Gross',
-            src: user4,
-            status: 'This headline will attract the right',
-            followed: true,
-            location: {country: 'Russia', city: 'Moscow'}
-        },
-    ]
+    users: []
 }
 
 export const usersReducer = (state = initialStateUser, action: AllActionType ): InitialStateUsersType => {

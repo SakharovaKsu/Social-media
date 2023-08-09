@@ -1,7 +1,19 @@
 .dialogs {
+    background-color: #FEF8EC;
+    padding: 64px;
+    height: 100%;
+}
+
+.title {
+    padding-bottom: 32px;
+}
+
+.box {
     display: grid;
     grid-template-columns: 2fr 10fr;
     padding: 40px;
+    background-color: #FFFFFF;
+    border-radius: 24px;
 }
 
 .list {
