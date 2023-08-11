@@ -13,10 +13,10 @@ const mapStateToProps = (state: StoreType) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        followCallback: (userId: string) => {
+        followCallback: (userId: number) => {
             dispatch(followAC(userId))
         },
-        unfollowCallback: (userId: string) => {
+        unfollowCallback: (userId: number) => {
             dispatch(unfollowAC(userId))
         },
         setUsersCallback: (users: UserType[]) => {

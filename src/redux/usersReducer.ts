@@ -17,9 +17,9 @@ type LocationType = {
 }
 
 export type UserType = {
-    id: string
+    id: number
     name: string
-    src: any
+    photos: any
     status: string
     followed: boolean
     location: LocationType
@@ -55,14 +55,14 @@ export const usersReducer = (state = initialStateUser, action: AllActionType ): 
     }
 }
 
-export const followAC = (userId: string) => {
+export const followAC = (userId: number) => {
     return {
         type: 'FOLLOW',
         payload: {userId}
     } as const
 }
 
-export const unfollowAC = (userId: string) => {
+export const unfollowAC = (userId: number) => {
     return {
         type: 'UNFOLLOW',
         payload: {userId}
