@@ -2,6 +2,7 @@ import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
 import {PostPageType} from '../../../redux/postPageReducer';
+import Button from '../../Elements/Button';
 
 type MyPostsType = {
     postPage: PostPageType
@@ -45,7 +46,7 @@ const MyPosts:FC<MyPostsType> = ({postPage, newPostCallback, onPostChangeCallbac
             {postsElements}
             <div className={s.wrapper}>
                 <textarea className={s.textarea} ref={newPostElement} placeholder={'That tell interesting'} value={postPage.newPostText} onChange={onPostChange} onKeyPress={handleKeyPress}/>
-                <button className={s.button} onClick={newPost}>Add post</button>
+                <Button className={s.buttonColor} callback={newPost} name={'Add post'} color={'blue'}/>
             </div>
         </div>
     )

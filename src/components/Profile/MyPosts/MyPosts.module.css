@@ -33,10 +33,7 @@
     width: 150px;
 }
 
-.button:hover {
-    background-color: #246ADE;
-}
-
-.button:active {
-    background-color: #091B3D;
+.buttonColor {
+    color: #FFFFFF;
+    background-color: #2772F0;
 }

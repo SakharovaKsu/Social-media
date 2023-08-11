@@ -4,13 +4,25 @@
     padding: 64px;
 }
 
+.list {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
 .title {
     padding-bottom: 32px;
 }
 
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .item {
     padding: 24px;
-    margin-bottom: 15px;
     background-color: #FFFFFF;
     border-radius: 16px;
 }
@@ -46,22 +58,18 @@
     gap: 15px;
 }
 
-.button {
-    font-weight: 600;
-    font-size: 14px;
-    border: none;
-    border-radius: 16px;
-    padding: 16px 40px;
-}
+/*.buttonColor {*/
+/*    background-color: #2772F0;*/
+/*    color: #fff;*/
+/*}*/
 
-.buttonColor {
-    background-color: #2772F0;
-    color: #fff;
-}
+/*.buttonNoColor {*/
+/*    background-color: #ffffff;*/
+/*    outline: 2px solid #2772F0;*/
+/*    color: #2772F0;*/
+/*}*/
 
-.buttonNoColor {
-    background-color: #ffffff;
-    border: 2px solid #2772F0;
-    color: #2772F0;
+.center {
+    margin: 0 auto;
 }
 

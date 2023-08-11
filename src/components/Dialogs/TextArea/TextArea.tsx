@@ -2,6 +2,7 @@ import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
 import s from './TextArea.module.css'
 import {AllActionType} from '../../../redux/state';
 import {addMassageAC, updateNewMessageTextAC} from '../../../redux/dialogsReducer';
+import Button from '../../Elements/Button';
 
 type TextAreaType = {
     name: string
@@ -38,7 +39,7 @@ const TextArea:FC<TextAreaType> = ({name,  newMessageText, addMessagesCallback, 
     return (
         <div className={s.wrapper}>
             <textarea className={s.textArea} placeholder={'Type your message'} value={newMessageText} onChange={onMessageChange} onKeyPress={handleKeyPress}></textarea>
-            <button className={s.button} onClick={addMessages}>{name}</button>
+            <Button className={s.button} color={'blue'} name={name} callback={addMessages}/>
         </div>
     );
 };

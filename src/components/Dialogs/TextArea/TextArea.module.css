@@ -20,17 +20,5 @@
 
 .button {
     background-color: #2772F0;
-    padding: 16px 40px;
     color: #fff;
-    font-weight: 600;
-    border: none;
-    border-radius: 16px;
-}
-
-.button:hover {
-    background-color: #246ADE;
-}
-
-.button:active {
-    background-color: #091B3D;
 }

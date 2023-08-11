@@ -7,6 +7,7 @@ import user3 from '../../images/avatar-user/user-3.svg';
 import user2 from '../../images/avatar-user/user-2.svg';
 import user5 from '../../images/avatar-user/user-5.svg';
 import user4 from '../../images/avatar-user/user-4.svg';
+import Button from '../Elements/Button';
 
 type UsersType = {
     usersPage: InitialStateUsersType;
@@ -63,45 +64,46 @@ const Users: FC<UsersType> = ({usersPage, followCallback, unfollowCallback, setU
     }
 
     // Отображаем определенное количество пользователей
-    const displayedUsers = usersPage.users.slice(0, 10);
+    const displayedUsers = usersPage.users.slice(0, 12);
 
     return (
         <div className={s.users}>
             <h2 className={s.title}>Users list</h2>
-            <ul className={s.list}>
-                {displayedUsers.map(u => {
+            <div className={s.box}>
+                <ul className={s.list}>
+                    {displayedUsers.map(u => {
 
-                    const followHandler = () => {
-                        followCallback(u.id)
-                    }
+                        const followHandler = () => {
+                            followCallback(u.id)
+                        }
 
-                    const unfollowHandler = () => {
-                        unfollowCallback(u.id)
-                    }
+                        const unfollowHandler = () => {
+                            unfollowCallback(u.id)
+                        }
 
-                    return (
-                        <li key={u.id} className={s.item}>
-                            <div className={s.container}>
-                                <img className={s.img} src={u.src} alt={'Фото пользователя.'}/>
-                                <div>
-                                    <h3 className={s.name}>{u.name}</h3>
-                                    <p className={s.text}>{u.location.country + ' ' + u.location.city}</p>
-                                    <p className={s.description}>{u.status}</p>
+                        return (
+                            <li key={u.id} className={s.item}>
+                                <div className={s.container}>
+                                    <img className={s.img} src={u.src} alt={'Фото пользователя.'}/>
+                                    <div>
+                                        <h3 className={s.name}>{u.name}</h3>
+                                        <p className={s.text}>{u.location.country + ' ' + u.location.city}</p>
+                                        <p className={s.description}>{u.status}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={s.boxButton}>
-                                {u.followed
-                                    ? <button className={s.button + ' ' + s.buttonNoColor}
-                                              onClick={unfollowHandler}>Unfollow</button>
-                                    : <button className={s.button + ' ' + s.buttonNoColor}
-                                              onClick={followHandler}>Follow</button>}
-                                <button className={s.button + ' ' + s.buttonColor}>Message</button>
-                            </div>
-                        </li>
-                    )
-                })}
-            </ul>
-            <button>Other users</button>
+                                <div className={s.boxButton}>
+                                    {u.followed
+                                        ? <Button className={s.buttonNoColor} color={'white'} name={'Unfollow'} callback={unfollowHandler}/>
+                                        : <Button className={s.buttonNoColor} color={'white'} name={'Follow'} callback={followHandler} />
+                                    }
+                                    <Button className={s.buttonColor} color={'blue'} name={'Message'}/>
+                                </div>
+                            </li>
+                        )
+                    })}
+                </ul>
+                <Button className={s.buttonColor + ' ' + s.center} color={'blue'} name={'Other users'}/>
+            </div>
         </div>
     )
 }
