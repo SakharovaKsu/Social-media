@@ -46,7 +46,7 @@ const MyPosts:FC<MyPostsType> = ({postPage, newPostCallback, onPostChangeCallbac
             {postsElements}
             <div className={s.wrapper}>
                 <textarea className={s.textarea} ref={newPostElement} placeholder={'That tell interesting'} value={postPage.newPostText} onChange={onPostChange} onKeyPress={handleKeyPress}/>
-                <Button className={s.buttonColor} callback={newPost} name={'Add post'} color={'blue'}/>
+                <Button callback={newPost} name={'Add post'} color={'blue'}/>
             </div>
         </div>
     )

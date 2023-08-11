@@ -39,7 +39,7 @@ const TextArea:FC<TextAreaType> = ({name,  newMessageText, addMessagesCallback, 
     return (
         <div className={s.wrapper}>
             <textarea className={s.textArea} placeholder={'Type your message'} value={newMessageText} onChange={onMessageChange} onKeyPress={handleKeyPress}></textarea>
-            <Button className={s.button} color={'blue'} name={name} callback={addMessages}/>
+            <Button color={'blue'} name={name} callback={addMessages}/>
         </div>
     );
 };
