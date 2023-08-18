@@ -28,52 +28,8 @@ const Users: FC<UsersType> = ({usersPage, followCallback, unfollowCallback, setU
             .then(response => {
                 setUsersCallback(response.data.items)
             })
-
-        // setUsersCallback([
-        //     {
-        //         id: 1,
-        //         name: 'Terry McDaniel',
-        //         src: user1,
-        //         status: 'This headline will attract the right',
-        //         followed: false,
-        //         location: {country: 'Russia', city: 'Moscow'}
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Randy Russell',
-        //         src: user3,
-        //         status: 'This headline will attract the right',
-        //         followed: false,
-        //         location: {country: 'Russia', city: 'Moscow'}
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Charlotte Peters',
-        //         src: user2,
-        //         status: 'This headline will attract the right',
-        //         followed: true,
-        //         location: {country: 'Russia', city: 'Moscow'}
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Pearl Ward',
-        //         src: user5,
-        //         status: 'This headline will attract the right',
-        //         followed: true,
-        //         location: {country: 'Russia', city: 'Moscow'}
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Martha Gross',
-        //         src: user4,
-        //         status: 'This headline will attract the right',
-        //         followed: true,
-        //         location: {country: 'Russia', city: 'Moscow'}
-        //     },
-        // ])
     }
 
-    // Отображаем определенное количество пользователей
     const displayedUsers = usersPage.users.slice(0, 12);
 
     return (
@@ -81,7 +37,7 @@ const Users: FC<UsersType> = ({usersPage, followCallback, unfollowCallback, setU
             <h2 className={s.title}>Users list</h2>
             <div className={s.box}>
                 <ul className={s.list}>
-                    {displayedUsers.map(u => {
+                    {displayedUsers.map((u: UserType) => {
 
                         const followHandler = () => {
                             followCallback(u.id)
