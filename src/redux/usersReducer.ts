@@ -1,15 +1,12 @@
 import {v1} from 'uuid';
-import user1 from '../images/avatar-user/user-1.svg';
-import user2 from '../images/avatar-user/user-2.svg';
-import user3 from '../images/avatar-user/user-3.svg';
-import user4 from '../images/avatar-user/user-4.svg';
-import user5 from '../images/avatar-user/user-5.svg';
 
-type AllActionType = FollowType | UnfollowType | SetUsersType
+type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType
 
 type FollowType = ReturnType<typeof followAC>
 type UnfollowType = ReturnType<typeof unfollowAC>
 type SetUsersType = ReturnType<typeof setUsersAC>
+type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
+type SetUsersTotalCountType = ReturnType<typeof setUsersTotalCountAC>
 
 type LocationType = {
     country: string
@@ -27,10 +24,18 @@ export type UserType = {
 
 export type InitialStateUsersType = {
     users: UserType[]
+    pageSize: number
+    totalUsersCount: number
+
+    // отображение текущей страницы (пагинация)
+    currentPage: number
 }
 
 export const initialStateUser: InitialStateUsersType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1
 }
 
 export const usersReducer = (state = initialStateUser, action: AllActionType ): InitialStateUsersType => {
@@ -48,7 +53,13 @@ export const usersReducer = (state = initialStateUser, action: AllActionType ): 
             }
         }
         case 'SET-USERS': {
-            return {...state, users: [...state.users, ...action.payload.users]}
+            return {...state, users: action.payload.users}
+        }
+        case 'SET-CURRENT-PAGE': {
+            return {...state, currentPage: action.payload.page}
+        }
+        case 'SET-TOTAL-COUNT': {
+            return {...state, totalUsersCount: action.payload.count}
         }
         default:
             return state
@@ -73,6 +84,20 @@ export const setUsersAC = (users: UserType[]) => {
     return {
         type: 'SET-USERS',
         payload: {users}
+    } as const
+}
+
+export const setCurrentPageAC = (page: number) => {
+    return {
+        type: 'SET-CURRENT-PAGE',
+        payload: {page}
+    } as const
+}
+
+export const setUsersTotalCountAC = (count: number) => {
+    return {
+        type: 'SET-TOTAL-COUNT',
+        payload: {count}
     } as const
 }
 

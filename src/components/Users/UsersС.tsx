@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Users.module.css';
-import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
+import {UserType} from '../../redux/usersReducer';
 import user1 from '../../images/avatar-user/user-1.svg';
 import user3 from '../../images/avatar-user/user-3.svg';
 import user2 from '../../images/avatar-user/user-2.svg';
@@ -12,22 +12,40 @@ import axios from 'axios';
 const userImages = [user1, user2, user3, user4, user5]
 
 class UsersC extends React.Component<any, any>{
-    // constructor(props: InitialStateUsersType) {
-    //     super(props);
-    // }
 
-    getUsers = () => {
-        if(this.props.usersPage.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(response => {
-                    this.props.setUsersCallback(response.data.items)
-                })
-        }
+    // ? - после вопроса идет get-параметр, 'ключ'='значение' (то, что запрашиваем у сервера), &-разделительный символ
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                // сетаем
+                this.props.setUsersCallback(response.data.items)
+                this.props.setUsersTotalCountCallback(response.data.totalCount)
+            })
     }
 
-    displayedUsers = () => this.props.usersPage.users.slice(0, 12);
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPageCallback(pageNumber)
+
+        // делаем запрос на сервер для текущей странице по клике
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsersCallback(response.data.items)
+            })
+    }
+
+    displayedUsers = () => this.props.usersPage.users.slice(0, 8);
 
     render() {
+
+        // Узнаем количество пользователь, для понимая сколько нам нужно кнопок
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+
+        // Заполняем массив для пагинации
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
         return (
             <div className={s.users}>
                 <h2 className={s.title}>Users list</h2>
@@ -69,7 +87,33 @@ class UsersC extends React.Component<any, any>{
                             )
                         })}
                     </ul>
-                    <Button className={s.buttonColor + ' ' + s.center} color={'blue'} name={'Other users'} callback={this.getUsers}/>
+                    <Button className={s.buttonColor + ' ' + s.center}
+                            color={'blue'}
+                            name={'Other users'}
+                            // callback={this.getUsers}
+                    />
+
+                    <div>
+                        {pages.map(p => {
+                            const currentPageHandler = () => {
+                                this.onPageChanged(p)
+                            }
+
+                            if (p === 1 || p === pagesCount || (p >= this.props.currentPage - 2 && p <= this.props.currentPage + 2)) {
+
+                                return (
+                                    (p === 1 || p === pagesCount || (p >= this.props.currentPage - 2 && p <= this.props.currentPage + 2))
+                                        ? <span
+                                            key={p}
+                                            className={this.props.currentPage === p ? s.buttonActive : ''}
+                                            onClick={currentPageHandler}>{p} </span>
+                                        : (p === this.props.currentPage - 3 || p === this.props.currentPage + 3)
+                                            ? <span key={p}>... </span>
+                                            : null
+                                );
+                            }
+                        })}
+                    </div>
                 </div>
             </div>
         );
