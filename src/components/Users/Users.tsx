@@ -3,29 +3,23 @@ import s from './Users.module.css';
 import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
 import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
-import user2 from '../../images/avatar-user/user-2.svg';
-import user3 from '../../images/avatar-user/user-3.svg';
-import user4 from '../../images/avatar-user/user-4.svg';
-import user5 from '../../images/avatar-user/user-5.svg';
 
 type UsersCType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
     usersPage: InitialStateUsersType
-    followCallback: (id: number) => void
-    unfollowCallback: (id: number) => void
+    follow: (id: number) => void
+    unfollow: (id: number) => void
     onPageChanged: (p: number) => void
 }
-
-const userImages = [user1, user2, user3, user4, user5]
 
 export const Users:FC<UsersCType> = ({
                                    totalUsersCount,
                                    pageSize,
                                    usersPage,
-                                   followCallback,
-                                   unfollowCallback,
+                                   follow,
+                                   unfollow,
                                    onPageChanged,
                                    currentPage}) => {
 
@@ -48,20 +42,17 @@ export const Users:FC<UsersCType> = ({
                     {displayedUsers().map((u: UserType) => {
 
                         const followHandler = () => {
-                            followCallback(u.id)
+                            follow(u.id)
                         }
 
                         const unfollowHandler = () => {
-                            unfollowCallback(u.id)
+                            unfollow(u.id)
                         }
-
-                        // Генерируем случайное число от 0 до 4
-                        const randomIndex = Math.floor(Math.random() * 4);
 
                         return (
                             <li key={u.id} className={s.item}>
                                 <div className={s.container}>
-                                    <img className={s.img} src={u.photos.small !== 'small' ? userImages[randomIndex] : ''} alt={'Фото пользователя.'}/>
+                                    <img className={s.img} src={u.photos.small !== 'small' ? user1 : ''} alt={'Фото пользователя.'}/>
                                     <div>
                                         <h3 className={s.name}>{u.name}</h3>
                                         <p className={s.text}>
