@@ -1,43 +1,51 @@
 import React, {FC} from 'react';
 import s from './Users.module.css';
 import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
-import {v1} from 'uuid';
-import user1 from '../../images/avatar-user/user-1.svg';
-import user3 from '../../images/avatar-user/user-3.svg';
-import user2 from '../../images/avatar-user/user-2.svg';
-import user5 from '../../images/avatar-user/user-5.svg';
-import user4 from '../../images/avatar-user/user-4.svg';
 import Button from '../Elements/Button';
-import axios from 'axios';
+import user1 from '../../images/avatar-user/user-1.svg';
+import user2 from '../../images/avatar-user/user-2.svg';
+import user3 from '../../images/avatar-user/user-3.svg';
+import user4 from '../../images/avatar-user/user-4.svg';
+import user5 from '../../images/avatar-user/user-5.svg';
+
+type UsersCType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    usersPage: InitialStateUsersType
+    followCallback: (id: number) => void
+    unfollowCallback: (id: number) => void
+    onPageChanged: (p: number) => void
+}
 
 const userImages = [user1, user2, user3, user4, user5]
 
-type UsersType = {
-    usersPage: InitialStateUsersType;
-    followCallback: (userId: number) => void;
-    unfollowCallback: (userId: number) => void;
-    setUsersCallback: (users: UserType[]) => void;
-}
+export const Users:FC<UsersCType> = ({
+                                   totalUsersCount,
+                                   pageSize,
+                                   usersPage,
+                                   followCallback,
+                                   unfollowCallback,
+                                   onPageChanged,
+                                   currentPage}) => {
 
-const Users: FC<UsersType> = ({usersPage, followCallback, unfollowCallback, setUsersCallback}) => {
+    const displayedUsers = () => usersPage.users.slice(0, 8);
 
-    if(usersPage.users.length === 0) {
+    // Узнаем количество пользователь, для понимая сколько нам нужно кнопок
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
 
-        // берем пользователей из сервака
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
-            .then(response => {
-                setUsersCallback(response.data.items)
-            })
+    // Заполняем массив для пагинации
+    let pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
-
-    const displayedUsers = usersPage.users.slice(0, 12);
 
     return (
         <div className={s.users}>
             <h2 className={s.title}>Users list</h2>
             <div className={s.box}>
                 <ul className={s.list}>
-                    {displayedUsers.map((u: UserType) => {
+                    {displayedUsers().map((u: UserType) => {
 
                         const followHandler = () => {
                             followCallback(u.id)
@@ -73,10 +81,34 @@ const Users: FC<UsersType> = ({usersPage, followCallback, unfollowCallback, setU
                         )
                     })}
                 </ul>
-                <Button className={s.buttonColor + ' ' + s.center} color={'blue'} name={'Other users'}/>
+                <Button className={s.buttonColor + ' ' + s.center}
+                        color={'blue'}
+                        name={'Other users'}
+                    // callback={this.getUsers}
+                />
+
+                <div>
+                    {pages.map(p => {
+                        const currentPageHandler = () => {
+                            onPageChanged(p)
+                        }
+
+                        if (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 2)) {
+
+                            return (
+                                (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 2))
+                                    ? <span
+                                        key={p}
+                                        className={currentPage === p ? s.buttonActive : ''}
+                                        onClick={currentPageHandler}>{p} </span>
+                                    : (p === currentPage - 3 || p === currentPage + 3)
+                                        ? <span key={p}>... </span>
+                                        : null
+                            );
+                        }
+                    })}
+                </div>
             </div>
         </div>
-    )
-}
-
-export default Users;
+    );
+};
