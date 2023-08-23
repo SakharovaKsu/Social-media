@@ -3,6 +3,7 @@ import s from './Users.module.css';
 import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
 import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
+import ButtonPagination from '../Elements/ButtonPagination/ButtonPagination';
 
 type UsersCType = {
     totalUsersCount: number
@@ -72,11 +73,6 @@ export const Users:FC<UsersCType> = ({
                         )
                     })}
                 </ul>
-                {/*<Button className={s.buttonColor + ' ' + s.center}*/}
-                {/*        color={'blue'}*/}
-                {/*        name={'Other users'}*/}
-                {/*    // callback={this.getUsers}*/}
-                {/*/>*/}
 
                 <div>
                     {pages.map(p => {
@@ -84,16 +80,18 @@ export const Users:FC<UsersCType> = ({
                             onPageChanged(p)
                         }
 
-                        if (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 2)) {
+                        if (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1)) {
 
+                            const styleActiveButton =  currentPage === p ? s.buttonActive : ''
                             return (
-                                (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 2))
-                                    ? <span
+                                (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1))
+                                    ? <ButtonPagination
                                         key={p}
-                                        className={currentPage === p ? s.buttonActive : ''}
-                                        onClick={currentPageHandler}>{p} </span>
-                                    : (p === currentPage - 3 || p === currentPage + 3)
-                                        ? <span key={p}>... </span>
+                                        buttonActive={styleActiveButton}
+                                        name={p.toString()}
+                                        callback={currentPageHandler}/>
+                                    : (p === currentPage - 2 || p === currentPage + 2)
+                                        ? <ButtonPagination key={p} name={'...'}/>
                                         : null
                             );
                         }

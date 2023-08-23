@@ -1,0 +1,41 @@
+.buttonPagination {
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    min-width: 40px;
+    background-color: #ffffff;
+    outline: 2px solid #eef5ff;
+    color: #2772F0;
+    margin-left: 10px;
+
+    &:hover {
+        background-color: #eef5ff;
+    }
+
+    &:active {
+        background-color: #fedfbb;
+        outline: none;
+    }
+
+    &:disabled {
+        color: #9CBEF8;
+        outline: 2px solid #EAF1FE;
+        background-color: #EAF1FE;
+    }
+}
+
+.buttonActive {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    min-width: 40px;
+    background-color: #b04444;
+    outline: 2px solid #eef5ff;
+    color: #2772F0;
+    margin-left: 10px;
+}
+
