@@ -1,12 +1,12 @@
-import {v1} from 'uuid';
 
-type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType
+type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType | ToggleIsFetchingType
 
 type FollowType = ReturnType<typeof followAC>
 type UnfollowType = ReturnType<typeof unfollowAC>
 type SetUsersType = ReturnType<typeof setUsersAC>
 type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
 type SetUsersTotalCountType = ReturnType<typeof setUsersTotalCountAC>
+type ToggleIsFetchingType = ReturnType<typeof toggleIsFetchingAC>
 
 type LocationType = {
     country: string
@@ -29,13 +29,17 @@ export type InitialStateUsersType = {
 
     // отображение текущей страницы (пагинация)
     currentPage: number
+
+    // Крутилка - анимация (ожидания ответа от сервера)
+    isFetching: boolean
 }
 
 export const initialStateUser: InitialStateUsersType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 export const usersReducer = (state = initialStateUser, action: AllActionType ): InitialStateUsersType => {
@@ -60,6 +64,9 @@ export const usersReducer = (state = initialStateUser, action: AllActionType ): 
         }
         case 'SET-TOTAL-COUNT': {
             return {...state, totalUsersCount: action.payload.count}
+        }
+        case 'TOGGLE-IS-FETCHING': {
+            return {...state, isFetching: action.payload.isFetching}
         }
         default:
             return state
@@ -98,6 +105,13 @@ export const setUsersTotalCountAC = (count: number) => {
     return {
         type: 'SET-TOTAL-COUNT',
         payload: {count}
+    } as const
+}
+
+export const toggleIsFetchingAC = (isFetching: boolean) => {
+    return {
+        type: 'TOGGLE-IS-FETCHING',
+        payload: {isFetching}
     } as const
 }
 

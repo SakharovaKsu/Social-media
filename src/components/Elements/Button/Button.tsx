@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import s from '../Elements/Button.module.css';
+import s from './Button.module.css';
 
 type ButtonType = {
     name: string

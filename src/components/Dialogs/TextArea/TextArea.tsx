@@ -2,7 +2,7 @@ import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
 import s from './TextArea.module.css'
 import {AllActionType} from '../../../redux/state';
 import {addMassageAC, updateNewMessageTextAC} from '../../../redux/dialogsReducer';
-import Button from '../../Elements/Button';
+import Button from '../../Elements/Button/Button';
 
 type TextAreaType = {
     name: string

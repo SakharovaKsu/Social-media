@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import s from './Users.module.css';
 import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
-import Button from '../Elements/Button';
+import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
 import user2 from '../../images/avatar-user/user-2.svg';
 import user3 from '../../images/avatar-user/user-3.svg';
@@ -81,11 +81,11 @@ export const Users:FC<UsersCType> = ({
                         )
                     })}
                 </ul>
-                <Button className={s.buttonColor + ' ' + s.center}
-                        color={'blue'}
-                        name={'Other users'}
-                    // callback={this.getUsers}
-                />
+                {/*<Button className={s.buttonColor + ' ' + s.center}*/}
+                {/*        color={'blue'}*/}
+                {/*        name={'Other users'}*/}
+                {/*    // callback={this.getUsers}*/}
+                {/*/>*/}
 
                 <div>
                     {pages.map(p => {
