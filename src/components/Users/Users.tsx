@@ -4,6 +4,7 @@ import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
 import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
 import ButtonPagination from '../Elements/ButtonPagination/ButtonPagination';
+import {NavLink} from 'react-router-dom';
 
 type UsersCType = {
     totalUsersCount: number
@@ -53,7 +54,9 @@ export const Users:FC<UsersCType> = ({
                         return (
                             <li key={u.id} className={s.item}>
                                 <div className={s.container}>
-                                    <img className={s.img} src={u.photos.small !== 'small' ? user1 : ''} alt={'Фото пользователя.'}/>
+                                    <NavLink to={'/profile/' + u.id}>
+                                        <img className={s.img} src={u.photos.small || user1} alt={'Фото пользователя.'}/>
+                                    </NavLink>
                                     <div>
                                         <h3 className={s.name}>{u.name}</h3>
                                         <p className={s.text}>

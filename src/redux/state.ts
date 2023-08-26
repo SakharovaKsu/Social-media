@@ -51,7 +51,8 @@ export const store: StoreType = {
                     src: 'https://i.ibb.co/xLPQLDG/MyPost-2.jpg',
                     likeCount: 232},
             ],
-            newPostText: ''
+            newPostText: '',
+            profile: null
         }
     },
 

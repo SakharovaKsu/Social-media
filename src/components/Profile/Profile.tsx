@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 
-const Profile = () => {
+type ProfileType = {
+    profile: any
+}
+
+const Profile: FC<ProfileType> = ({profile}) => {
+
     return (
         <div className={s.content}>
-            <ProfileInfo />
+            <ProfileInfo profile={profile} />
             <MyPostsContainer/>
         </div>
     )

@@ -13,9 +13,9 @@ import {Users} from './Users';
 import axios from 'axios';
 import Preloader from '../Elements/Preloader/Preloader';
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+type FromReduxType = ConnectedProps<typeof connector>;
 
-class UsersAPIComponent extends React.Component<PropsFromRedux>{
+class UsersAPIComponent extends React.Component<FromReduxType>{
 
     // ? - после вопроса идет get-параметр, 'ключ'='значение' (то, что запрашиваем у сервера), &-разделительный символ
     componentDidMount() {

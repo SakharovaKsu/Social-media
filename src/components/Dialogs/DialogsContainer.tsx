@@ -1,5 +1,5 @@
 import React from 'react';
-import {addMassageAC, DialogsPageType, updateNewMessageTextAC} from '../../redux/dialogsReducer';
+import {addMassageAC, updateNewMessageTextAC} from '../../redux/dialogsReducer';
 import {StoreType} from '../../redux/redux-store';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';

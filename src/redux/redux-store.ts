@@ -16,4 +16,7 @@ export type StoreType = ReturnType<typeof reducers>
 // создаем store
 const store = createStore(reducers)
 
+// @ts-ignore
+window.store = store
+
 export default store
