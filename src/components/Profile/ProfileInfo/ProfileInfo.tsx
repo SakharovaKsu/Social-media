@@ -7,7 +7,6 @@ type ProfileInfoType = {
 }
 
 const ProfileInfo:FC<ProfileInfoType> = ({profile}) => {
-    debugger
 
     // Если Profile null или не определен, то показываем Preloader
     if(!profile) {

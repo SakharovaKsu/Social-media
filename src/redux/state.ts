@@ -52,7 +52,27 @@ export const store: StoreType = {
                     likeCount: 232},
             ],
             newPostText: '',
-            profile: null
+            profile: {
+                aboutMe: '',
+                contacts: {
+                    facebook: '',
+                    website: '',
+                    vk: '',
+                    twitter: '',
+                    instagram: '',
+                    youtube: '',
+                    github: '',
+                    mainLink: '',
+                },
+                lookingForAJob: true,
+                lookingForAJobDescription: '',
+                fullName: '',
+                userId: 2,
+                photos: {
+                    small: '',
+                    large: ''
+                }
+            }
         }
     },
 

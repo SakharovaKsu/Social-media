@@ -13,10 +13,36 @@ export type PostsDataType = {
     likeCount: number
 }
 
+type ContactsType = {
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
+}
+
+type PhotosType = {
+    small: string
+    large: string
+}
+
+export type ProfileType = {
+    aboutMe: string
+    contacts: ContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: PhotosType
+}
+
 export type PostPageType = {
     postsData: PostsDataType[]
     newPostText: string
-    profile: any
+    profile: ProfileType
 }
 
 const postPage: PostPageType = {
@@ -35,28 +61,27 @@ const postPage: PostPageType = {
         },
     ],
     newPostText: '',
-    profile: null
-    // profile: {
-    //     "aboutMe": "я круто чувак 1001%",
-    //     "contacts": {
-    //         "facebook": "facebook.com",
-    //         "website": null,
-    //         "vk": "vk.com/dimych",
-    //         "twitter": "https://twitter.com/@sdf",
-    //         "instagram": "instagra.com/sds",
-    //         "youtube": null,
-    //         "github": "github.com",
-    //         "mainLink": null
-    //     },
-    //     "lookingForAJob": true,
-    //     "lookingForAJobDescription": "не ищу, а дурачусь",
-    //     "fullName": "samurai dimych",
-    //     "userId": 2,
-    //     "photos": {
-    //         "small": "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
-    //         "large": "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
-    //     }
-    // }
+    profile: {
+        aboutMe: '',
+        contacts: {
+            facebook: '',
+            website: '',
+            vk: '',
+            twitter: '',
+            instagram: '',
+            youtube: '',
+            github: '',
+            mainLink: '',
+        },
+        lookingForAJob: true,
+        lookingForAJobDescription: '',
+        fullName: '',
+        userId: 2,
+        photos: {
+            small: '',
+            large: ''
+        }
+    }
 }
 
 export const postPageReducer = (state = postPage, action: AllActionType ): PostPageType => {
@@ -90,7 +115,7 @@ export const updateNewPostTextAC = (text: string) => {
     } as const
 }
 
-export const setUserProfileAC = (profile: any) => {
+export const setUserProfileAC = (profile: ProfileType) => {
     return {
         type: 'SET-USER-PROFILE',
         payload: {profile}
