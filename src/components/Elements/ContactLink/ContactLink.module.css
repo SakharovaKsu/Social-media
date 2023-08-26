@@ -1,4 +1,9 @@
 .icon {
     width: 30px;
     height: auto;
+    fill: #9DA4B1;
+}
+
+.link:hover {
+    fill: #091B3D;
 }

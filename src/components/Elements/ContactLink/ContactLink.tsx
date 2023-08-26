@@ -12,7 +12,7 @@ export const ContactLink:FC<ContactLinkType> = ({ url, imgSrc }) => {
     }
 
     return (
-        <a href={url}>
+        <a className={s.link} href={url}>
             <img className={s.icon} src={imgSrc} />
         </a>
     );

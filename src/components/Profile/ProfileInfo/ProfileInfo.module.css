@@ -1,25 +1,45 @@
 .container {
-    display: flex;
-    gap: 10px 20px;
+    display: grid;
+    grid-template-columns: 150px 3fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0 25px;
 
     background-color: #FFFFFF;
     border-radius: 16px;
-    padding: 15px;
+    padding: 24px;
     margin-bottom: 100px;
-    max-width: 500px;
+    max-width: 700px;
 }
 
 .picture {
+    grid-area: 1 / 1 / 4 / 2;
     width: 150px;
     height: auto;
     border-radius: 16px;
 }
 
-.title {
+.containerInfo {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.boxInfo {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.boxContact {
+    grid-area: 3 / 2 / 4 / 3;
 }
 
 .text {
     color: #9DA4B1;
+    font-size: 14px;
+}
+
+.box {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .icon {

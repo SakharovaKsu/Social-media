@@ -5,6 +5,7 @@ import {ProfileType} from '../../../redux/postPageReducer';
 import work from '../../../images/work.svg'
 import notWork from '../../../images/workFalse.svg'
 import ProfileContacts from './ProfileContacts/ProfileContacts';
+import user1 from '../../../images/avatar-user/user-1.svg';
 
 
 type ProfileInfoType = {
@@ -31,17 +32,19 @@ const ProfileInfo:FC<ProfileInfoType> = ({profile}) => {
 
     return (
         <div className={s.container}>
-            <img className={s.picture} src={profile.photos.large}/>
-            <div>
+            <img className={s.picture} src={profile.photos.large ? profile.photos.large : user1}/>
+            <div className={s.containerInfo}>
                 <h2 className={s.title}>{profile.fullName}</h2>
                 <p className={s.text}>{profile.aboutMe}</p>
-
-                <div>
-                    <h3>Статус работы</h3>
+            </div>
+            <div className={s.boxInfo}>
+                <h3 className={s.subTitle}>Статус работы</h3>
+                <div className={s.box}>
                     <img className={s.icon} src={styleIcons}/>
-                    <p>{profile.lookingForAJobDescription}</p>
+                    <p>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'Не ищу'}</p>
                 </div>
-
+            </div>
+            <div className={s.boxContact}>
                 <ProfileContacts contacts={profileContacts}/>
             </div>
         </div>
