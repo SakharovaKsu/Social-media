@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    gap: 10px 20px;
+
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 100px;
+    max-width: 500px;
+}
+
+.picture {
+    width: 150px;
+    height: auto;
+    border-radius: 16px;
+}
+
+.title {
+}
+
+.text {
+    color: #9DA4B1;
+}
+
+.icon {
+    width: 24px;
+    height: auto;
+}
