@@ -20,7 +20,10 @@ const App = () => {
                     {/*отрисовка компонента по клику на страничке*/}
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route exact path='/dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/profile' render={() => <ProfileContainer/>}/>
+
+                    {/* :userId - параметр для отображения пользователя */}
+                    {/* ? - означает что параметр не обязательный */}
+                    <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                     <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/news' component={News}/>
                 </div>
