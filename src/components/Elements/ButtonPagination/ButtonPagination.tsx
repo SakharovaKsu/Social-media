@@ -4,7 +4,7 @@ import s from './ButtonPagination.module.css';
 type ButtonPaginationType = {
     name: string
     callback?: () => void
-    buttonActive?: string
+    buttonActive?: boolean
 }
 
 const ButtonPagination:FC<ButtonPaginationType> = ({name, callback, buttonActive}) => {

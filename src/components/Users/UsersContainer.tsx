@@ -14,6 +14,13 @@ import axios from 'axios';
 import Preloader from '../Elements/Preloader/Preloader';
 import s from './Users.module.css'
 
+export const axiosInstance = axios.create({
+    baseURL: 'https://social-network.samuraijs.com/api/1.0',
+    withCredentials: true,
+    headers: {
+        'API-KEY': '38441d44-efce-4f1f-95aa-be1f9fc10993'}
+})
+
 type FromReduxType = ConnectedProps<typeof connector>;
 
 class UsersAPIComponent extends React.Component<FromReduxType>{
@@ -23,7 +30,7 @@ class UsersAPIComponent extends React.Component<FromReduxType>{
         // когда запрос пошел, меняем состояние
         this.props.toggleIsFetching(true)
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axiosInstance.get(`/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
 
                 // запрос получили, меняем состояние
@@ -41,7 +48,7 @@ class UsersAPIComponent extends React.Component<FromReduxType>{
         this.props.setCurrentPage(pageNumber)
 
         // делаем запрос на сервер для текущей странице по клике
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+        axiosInstance.get(`/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items)

@@ -5,6 +5,8 @@ import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
 import ButtonPagination from '../Elements/ButtonPagination/ButtonPagination';
 import {NavLink} from 'react-router-dom';
+import axios from 'axios';
+import {axiosInstance} from './UsersContainer';
 
 type UsersCType = {
     totalUsersCount: number
@@ -44,11 +46,28 @@ export const Users:FC<UsersCType> = ({
                     {displayedUsers().map((u: UserType) => {
 
                         const followHandler = () => {
-                            follow(u.id)
+                            axiosInstance.post(`/follow/${u.id}`, null)
+
+                                .then(response => {
+                                    console.log(response)
+                                    // всегда делаем проверку значения resultCode, который получаем из сервака
+                                    if(response.data.resultCode === 0) {
+                                        follow(u.id)
+                                    }
+                                })
                         }
 
                         const unfollowHandler = () => {
-                            unfollow(u.id)
+
+                            axiosInstance.delete(`/follow/${u.id}`)
+
+                                .then(response => {
+
+                                    // всегда делаем проверку значения resultCode, который получаем из сервака
+                                    if(response.data.resultCode === 0) {
+                                        unfollow(u.id)
+                                    }
+                                })
                         }
 
                         return (
@@ -85,7 +104,7 @@ export const Users:FC<UsersCType> = ({
 
                         if (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1)) {
 
-                            const styleActiveButton =  currentPage === p ? s.buttonActive : ''
+                            const styleActiveButton =  currentPage === p ? true : false
                             return (
                                 (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1))
                                     ? <ButtonPagination
