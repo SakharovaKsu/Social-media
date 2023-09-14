@@ -11,6 +11,7 @@ body {
 }
 
 .app-wrapper-content {
+  position: relative;
   grid-area: c;
   background-color: #FFF;
 }

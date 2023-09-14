@@ -108,16 +108,5 @@ export const postPageReducer = (state = postPage, action: AllActionType ): PostP
 }
 
 export const addPostAC = () => ({type: 'ADD-POST'} as const)
-export const updateNewPostTextAC = (text: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        payload: {text}
-    } as const
-}
-
-export const setUserProfileAC = (profile: ProfileType) => {
-    return {
-        type: 'SET-USER-PROFILE',
-        payload: {profile}
-    } as const
-}
+export const updateNewPostTextAC = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', payload: {text}} as const)
+export const setUserProfileAC = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', payload: {profile}} as const)

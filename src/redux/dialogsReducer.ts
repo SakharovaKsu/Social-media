@@ -64,14 +64,5 @@ export const dialogsReducer = (state = dialogsPage, action: AllActionType ): Dia
     }
 }
 
-export const addMassageAC = () => {
-    return {
-        type: 'ADD-MESSAGE'
-    } as const
-}
-export const updateNewMessageTextAC = (text: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-TEXT',
-        payload: {text}
-    } as const
-}
+export const addMassageAC = () => ({type: 'ADD-MESSAGE'} as const)
+export const updateNewMessageTextAC = (text: string) => ({type: 'UPDATE-NEW-MESSAGE-TEXT', payload: {text}} as const)

@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import Profile from './Profile';
 import axios from 'axios';
 import {connect, ConnectedProps} from 'react-redux';
-import {StoreType} from '../../redux/redux-store';
+import {StoreType} from '../../redux/reduxStore';
 import {setUserProfileAC} from '../../redux/postPageReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 

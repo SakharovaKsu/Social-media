@@ -73,45 +73,10 @@ export const usersReducer = (state = initialStateUser, action: AllActionType ): 
     }
 }
 
-export const followAC = (userId: number) => {
-    return {
-        type: 'FOLLOW',
-        payload: {userId}
-    } as const
-}
-
-export const unfollowAC = (userId: number) => {
-    return {
-        type: 'UNFOLLOW',
-        payload: {userId}
-    } as const
-}
-
-export const setUsersAC = (users: UserType[]) => {
-    return {
-        type: 'SET-USERS',
-        payload: {users}
-    } as const
-}
-
-export const setCurrentPageAC = (page: number) => {
-    return {
-        type: 'SET-CURRENT-PAGE',
-        payload: {page}
-    } as const
-}
-
-export const setUsersTotalCountAC = (count: number) => {
-    return {
-        type: 'SET-TOTAL-COUNT',
-        payload: {count}
-    } as const
-}
-
-export const toggleIsFetchingAC = (isFetching: boolean) => {
-    return {
-        type: 'TOGGLE-IS-FETCHING',
-        payload: {isFetching}
-    } as const
-}
+export const followAC = (userId: number) => ({type: 'FOLLOW', payload: {userId}} as const)
+export const unfollowAC = (userId: number) => ({type: 'UNFOLLOW', payload: {userId}} as const)
+export const setUsersAC = (users: UserType[]) => ({type: 'SET-USERS', payload: {users}} as const)
+export const setCurrentPageAC = (page: number) => ({type: 'SET-CURRENT-PAGE', payload: {page}} as const)
+export const setUsersTotalCountAC = (count: number) => ({type: 'SET-TOTAL-COUNT', payload: {count}} as const)
+export const toggleIsFetchingAC = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', payload: {isFetching}} as const)
 

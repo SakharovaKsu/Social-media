@@ -8,10 +8,11 @@ import {
     unfollowAC,
     toggleIsFetchingAC
 } from '../../redux/usersReducer';
-import {StoreType} from '../../redux/redux-store';
+import {StoreType} from '../../redux/reduxStore';
 import {Users} from './Users';
 import axios from 'axios';
 import Preloader from '../Elements/Preloader/Preloader';
+import s from './Users.module.css'
 
 type FromReduxType = ConnectedProps<typeof connector>;
 
@@ -50,7 +51,9 @@ class UsersAPIComponent extends React.Component<FromReduxType>{
     render() {
 
         return <>
-            {this.props.isFetching ? <Preloader/> : null}
+            <div className={s.containerPreloader}>
+                {this.props.isFetching ? <Preloader/> : null}
+            </div>
             <Users
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
