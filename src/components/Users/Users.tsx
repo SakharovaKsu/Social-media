@@ -5,8 +5,7 @@ import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
 import ButtonPagination from '../Elements/ButtonPagination/ButtonPagination';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
-import {axiosInstance} from './UsersContainer';
+import {usersApi} from '../../api/api';
 
 type UsersCType = {
     totalUsersCount: number
@@ -43,11 +42,11 @@ export const Users:FC<UsersCType> = ({
             <h2 className={s.title}>Users list</h2>
             <div className={s.box}>
                 <ul className={s.list}>
+
                     {displayedUsers().map((u: UserType) => {
 
                         const followHandler = () => {
-                            axiosInstance.post(`/follow/${u.id}`, null)
-
+                            usersApi.followUser(u.id)
                                 .then(response => {
                                     console.log(response)
                                     // всегда делаем проверку значения resultCode, который получаем из сервака
@@ -59,8 +58,7 @@ export const Users:FC<UsersCType> = ({
 
                         const unfollowHandler = () => {
 
-                            axiosInstance.delete(`/follow/${u.id}`)
-
+                            usersApi.unfollowUser(u.id)
                                 .then(response => {
 
                                     // всегда делаем проверку значения resultCode, который получаем из сервака

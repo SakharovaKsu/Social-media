@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Header from './Header';
-import axios from 'axios';
 import {connect, ConnectedProps} from 'react-redux';
 import {setUserDataAC} from '../../redux/authReducer';
 import {StoreType} from '../../redux/reduxStore';
+import {usersApi} from '../../api/api';
 
 // Определение типов для пропсов, полученных через connect
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -11,7 +11,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 class HeaderContainer extends React.Component<PropsFromRedux> {
     componentDidMount() {
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true})
+        usersApi.getAuth()
             .then(response => {
                 if(response.data.resultCode === 0) {
                     this.props.setUserData(response.data.data)
