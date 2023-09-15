@@ -7,8 +7,10 @@ export const axiosInstance = axios.create({
         'API-KEY': '38441d44-efce-4f1f-95aa-be1f9fc10993'}
 })
 
+// ? - после вопроса идет get-параметр, 'ключ'='значение' (то, что запрашиваем у сервера), &-разделительный символ
+
 export const usersApi = {
-    getUsers(currentPage: number, pageSize: number = 1) {
+    async getUsers(currentPage: number, pageSize: number = 1) {
         return axiosInstance.get(`/users?page=${currentPage}&count=${pageSize}`)
             .then(respons => respons.data)
         // ретурнем то что приходит с нового промиса then, так как нам весь список не нужен с сервака, берем что нам необходимо

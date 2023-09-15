@@ -6,7 +6,7 @@ import {
     setUsersTotalCountAC,
     setUsersAC,
     unfollowAC,
-    toggleIsFetchingAC, toggleIsFollowingProgressAC
+    toggleIsFetchingAC, toggleIsFollowingProgressAC, getUsersTC
 } from '../../redux/usersReducer';
 import {StoreType} from '../../redux/reduxStore';
 import {Users} from './Users';
@@ -24,22 +24,11 @@ export const axiosInstance = axios.create({
 
 type FromReduxType = ConnectedProps<typeof connector>;
 
-class UsersAPIComponent extends React.Component<FromReduxType>{
+class UsersAPIComponent extends React.Component<FromReduxType> {
 
-    // ? - после вопроса идет get-параметр, 'ключ'='значение' (то, что запрашиваем у сервера), &-разделительный символ
     componentDidMount() {
-        // когда запрос пошел, меняем состояние
-        this.props.toggleIsFetching(true)
-
-        usersApi.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-
-                // запрос получили, меняем состояние
-                this.props.toggleIsFetching(false)
-
-                // сетаем
-                this.props.setUsers(data.items)
-                this.props.setUsersTotalCount(data.totalCount)
-            })
+        console.log(this.props)
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
     // Меняем страничку пользователей
@@ -95,7 +84,8 @@ const mapDispatchToProps = {
     setCurrentPage: setCurrentPageAC,
     setUsersTotalCount: setUsersTotalCountAC,
     toggleIsFetching: toggleIsFetchingAC,
-    toggleIsFollowingProgress: toggleIsFollowingProgressAC
+    toggleIsFollowingProgress: toggleIsFollowingProgressAC,
+    getUsersTC
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

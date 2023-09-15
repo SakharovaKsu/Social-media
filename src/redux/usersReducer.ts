@@ -1,3 +1,5 @@
+import {Dispatch} from 'redux';
+import {usersApi} from '../api/api';
 
 type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType | ToggleIsFetchingType | ToggleIsFollowingProgressType
 
@@ -91,3 +93,19 @@ export const setUsersTotalCountAC = (count: number) => ({type: 'SET-TOTAL-COUNT'
 export const toggleIsFetchingAC = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', payload: {isFetching}} as const)
 export const toggleIsFollowingProgressAC = (isFetching: boolean, userId: number) => ({type: 'TOGGLE-IS-FOLLOWING-PROGRESS', payload:{isFetching, userId}} as const)
 
+export const getUsersTC = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFetchingAC(true))
+
+        usersApi.getUsers(currentPage, pageSize).then(data => {
+
+            // запрос получили, меняем состояние
+            dispatch(toggleIsFetchingAC(false))
+
+            // сетаем
+            dispatch(setUsersAC(data.items))
+            dispatch(setUsersTotalCountAC(data.totalCount))
+        })
+    }
+}

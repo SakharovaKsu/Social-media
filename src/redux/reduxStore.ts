@@ -1,8 +1,10 @@
-import {combineReducers, createStore} from 'redux';
+import {AnyAction, applyMiddleware, combineReducers, createStore} from 'redux';
 import {postPageReducer} from './postPageReducer';
 import {dialogsReducer} from './dialogsReducer';
 import {usersReducer} from './usersReducer';
 import {authReducer} from './authReducer';
+import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
+import {useDispatch} from 'react-redux';
 
 // объединяем функции, создаем объект
 const reducers = combineReducers({
@@ -12,11 +14,15 @@ const reducers = combineReducers({
     auth: authReducer
 })
 
-export type StoreType = ReturnType<typeof reducers>
-// export type StoreType = typeof store
-
 // создаем store
-const store = createStore(reducers)
+// Thunk middleware (thunkMiddleware) позволяет диспатчить и функции и объекты.
+const store = createStore(reducers, applyMiddleware(thunkMiddleware))
+
+// если не будет использовать thunkMiddleware - увидим ошибку: Error: Actions must be plain objects. Use custom middleware for async actions
+// Redux ругается, что можем диспатчить только plain (простые) объекты-экшены… если хотите чего покруче, то юзайте промежуточные перехватчики middlew
+
+// определить автоматически тип всего объекта состояния
+export type StoreType = ReturnType<typeof reducers>
 
 // @ts-ignore
 window.store = store
