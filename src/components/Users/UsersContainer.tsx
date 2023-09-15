@@ -6,7 +6,7 @@ import {
     setUsersTotalCountAC,
     setUsersAC,
     unfollowAC,
-    toggleIsFetchingAC
+    toggleIsFetchingAC, toggleIsFollowingProgressAC
 } from '../../redux/usersReducer';
 import {StoreType} from '../../redux/reduxStore';
 import {Users} from './Users';
@@ -69,6 +69,8 @@ class UsersAPIComponent extends React.Component<FromReduxType>{
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
                 onPageChanged={this.onPageChanged}
+                toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
+                followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -80,7 +82,8 @@ const mapStateToProps = (state: StoreType) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -91,7 +94,8 @@ const mapDispatchToProps = {
     setUsers: setUsersAC,
     setCurrentPage: setCurrentPageAC,
     setUsersTotalCount: setUsersTotalCountAC,
-    toggleIsFetching: toggleIsFetchingAC
+    toggleIsFetching: toggleIsFetchingAC,
+    toggleIsFollowingProgress: toggleIsFollowingProgressAC
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

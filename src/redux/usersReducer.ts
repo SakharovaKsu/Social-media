@@ -1,5 +1,5 @@
 
-type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType | ToggleIsFetchingType
+type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType | ToggleIsFetchingType | ToggleIsFollowingProgressType
 
 type FollowType = ReturnType<typeof followAC>
 type UnfollowType = ReturnType<typeof unfollowAC>
@@ -7,6 +7,7 @@ type SetUsersType = ReturnType<typeof setUsersAC>
 type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
 type SetUsersTotalCountType = ReturnType<typeof setUsersTotalCountAC>
 type ToggleIsFetchingType = ReturnType<typeof toggleIsFetchingAC>
+type ToggleIsFollowingProgressType = ReturnType<typeof toggleIsFollowingProgressAC>
 
 type LocationType = {
     country: string
@@ -32,6 +33,9 @@ export type InitialStateUsersType = {
 
     // Крутилка - анимация (ожидания ответа от сервера)
     isFetching: boolean
+
+    // для блокировки кнопки во время запроса на сервер
+    followingInProgress: number[]
 }
 
 export const initialStateUser: InitialStateUsersType = {
@@ -39,7 +43,8 @@ export const initialStateUser: InitialStateUsersType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 export const usersReducer = (state = initialStateUser, action: AllActionType ): InitialStateUsersType => {
@@ -68,6 +73,11 @@ export const usersReducer = (state = initialStateUser, action: AllActionType ): 
         case 'TOGGLE-IS-FETCHING': {
             return {...state, isFetching: action.payload.isFetching}
         }
+        case 'TOGGLE-IS-FOLLOWING-PROGRESS': {
+            return {...state, followingInProgress: action.payload.isFetching
+                    ? [...state.followingInProgress, action.payload.userId]
+                    : state.followingInProgress.filter(id => id !== action.payload.userId)}
+        }
         default:
             return state
     }
@@ -79,4 +89,5 @@ export const setUsersAC = (users: UserType[]) => ({type: 'SET-USERS', payload: {
 export const setCurrentPageAC = (page: number) => ({type: 'SET-CURRENT-PAGE', payload: {page}} as const)
 export const setUsersTotalCountAC = (count: number) => ({type: 'SET-TOTAL-COUNT', payload: {count}} as const)
 export const toggleIsFetchingAC = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', payload: {isFetching}} as const)
+export const toggleIsFollowingProgressAC = (isFetching: boolean, userId: number) => ({type: 'TOGGLE-IS-FOLLOWING-PROGRESS', payload:{isFetching, userId}} as const)
 

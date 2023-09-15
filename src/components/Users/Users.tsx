@@ -15,6 +15,8 @@ type UsersCType = {
     follow: (id: number) => void
     unfollow: (id: number) => void
     onPageChanged: (p: number) => void
+    toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
+    followingInProgress: number[]
 }
 
 export const Users:FC<UsersCType> = ({
@@ -24,7 +26,9 @@ export const Users:FC<UsersCType> = ({
                                    follow,
                                    unfollow,
                                    onPageChanged,
-                                   currentPage}) => {
+                                   currentPage,
+                                   toggleIsFollowingProgress,
+                                   followingInProgress}) => {
 
     const displayedUsers = () => usersPage.users.slice(0, 8);
 
@@ -46,18 +50,21 @@ export const Users:FC<UsersCType> = ({
                     {displayedUsers().map((u: UserType) => {
 
                         const followHandler = () => {
+
+                            toggleIsFollowingProgress(true, u.id)
                             usersApi.followUser(u.id)
                                 .then(response => {
-                                    console.log(response)
                                     // всегда делаем проверку значения resultCode, который получаем из сервака
                                     if(response.data.resultCode === 0) {
                                         follow(u.id)
                                     }
+                                    toggleIsFollowingProgress(false, u.id)
                                 })
                         }
 
                         const unfollowHandler = () => {
 
+                            toggleIsFollowingProgress(true, u.id)
                             usersApi.unfollowUser(u.id)
                                 .then(response => {
 
@@ -65,8 +72,11 @@ export const Users:FC<UsersCType> = ({
                                     if(response.data.resultCode === 0) {
                                         unfollow(u.id)
                                     }
+                                    toggleIsFollowingProgress(false, u.id)
                                 })
                         }
+
+                        const followingInProgressUser = followingInProgress.some(id => id === u.id)
 
                         return (
                             <li key={u.id} className={s.item}>
@@ -84,8 +94,8 @@ export const Users:FC<UsersCType> = ({
                                 </div>
                                 <div className={s.boxButton}>
                                     {u.followed
-                                        ? <Button className={s.buttonNoColor} color={'white'} name={'Unfollow'} callback={unfollowHandler}/>
-                                        : <Button className={s.buttonNoColor} color={'white'} name={'Follow'} callback={followHandler} />
+                                        ? <Button className={s.buttonNoColor} color={'white'} name={'Unfollow'} followingInProgress={followingInProgressUser} callback={unfollowHandler}/>
+                                        : <Button className={s.buttonNoColor} color={'white'} name={'Follow'} followingInProgress={followingInProgressUser} callback={followHandler} />
                                     }
                                     <Button className={s.buttonColor} color={'blue'} name={'Message'}/>
                                 </div>
