@@ -7,10 +7,15 @@
 .textArea {
     background-color: #FEF8EC;
     width: 100%;
+    min-width: 450px;
     padding: 24px;
     border: none;
     border-radius: 24px;
     resize: none;
+
+    @media (max-width: 1024px) {
+        min-width: 180px;
+    }
 }
 
 .textArea::placeholder {
