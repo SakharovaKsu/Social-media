@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {setUserProfileAC} from '../redux/postPageReducer';
 
 export const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -9,19 +10,26 @@ export const axiosInstance = axios.create({
 
 // ? - после вопроса идет get-параметр, 'ключ'='значение' (то, что запрашиваем у сервера), &-разделительный символ
 
-export const usersApi = {
-    async getUsers(currentPage: number, pageSize: number = 1) {
+export const userAPI = {
+    getUsers(currentPage: number, pageSize: number = 1) {
         return axiosInstance.get(`/users?page=${currentPage}&count=${pageSize}`)
             .then(respons => respons.data)
         // ретурнем то что приходит с нового промиса then, так как нам весь список не нужен с сервака, берем что нам необходимо
     },
-    getAuth() {
-        return axiosInstance.get(`/auth/me`)
+    getProfile(userId: string){
+        return axiosInstance.get(`/profile/` + userId )
+            .then(response => setUserProfileAC(response.data))
     },
     followUser(id: number) {
         return axiosInstance.post(`/follow/${id}`, null)
     },
     unfollowUser(id: number) {
         return axiosInstance.delete(`/follow/${id}`)
+    }
+}
+
+export const authAPI = {
+    getAuthMe() {
+        return axiosInstance.get(`/auth/me`)
     }
 }

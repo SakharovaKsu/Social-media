@@ -1,5 +1,7 @@
 import {AllActionType} from './state';
 import {v1} from 'uuid';
+import {Dispatch} from 'redux';
+import {userAPI} from '../api/api';
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
@@ -110,3 +112,14 @@ export const postPageReducer = (state = postPage, action: AllActionType ): PostP
 export const addPostAC = () => ({type: 'ADD-POST'} as const)
 export const updateNewPostTextAC = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', payload: {text}} as const)
 export const setUserProfileAC = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', payload: {profile}} as const)
+
+export const getProfileTC = (userId: string) => {
+
+    return (dispatch: Dispatch) => {
+
+        userAPI.getProfile(userId)
+            .then(response => {
+                dispatch(setUserProfileAC(response.payload.profile))
+            })
+    }
+}

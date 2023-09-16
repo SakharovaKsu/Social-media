@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {usersApi} from '../api/api';
+import {userAPI} from '../api/api';
 
 type AllActionType = FollowType | UnfollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType | ToggleIsFetchingType | ToggleIsFollowingProgressType
 
@@ -99,7 +99,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
 
         dispatch(toggleIsFetchingAC(true))
 
-        usersApi.getUsers(currentPage, pageSize).then(data => {
+        userAPI.getUsers(currentPage, pageSize).then(data => {
 
             // запрос получили, меняем состояние
             dispatch(toggleIsFetchingAC(false))
@@ -119,7 +119,7 @@ export const onPageChangedTC = (pageNumber: number, pageSize: number) => {
         dispatch(setCurrentPageAC(pageNumber))
 
         // делаем запрос на сервер для текущей странице по клике
-        usersApi.getUsers(pageNumber, pageSize)
+        userAPI.getUsers(pageNumber, pageSize)
             .then(data => {
                 dispatch(toggleIsFetchingAC(false))
                 dispatch(setUsersAC(data.items))
@@ -133,7 +133,7 @@ export const followTC = (id: number) => {
 
         dispatch(toggleIsFollowingProgressAC(true, id))
 
-        usersApi.followUser(id)
+        userAPI.followUser(id)
             .then(response => {
 
                 // всегда делаем проверку значения resultCode, который получаем из сервака
@@ -152,7 +152,7 @@ export const unfollowTC = (id: number) => {
 
         dispatch(toggleIsFollowingProgressAC(true, id))
 
-        usersApi.unfollowUser(id)
+        userAPI.unfollowUser(id)
             .then(response => {
 
                 if(response.data.resultCode === 0) {

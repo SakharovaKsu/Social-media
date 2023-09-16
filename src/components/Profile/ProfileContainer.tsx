@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
 import Profile from './Profile';
-import axios from 'axios';
 import {connect, ConnectedProps} from 'react-redux';
 import {StoreType} from '../../redux/reduxStore';
-import {setUserProfileAC} from '../../redux/postPageReducer';
+import {getProfileTC} from '../../redux/postPageReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 type ProfileContainerType = ConnectedProps<typeof connector> &
@@ -18,10 +17,7 @@ class ProfileAPIContainer extends React.Component<ProfileContainerType> {
             userId = (2).toString()
         }
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId )
-            .then(response => {
-                this.props.setUserProfile(response.data)
-            })
+        this.props.getProfileTC(userId)
     }
 
     render() {
@@ -37,7 +33,7 @@ const mapStateToProps = (state: StoreType) => {
     }
 }
 
-const mapDispatchToProps =  {setUserProfile: setUserProfileAC}
+const mapDispatchToProps =  {getProfileTC}
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

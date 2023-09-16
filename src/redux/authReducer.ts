@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {usersApi} from '../api/api';
+import {authAPI} from '../api/api';
 
 type InitialStateType = {
     id: number | null
@@ -33,7 +33,7 @@ export const authReducer = (state = initialState, action: AllType): InitialState
 
 export const setAuthTC = () => {
     return (dispatch: Dispatch) => {
-        usersApi.getAuth()
+        authAPI.getAuthMe()
             .then(response => {
                 if(response.data.resultCode === 0) {
                     dispatch(setUserDataAC(response.data.data))

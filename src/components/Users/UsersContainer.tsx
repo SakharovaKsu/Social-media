@@ -1,9 +1,6 @@
 import React, {FC} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {
-    followAC,
-    unfollowAC,
-    toggleIsFollowingProgressAC,
     getUsersTC,
     onPageChangedTC,
     unfollowTC, followTC
@@ -23,7 +20,7 @@ export const axiosInstance = axios.create({
 
 type FromReduxType = ConnectedProps<typeof connector>;
 
-class UsersAPIComponent extends React.Component<FromReduxType> {
+class Component extends React.Component<FromReduxType> {
 
     componentDidMount() {
         this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
@@ -72,4 +69,4 @@ const mapDispatchToProps = {
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export const UsersContainer: FC = connector(UsersAPIComponent);
+export const UsersContainer: FC = connector(Component);
