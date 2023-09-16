@@ -25,21 +25,3 @@ export const usersApi = {
         return axiosInstance.delete(`/follow/${id}`)
     }
 }
-
-export const getUsers = (currentPage: number, pageSize: number = 1) => {
-    return axiosInstance.get(`/users?page=${currentPage}&count=${pageSize}`)
-        .then(respons => respons.data)
-        // ретурнем то что приходит с нового промиса then, так как нам весь список не нужен с сервака, берем что нам необходимо
-}
-
-export const getAuth = () => {
-    return axiosInstance.get(`/auth/me`)
-}
-
-export const followUser = (id: number) => {
-    return axiosInstance.post(`/follow/${id}`, null)
-}
-
-export const unfollowUser = (id: number) => {
-    return axiosInstance.delete(`/follow/${id}`)
-}

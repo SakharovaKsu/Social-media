@@ -1,34 +1,31 @@
 import React, {FC} from 'react';
 import s from './Users.module.css';
-import {InitialStateUsersType, UserType} from '../../redux/usersReducer';
+import { InitialStateUsersType, UserType} from '../../redux/usersReducer';
 import Button from '../Elements/Button/Button';
 import user1 from '../../images/avatar-user/user-1.svg';
 import ButtonPagination from '../Elements/ButtonPagination/ButtonPagination';
 import {NavLink} from 'react-router-dom';
-import {usersApi} from '../../api/api';
 
 type UsersCType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
     usersPage: InitialStateUsersType
-    follow: (id: number) => void
-    unfollow: (id: number) => void
     onPageChanged: (p: number) => void
-    toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
     followingInProgress: number[]
+    followTC: (id: number) => void
+    unfollowTC: (id: number) => void
 }
 
 export const Users:FC<UsersCType> = ({
                                    totalUsersCount,
                                    pageSize,
                                    usersPage,
-                                   follow,
-                                   unfollow,
                                    onPageChanged,
                                    currentPage,
-                                   toggleIsFollowingProgress,
-                                   followingInProgress}) => {
+                                   followingInProgress,
+                                   followTC,
+                                   unfollowTC}) => {
 
     const displayedUsers = () => usersPage.users.slice(0, 8);
 
@@ -49,33 +46,8 @@ export const Users:FC<UsersCType> = ({
 
                     {displayedUsers().map((u: UserType) => {
 
-                        const followHandler = () => {
-
-                            toggleIsFollowingProgress(true, u.id)
-                            usersApi.followUser(u.id)
-                                .then(response => {
-                                    // всегда делаем проверку значения resultCode, который получаем из сервака
-                                    if(response.data.resultCode === 0) {
-                                        follow(u.id)
-                                    }
-                                    toggleIsFollowingProgress(false, u.id)
-                                })
-                        }
-
-                        const unfollowHandler = () => {
-
-                            toggleIsFollowingProgress(true, u.id)
-                            usersApi.unfollowUser(u.id)
-                                .then(response => {
-
-                                    // всегда делаем проверку значения resultCode, который получаем из сервака
-                                    if(response.data.resultCode === 0) {
-                                        unfollow(u.id)
-                                    }
-                                    toggleIsFollowingProgress(false, u.id)
-                                })
-                        }
-
+                        const followHandler = () => followTC(u.id)
+                        const unfollowHandler = () => unfollowTC(u.id)
                         const followingInProgressUser = followingInProgress.some(id => id === u.id)
 
                         return (

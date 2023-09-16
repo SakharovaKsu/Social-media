@@ -52,6 +52,7 @@ export const initialStateUser: InitialStateUsersType = {
 export const usersReducer = (state = initialStateUser, action: AllActionType ): InitialStateUsersType => {
     switch (action.type) {
         case 'FOLLOW': {
+
             return {
                 ...state,
                 users: state.users.map(u => u.id === action.payload.userId ? {...u, followed: true} : u)
@@ -107,5 +108,57 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
             dispatch(setUsersAC(data.items))
             dispatch(setUsersTotalCountAC(data.totalCount))
         })
+    }
+}
+
+export const onPageChangedTC = (pageNumber: number, pageSize: number) => {
+
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFetchingAC(true))
+        dispatch(setCurrentPageAC(pageNumber))
+
+        // делаем запрос на сервер для текущей странице по клике
+        usersApi.getUsers(pageNumber, pageSize)
+            .then(data => {
+                dispatch(toggleIsFetchingAC(false))
+                dispatch(setUsersAC(data.items))
+            })
+    }
+}
+
+export const followTC = (id: number) => {
+
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFollowingProgressAC(true, id))
+
+        usersApi.followUser(id)
+            .then(response => {
+
+                // всегда делаем проверку значения resultCode, который получаем из сервака
+                if(response.data.resultCode === 0) {
+
+                    dispatch(followAC(id))
+                }
+                dispatch(toggleIsFollowingProgressAC(false, id))
+            })
+    }
+}
+
+export const unfollowTC = (id: number) => {
+
+    return (dispatch: Dispatch) => {
+
+        dispatch(toggleIsFollowingProgressAC(true, id))
+
+        usersApi.unfollowUser(id)
+            .then(response => {
+
+                if(response.data.resultCode === 0) {
+                    dispatch(unfollowAC(id))
+                }
+                dispatch(toggleIsFollowingProgressAC(false, id))
+            })
     }
 }

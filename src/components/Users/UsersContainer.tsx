@@ -2,18 +2,17 @@ import React, {FC} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {
     followAC,
-    setCurrentPageAC,
-    setUsersTotalCountAC,
-    setUsersAC,
     unfollowAC,
-    toggleIsFetchingAC, toggleIsFollowingProgressAC, getUsersTC
+    toggleIsFollowingProgressAC,
+    getUsersTC,
+    onPageChangedTC,
+    unfollowTC, followTC
 } from '../../redux/usersReducer';
 import {StoreType} from '../../redux/reduxStore';
 import {Users} from './Users';
 import axios from 'axios';
 import Preloader from '../Elements/Preloader/Preloader';
 import s from './Users.module.css'
-import {usersApi} from '../../api/api';
 
 export const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -27,21 +26,12 @@ type FromReduxType = ConnectedProps<typeof connector>;
 class UsersAPIComponent extends React.Component<FromReduxType> {
 
     componentDidMount() {
-        console.log(this.props)
         this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
     // Меняем страничку пользователей
     onPageChanged = (pageNumber: number) => {
-        this.props.toggleIsFetching(true)
-        this.props.setCurrentPage(pageNumber)
-
-        // делаем запрос на сервер для текущей странице по клике
-        usersApi.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+        this.props.onPageChangedTC(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -55,11 +45,10 @@ class UsersAPIComponent extends React.Component<FromReduxType> {
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 usersPage={this.props.usersPage}
-                follow={this.props.follow}
-                unfollow={this.props.unfollow}
                 onPageChanged={this.onPageChanged}
-                toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
                 followingInProgress={this.props.followingInProgress}
+                followTC={this.props.followTC}
+                unfollowTC={this.props.unfollowTC}
             />
         </>
     }
@@ -78,14 +67,7 @@ const mapStateToProps = (state: StoreType) => {
 
 // то что диспачем
 const mapDispatchToProps = {
-    follow: followAC,
-    unfollow: unfollowAC,
-    setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    setUsersTotalCount: setUsersTotalCountAC,
-    toggleIsFetching: toggleIsFetchingAC,
-    toggleIsFollowingProgress: toggleIsFollowingProgressAC,
-    getUsersTC
+    getUsersTC, onPageChangedTC, followTC, unfollowTC
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

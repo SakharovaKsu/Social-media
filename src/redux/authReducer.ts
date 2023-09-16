@@ -1,3 +1,6 @@
+import {Dispatch} from 'redux';
+import {usersApi} from '../api/api';
+
 type InitialStateType = {
     id: number | null
     login: string | null
@@ -25,5 +28,16 @@ export const authReducer = (state = initialState, action: AllType): InitialState
         }
         default:
             return state;
+    }
+}
+
+export const setAuthTC = () => {
+    return (dispatch: Dispatch) => {
+        usersApi.getAuth()
+            .then(response => {
+                if(response.data.resultCode === 0) {
+                    dispatch(setUserDataAC(response.data.data))
+                }
+            })
     }
 }

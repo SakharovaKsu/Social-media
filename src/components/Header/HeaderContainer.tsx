@@ -1,22 +1,17 @@
 import React from 'react';
 import Header from './Header';
 import {connect, ConnectedProps} from 'react-redux';
-import {setUserDataAC} from '../../redux/authReducer';
+import {setAuthTC, setUserDataAC} from '../../redux/authReducer';
 import {StoreType} from '../../redux/reduxStore';
-import {usersApi} from '../../api/api';
 
 // Определение типов для пропсов, полученных через connect
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 class HeaderContainer extends React.Component<PropsFromRedux> {
-    componentDidMount() {
 
-        usersApi.getAuth()
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    this.props.setUserData(response.data.data)
-                }
-            })
+    componentDidMount() {
+        // сетаем логин
+        this.props.setAuthTC()
     }
 
     render() {
@@ -31,9 +26,7 @@ const mapStateToProps = (state: StoreType) => {
     }
 
 }
-const mapDispatchToProps = {
-    setUserData: setUserDataAC
-}
+const mapDispatchToProps = {setAuthTC}
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
