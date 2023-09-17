@@ -69,4 +69,4 @@ const mapDispatchToProps = {
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export const UsersContainer: FC = connector(Component);
+export const UsersContainer = connector(Component);

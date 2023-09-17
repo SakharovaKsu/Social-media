@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import {connect, ConnectedProps} from 'react-redux';
-import {setAuthTC, setUserDataAC} from '../../redux/authReducer';
+import {setAuthTC} from '../../redux/authReducer';
 import {StoreType} from '../../redux/reduxStore';
 
 // Определение типов для пропсов, полученных через connect

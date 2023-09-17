@@ -1,14 +1,17 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Profile from './Profile';
-import {connect, ConnectedProps} from 'react-redux';
+import {connect} from 'react-redux';
 import {StoreType} from '../../redux/reduxStore';
 import {getProfileTC} from '../../redux/postPageReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 
-type ProfileContainerType = ConnectedProps<typeof connector> &
-    RouteComponentProps<{ userId: string }>;
+type PathParamsType = { userId: string }
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+type MapDispatchToPropsType = { getProfileTC: (userId: string) => void }
+type ProfileContainerType = MapStateToPropsType & MapDispatchToPropsType
+type ProfileContainer = RouteComponentProps<PathParamsType> & ProfileContainerType;
 
-class ProfileAPIContainer extends React.Component<ProfileContainerType> {
+class ProfileAPIContainer extends React.Component<ProfileContainer> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
@@ -35,12 +38,11 @@ const mapStateToProps = (state: StoreType) => {
 
 const mapDispatchToProps =  {getProfileTC}
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
 // withRouter возвращает новую компоненту, в которую закинет данные из url
 const withUrlDataContainerComponent =  withRouter(ProfileAPIContainer)
 
-export const ProfileContainer: FC = connector(withUrlDataContainerComponent);
+const connector = connect(mapStateToProps, mapDispatchToProps)
+export const ProfileContainer = connector(withUrlDataContainerComponent);
 
 export default ProfileContainer
 
