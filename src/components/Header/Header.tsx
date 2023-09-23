@@ -18,9 +18,9 @@ const Header: FC<HeaderType> = ({isAuth, login}) => {
                     {/*<img  src={''} alt={'Фото пользователя.'}/>*/}
                 </div>
                 <div>
-                    { isAuth
-                        ? login
-                        : <NavLink to={'/login'}></NavLink>
+                    { !isAuth
+                        ? <span>login</span>
+                        : <NavLink to={'/login'}>{login}</NavLink>
                     }
                 </div>
             </div>

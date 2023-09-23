@@ -3,7 +3,7 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {StoreType} from '../../redux/reduxStore';
 import {getProfileTC} from '../../redux/postPageReducer';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -24,6 +24,9 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
     }
 
     render() {
+        // Если мы не залогинены, то перенаправит на др. страницу
+        if(!this.props.isAuth) return <Redirect to={'./login'}/>
+
         return (
                 <Profile {...this.props} profile={this.props.profile}/>
         );
@@ -32,7 +35,8 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
 
 const mapStateToProps = (state: StoreType) => {
     return {
-        profile: state.postPage.profile
+        profile: state.postPage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 

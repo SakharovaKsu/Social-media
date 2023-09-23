@@ -10,7 +10,8 @@ import Dialogs from './Dialogs';
 
 const mapStateToProps = (state: StoreType) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 

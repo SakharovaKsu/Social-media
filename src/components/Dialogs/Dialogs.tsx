@@ -4,19 +4,24 @@ import DialogItem from './DialogItem /DialogItem';
 import Message from './Message/Message';
 import TextArea from './TextArea/TextArea';
 import { DialogsPageType} from '../../redux/dialogsReducer';
+import {Redirect} from 'react-router-dom';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
     addMessagesCallback: () => void
     updateNewMessageTextCallback: (text: string) => void
+    isAuth: boolean
 }
 
-const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback}) => {
+const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback, isAuth}) => {
 
     const dialogsElements = dialogsPage.dialogsData.map(dialog =>
         <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
 
     const messagesElements = dialogsPage.messageData.map(message => <Message key={message.id} message={message.message} id={message.id}/>)
+
+    // Если мы не залогинены, то перенаправит на др. страницу
+    if(!isAuth) return <Redirect to={'./login'}/>
 
     return (
         <div className={s.dialogs}>
