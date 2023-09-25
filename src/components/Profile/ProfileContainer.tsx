@@ -3,7 +3,8 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {StoreType} from '../../redux/reduxStore';
 import {getProfileTC} from '../../redux/postPageReducer';
-import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -24,26 +25,25 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
     }
 
     render() {
-        // Если мы не залогинены, то перенаправит на др. страницу
-        if(!this.props.isAuth) return <Redirect to={'./login'}/>
-
         return (
                 <Profile {...this.props} profile={this.props.profile}/>
         );
     }
 }
 
+const AuthRedirectContainer = withAuthRedirect(ProfileAPIContainer)
+
 const mapStateToProps = (state: StoreType) => {
     return {
         profile: state.postPage.profile,
-        isAuth: state.auth.isAuth
+        // isAuth: state.auth.isAuth
     }
 }
 
 const mapDispatchToProps =  {getProfileTC}
 
 // withRouter возвращает новую компоненту, в которую закинет данные из url
-const withUrlDataContainerComponent =  withRouter(ProfileAPIContainer)
+const withUrlDataContainerComponent =  withRouter(AuthRedirectContainer)
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 export const ProfileContainer = connector(withUrlDataContainerComponent);
