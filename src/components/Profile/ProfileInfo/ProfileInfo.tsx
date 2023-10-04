@@ -6,6 +6,7 @@ import work from '../../../images/work.svg'
 import notWork from '../../../images/workFalse.svg'
 import ProfileContacts from './ProfileContacts/ProfileContacts';
 import user1 from '../../../images/avatar-user/user-1.svg';
+import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 
 type ProfileInfoType = {
@@ -36,6 +37,7 @@ const ProfileInfo:FC<ProfileInfoType> = ({profile}) => {
             <div className={s.containerInfo}>
                 <h2 className={s.title}>{profile.fullName}</h2>
                 <p className={s.text}>{profile.aboutMe}</p>
+                <ProfileStatus status={'Yo'}/>
             </div>
             <div className={s.boxInfo}>
                 <h3 className={s.subTitle}>Статус работы</h3>
