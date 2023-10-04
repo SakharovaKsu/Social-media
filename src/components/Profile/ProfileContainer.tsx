@@ -5,6 +5,7 @@ import {StoreType} from '../../redux/reduxStore';
 import {getProfileTC} from '../../redux/postPageReducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -31,8 +32,6 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
     }
 }
 
-const AuthRedirectContainer = withAuthRedirect(ProfileAPIContainer)
-
 const mapStateToProps = (state: StoreType) => {
     return {
         profile: state.postPage.profile,
@@ -42,17 +41,15 @@ const mapStateToProps = (state: StoreType) => {
 
 const mapDispatchToProps =  {getProfileTC}
 
+export const ProfileContainer = compose<React.ComponentType>(
+    withAuthRedirect,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(ProfileAPIContainer)
+
 // withRouter возвращает новую компоненту, в которую закинет данные из url
-const withUrlDataContainerComponent =  withRouter(AuthRedirectContainer)
+// connect -> withRouter -> withAuthRedirect -> ProfileAPIContainer -> Profile
+// withRouter здесь достаем данные из url, закидываем их в ProfileAPIContainer.
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
-export const ProfileContainer = connector(withUrlDataContainerComponent);
-
-export default ProfileContainer
-
-// В этой компоненте несколько оберток.
-// ProfileContainer -> withUrlDataContainerComponent -> ProfileAPIContainer -> Profile  ProfileContainer
-
-// ProfileContainer достаем все необходимое из стора, диспачим и передаем далее.
-// withUrlDataContainerComponent здесь достаем данные из url, закидываем их в ProfileAPIContainer.
-// В ProfileAPIContainer достаем все нужные данные для Profile и в нее прокидываем.
+// compose - это функция, которая позволяет объединить несколько функций высшего порядка (HOC) в одну. Она принимает несколько HOC в качестве аргументов и возвращает новую функцию, которая последовательно применяет эти HOC к компоненте, переданной в последний аргумент.
+// В ProfileContainer, compose используется для объединения 3 HOC: withAuthRedirect, withRouter и connect. Порядок применения HOC определяется порядком их передачи в compose. В итоге, ProfileAPIContainer оборачивается в withAuthRedirect, затем в withRouter, и, наконец, в connect, который обеспечивает связь компонента с Redux store.

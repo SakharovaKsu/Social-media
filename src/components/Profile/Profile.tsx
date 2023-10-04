@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 
 type ProfileType = {
     profile: any
