@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
+import Button from '../Elements/Button/Button';
 
 type FormDataType = {
     login?: string
@@ -8,7 +9,8 @@ type FormDataType = {
     rememberMe?: boolean
 }
 
-const LoginForm= (props: any) => {
+const LoginForm= () => {
+
     const formik = useFormik({
         initialValues: {
             login: '',
@@ -41,17 +43,22 @@ const LoginForm= (props: any) => {
     })
 
     return (
-        <div className={s.login}>
-            <form onSubmit={formik.handleSubmit}>
-                <input {...formik.getFieldProps('login')}/>
-                {formik.touched.login && formik.errors.login && <div style={{color: 'red'}}>{formik.errors.login}</div>}
-                <input type='password' {...formik.getFieldProps('password')}/>
-                {formik.touched.password && formik.errors.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
-                <div>
-                    <input type={'checkbox'} checked={formik.values.rememberMe} {...formik.getFieldProps('checkbox')}/>
-                    Remember Me
+        <div>
+            <form className={s.form} onSubmit={formik.handleSubmit}>
+                <div className={s.containerInput}>
+                    <input className={s.input} {...formik.getFieldProps('login')}/>
+                    {formik.touched.login && formik.errors.login && <span className={s.spanError}>{formik.errors.login}</span>}
                 </div>
-                <button type={'submit'}>Login</button>
+                <div className={s.containerInput}>
+                    <input className={s.input}  type='password' {...formik.getFieldProps('password')}/>
+                    {formik.touched.password && formik.errors.password && <span className={s.spanError}>{formik.errors.password}</span>}
+                </div>
+                <label className={s.label}>
+                    <input type={'checkbox'} checked={formik.values.rememberMe} {...formik.getFieldProps('checkbox')}/>
+                    <span>Remember Me</span>
+                </label>
+
+                <Button name={'Login'} type={'submit'} color={''}/>
             </form>
         </div>
 
@@ -59,14 +66,14 @@ const LoginForm= (props: any) => {
 }
 
 const Login = () => {
-    const onSubmit = (formData: any) => {
-
-    }
 
     return (
         <div className={s.login}>
-            <h2>Let’s Sign You In</h2>
-            <LoginForm />
+            <div className={s.containerLogin}>
+                <h2 className={s.title}>Let’s Sign You In</h2>
+                <p className={s.subtitle}>Welcome back, we missed you!</p>
+                <LoginForm />
+            </div>
         </div>
     );
 };

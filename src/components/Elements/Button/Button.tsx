@@ -7,9 +7,10 @@ type ButtonType = {
     className?: string
     color: string
     followingInProgress?: boolean
+    type?: 'button' | 'submit' | 'reset' | undefined
 }
 
-const Button:FC<ButtonType> = ({name, callback, className, color, followingInProgress}) => {
+const Button:FC<ButtonType> = ({name, callback, className, color, followingInProgress, type}) => {
 
     const finalClassName = s.button
         + ' ' + (color === 'white' ? s.white : s.blue)
@@ -17,6 +18,7 @@ const Button:FC<ButtonType> = ({name, callback, className, color, followingInPro
     return (
         <>
             <button className={finalClassName + ' ' + className}
+                    type={type || 'button'}
                     disabled={followingInProgress}
                     onClick={callback}>
                 {name}
