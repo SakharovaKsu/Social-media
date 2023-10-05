@@ -1,5 +1,11 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {setUserProfileAC} from '../redux/postPageReducer';
+
+export type ResponseType<T = {}> = {
+    resultCode: number
+    messages: string[],
+    data: string
+}
 
 export const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -16,10 +22,6 @@ export const userAPI = {
             .then(respons => respons.data)
         // ретурнем то что приходит с нового промиса then, так как нам весь список не нужен с сервака, берем что нам необходимо
     },
-    getProfile(userId: string){
-        return axiosInstance.get(`/profile/` + userId )
-            .then(response => setUserProfileAC(response.data))
-    },
     followUser(id: number) {
         return axiosInstance.post(`/follow/${id}`, null)
     },
@@ -31,5 +33,19 @@ export const userAPI = {
 export const authAPI = {
     getAuthMe() {
         return axiosInstance.get(`/auth/me`)
+    }
+}
+
+export const profileAPI = {
+    getProfile(userId: string){
+        return axiosInstance.get(`/profile/` + userId )
+            .then(response => setUserProfileAC(response.data))
+    },
+    getUserStatus(userId: string) {
+        return axiosInstance.get(`/profile/status/` + userId )
+    },
+    updateStatus(status: string) {
+        return axiosInstance.put(`/profile/status/`, {status})
+        // return axiosInstance.put<ResponseType, AxiosResponse<ResponseType>, { status: string }>(`/profile/status/`, {status})
     }
 }

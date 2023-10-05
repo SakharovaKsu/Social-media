@@ -5,9 +5,12 @@ import user2 from '../images/avatar-user/user-2.svg';
 import user3 from '../images/avatar-user/user-3.svg';
 import user4 from '../images/avatar-user/user-4.svg';
 import user5 from '../images/avatar-user/user-5.svg';
+import {Dispatch} from 'redux';
+import {profileAPI} from '../api/api';
 
 type AddMessageActionType = ReturnType<typeof addMassageAC>
 type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
+
 
 export type AllDialogsActionType =  AddMessageActionType | UpdateNewMessageTextActionType
 
@@ -43,7 +46,7 @@ const dialogsPage: DialogsPageType = {
         {id: v1(), message: 'Thank you, I also love it.'},
         {id: v1(), message: 'Good morning ☀️'},
     ],
-        newMessageText: ''
+    newMessageText: '',
 }
 
 export const dialogsReducer = (state = dialogsPage, action: AllActionType ): DialogsPageType => {

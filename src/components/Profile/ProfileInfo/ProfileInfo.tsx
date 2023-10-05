@@ -11,9 +11,11 @@ import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 type ProfileInfoType = {
     profile: ProfileType
+    status: string
+    updateStatusTC: (status: string) => void
 }
 
-const ProfileInfo:FC<ProfileInfoType> = ({profile}) => {
+const ProfileInfo:FC<ProfileInfoType> = ({profile, status, updateStatusTC}) => {
 
     // Если Profile null или не определен, то показываем Preloader
     if(!profile) {
@@ -37,17 +39,19 @@ const ProfileInfo:FC<ProfileInfoType> = ({profile}) => {
             <div className={s.containerInfo}>
                 <h2 className={s.title}>{profile.fullName}</h2>
                 <p className={s.text}>{profile.aboutMe}</p>
-                <ProfileStatus status={'Yo'}/>
             </div>
             <div className={s.boxInfo}>
                 <h3 className={s.subTitle}>Статус работы</h3>
                 <div className={s.box}>
                     <img className={s.icon} src={styleIcons}/>
-                    <p>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'Не ищу'}</p>
+                    <p>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'I"m not looking'}</p>
                 </div>
             </div>
             <div className={s.boxContact}>
                 <ProfileContacts contacts={profileContacts}/>
+            </div>
+            <div className={s.boxStatus}>
+                <ProfileStatus status={status} updateStatusTC={updateStatusTC}/>
             </div>
         </div>
     )

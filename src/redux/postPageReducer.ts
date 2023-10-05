@@ -1,12 +1,14 @@
 import {AllActionType} from './state';
 import {v1} from 'uuid';
 import {Dispatch} from 'redux';
-import {userAPI} from '../api/api';
+import {profileAPI} from '../api/api';
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 type setUserProfileType = ReturnType<typeof setUserProfileAC>
-export type AllPostActionType =  AddPostActionType | UpdateNewPostTextActionType | setUserProfileType
+type SetStatusType = ReturnType<typeof setStatusAC>
+type UpdateStatusType = ReturnType<typeof updateStatusAC>
+export type AllPostActionType =  AddPostActionType | UpdateNewPostTextActionType | setUserProfileType | SetStatusType | UpdateStatusType
 
 export type PostsDataType = {
     id: string
@@ -45,6 +47,7 @@ export type PostPageType = {
     postsData: PostsDataType[]
     newPostText: string
     profile: ProfileType
+    status: string
 }
 
 const postPage: PostPageType = {
@@ -83,7 +86,8 @@ const postPage: PostPageType = {
             small: '',
             large: ''
         }
-    }
+    },
+    status: '',
 }
 
 export const postPageReducer = (state = postPage, action: AllActionType ): PostPageType => {
@@ -104,6 +108,12 @@ export const postPageReducer = (state = postPage, action: AllActionType ): PostP
         case 'SET-USER-PROFILE': {
             return {...state, profile: action.payload.profile}
         }
+        case 'SET-STATUS': {
+            return {...state, status: action.payload.status}
+        }
+        case 'UPDATE-STATUS': {
+            return {...state, status: action.payload.status}
+        }
         default:
             return state
     }
@@ -112,14 +122,33 @@ export const postPageReducer = (state = postPage, action: AllActionType ): PostP
 export const addPostAC = () => ({type: 'ADD-POST'} as const)
 export const updateNewPostTextAC = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', payload: {text}} as const)
 export const setUserProfileAC = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', payload: {profile}} as const)
+export const setStatusAC = (status: string) => ({type: 'SET-STATUS', payload: {status}} as const)
+export const updateStatusAC = (status: string) => ({type: 'UPDATE-STATUS', payload: {status}} as const)
 
 export const getProfileTC = (userId: string) => {
 
     return (dispatch: Dispatch) => {
 
-        userAPI.getProfile(userId)
+        profileAPI.getProfile(userId)
             .then(response => {
                 dispatch(setUserProfileAC(response.payload.profile))
             })
     }
+}
+
+export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
+    return profileAPI.getUserStatus(userId)
+        .then((res) => {
+            dispatch(setStatusAC(res.data))
+            console.log(res)
+        })
+}
+
+export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
+    return profileAPI.updateStatus(status)
+        .then((res) => {
+            if(res.data.resultCode === 0) {
+                dispatch(updateStatusAC(status))
+            }
+        })
 }

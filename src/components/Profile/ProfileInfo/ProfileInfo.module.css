@@ -46,3 +46,8 @@
     width: 24px;
     height: 24px;
 }
+
+.boxStatus {
+    grid-area: 4/3/4/1;
+    padding-top: 15px;
+}
