@@ -4,14 +4,13 @@ import {dialogsReducer} from './dialogsReducer';
 import {usersReducer} from './usersReducer';
 import {authReducer} from './authReducer';
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
-import {useDispatch} from 'react-redux';
 
 // объединяем функции, создаем объект
 const reducers = combineReducers({
     postPage: postPageReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
 })
 
 // создаем store

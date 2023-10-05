@@ -23,17 +23,16 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
         let userId = this.props.match.params.userId
 
         if(!userId) {
-            userId = (2).toString()
+            userId = (29405).toString()
         }
 
         this.props.getProfileTC(userId)
         this.props.getStatusTC(userId)
-        // this.props.updateStatusTC(status)
     }
 
     render() {
         return (
-                <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatusTC={updateStatusTC}/>
+                <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatusTC={this.props.updateStatusTC}/>
         );
     }
 }

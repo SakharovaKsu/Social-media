@@ -45,7 +45,7 @@ export const profileAPI = {
         return axiosInstance.get(`/profile/status/` + userId )
     },
     updateStatus(status: string) {
-        return axiosInstance.put(`/profile/status/`, {status})
+        return axiosInstance.put<ResponseType>(`/profile/status/`, {status})
         // return axiosInstance.put<ResponseType, AxiosResponse<ResponseType>, { status: string }>(`/profile/status/`, {status})
     }
 }

@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import s from './Header.module.css';
 import {NavLink} from 'react-router-dom';
+import user from '../../images/avatar-user/user-5.svg';
 
 type HeaderType = {
     isAuth: boolean
@@ -15,7 +16,7 @@ const Header: FC<HeaderType> = ({isAuth, login}) => {
             </a>
             <div className={s.loginBlock}>
                 <div className={s.imgUser}>
-                    {/*<img  src={''} alt={'Фото пользователя.'}/>*/}
+                    <img  src={user} alt={'Фото пользователя.'}/>
                 </div>
                 <div>
                     { !isAuth

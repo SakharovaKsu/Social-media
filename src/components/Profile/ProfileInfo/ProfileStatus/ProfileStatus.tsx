@@ -24,11 +24,12 @@ class ProfileStatus extends Component<ProfileStatusType, ProfileStatusState> {
         status: this.props.status
     }
 
-    // componentDidUpdate(prevProps: ProfileStatusType) {
-    //     if (prevProps.status !== this.props.status) {
-    //         this.setState({status: this.props.status})
-    //     }
-    // }
+    componentDidUpdate(prevProps: ProfileStatusType) {
+        // условие обязательно делать, что б не было зацикленности при рендере
+        if (prevProps.status !== this.props.status) {
+            this.setState({status: this.props.status})
+        }
+    }
 
     activateEditMode = () => {
         this.setState({editMode: true})
