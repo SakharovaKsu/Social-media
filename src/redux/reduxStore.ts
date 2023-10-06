@@ -4,6 +4,7 @@ import {dialogsReducer} from './dialogsReducer';
 import {usersReducer} from './usersReducer';
 import {authReducer} from './authReducer';
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 
 // объединяем функции, создаем объект
 const reducers = combineReducers({
@@ -22,6 +23,10 @@ const store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 // определить автоматически тип всего объекта состояния
 export type StoreType = ReturnType<typeof reducers>
+
+type AppDispatchType = ThunkDispatch<StoreType, unknown, AnyAction>
+export const useAppDispatch = () => useDispatch<ThunkDispatch<StoreType, unknown, AnyAction>>()
+export const useAppSelector: TypedUseSelectorHook<StoreType> = useSelector
 
 // @ts-ignore
 window.store = store

@@ -25,3 +25,24 @@
     border-radius: 50%;
     background-color: #2772F0;
 }
+
+.button {
+    padding: 5px;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #2f2f2f;
+    outline: 1px solid #2772F0;
+
+    &:hover {
+        color: #2772F0;
+    }
+
+    &:active {
+        background-color: #2772F0;
+        color: #FFFFFF;
+    }
+}

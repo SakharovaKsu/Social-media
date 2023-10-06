@@ -16,7 +16,6 @@ body {
   background-color: #FFF;
 }
 
-
 * {
   margin: 0;
   padding: 0;
@@ -34,4 +33,12 @@ img {
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+h2 {
+  font-size: 24px;
+  
+  @media (max-width: 767px) {
+    font-size: 18px;
+  }
 }

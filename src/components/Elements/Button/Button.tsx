@@ -5,7 +5,7 @@ type ButtonType = {
     name: string
     callback?: () => void
     className?: string
-    color: string
+    color?: string
     followingInProgress?: boolean
     type?: 'button' | 'submit' | 'reset' | undefined
 }

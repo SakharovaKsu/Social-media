@@ -2,32 +2,37 @@ import React, {FC} from 'react';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
 import Button from '../Elements/Button/Button';
+import {useAppDispatch, useAppSelector} from '../../redux/reduxStore';
+import {loginTC} from '../../redux/authReducer';
 
 type FormDataType = {
-    login?: string
+    email?: string
     password?: string
     rememberMe?: boolean
 }
 
 const LoginForm= () => {
 
+    const isLoggedIn = useAppSelector(state => state.auth.isAuth)
+    const dispatch = useAppDispatch()
+
     const formik = useFormik({
         initialValues: {
-            login: '',
+            email: '',
             password: '',
             rememberMe: false
         },
         validate: (values) => {
             const errors: FormDataType = {}
-            const regx = /^[A-Z][a-z]{1,}$/
-            if (!values.login) {
-                errors.login = 'Required'
-            } else if (!regx.test(values.login)) {
-                errors.login = 'Invalid first name'
+            const regx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+            if (!values.email) {
+                errors.email = 'Required'
+            } else if (!regx.test(values.email)) {
+                errors.email = 'Invalid email address'
             }
 
             if (!values.password) {
-                errors.login = 'Required'
+                errors.email = 'Required'
             } else if (values.password.length < 4) {
                 errors.password = 'Must be more 3 symbols'
             }
@@ -35,7 +40,7 @@ const LoginForm= () => {
         },
         onSubmit: values => {
             // еще не писала
-            // dispatch(loginTC(values))
+            dispatch(loginTC(values))
 
             // очищаем форму после отправки
             formik.resetForm()
@@ -46,15 +51,15 @@ const LoginForm= () => {
         <div>
             <form className={s.form} onSubmit={formik.handleSubmit}>
                 <div className={s.containerInput}>
-                    <input className={s.input} {...formik.getFieldProps('login')}/>
-                    {formik.touched.login && formik.errors.login && <span className={s.spanError}>{formik.errors.login}</span>}
+                    <input className={s.input} {...formik.getFieldProps('email')}/>
+                    {formik.touched.email && formik.errors.email && <span className={s.spanError}>{formik.errors.email}</span>}
                 </div>
                 <div className={s.containerInput}>
                     <input className={s.input}  type='password' {...formik.getFieldProps('password')}/>
                     {formik.touched.password && formik.errors.password && <span className={s.spanError}>{formik.errors.password}</span>}
                 </div>
                 <label className={s.label}>
-                    <input type={'checkbox'} checked={formik.values.rememberMe} {...formik.getFieldProps('checkbox')}/>
+                    <input type={'checkbox'} checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>
                     <span>Remember Me</span>
                 </label>
 

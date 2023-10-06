@@ -7,6 +7,12 @@ export type ResponseType<T = {}> = {
     data: string
 }
 
+export type FormType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
 export const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
     withCredentials: true,
@@ -33,6 +39,12 @@ export const userAPI = {
 export const authAPI = {
     getAuthMe() {
         return axiosInstance.get(`/auth/me`)
+    },
+    login(data: FormType) {
+        return axiosInstance.post<null, AxiosResponse<ResponseType<{ userId: number }>>, FormType>('auth/login', data)
+    },
+    logOut() {
+        return axiosInstance.delete<ResponseType>('auth/login')
     }
 }
 
