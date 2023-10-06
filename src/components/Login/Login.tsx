@@ -55,7 +55,7 @@ const LoginForm= () => {
                     {formik.touched.email && formik.errors.email && <span className={s.spanError}>{formik.errors.email}</span>}
                 </div>
                 <div className={s.containerInput}>
-                    <input className={s.input}  type='password' {...formik.getFieldProps('password')}/>
+                    <input className={s.input} type='password' {...formik.getFieldProps('password')}/>
                     {formik.touched.password && formik.errors.password && <span className={s.spanError}>{formik.errors.password}</span>}
                 </div>
                 <label className={s.label}>

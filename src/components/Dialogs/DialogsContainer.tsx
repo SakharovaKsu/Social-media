@@ -12,7 +12,6 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 const mapStateToProps = (state: StoreType) => {
     return {
         dialogsPage: state.dialogsPage,
-        // isAuth: state.auth.isAuth
     }
 }
 

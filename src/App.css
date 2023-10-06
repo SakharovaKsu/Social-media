@@ -42,3 +42,9 @@ h2 {
     font-size: 18px;
   }
 }
+
+input {
+  padding: 10px;
+  border: 2px solid #2f2f2f;
+  font-size: 14px;
+}

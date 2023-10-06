@@ -24,11 +24,10 @@ const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMes
             <h2 className={s.title}>Chats</h2>
             <div className={s.box}>
                 <ul className={s.list}>{ dialogsElements }</ul>
-                <div>
+                <div className={s.containerMessage}>
                     <div className={s.messagesList}>{ messagesElements }</div>
                     <TextArea
                         name={'Send'}
-                        newMessageText={dialogsPage.newMessageText}
                         addMessagesCallback={addMessagesCallback}
                         updateNewMessageTextCallback={updateNewMessageTextCallback}
                     />

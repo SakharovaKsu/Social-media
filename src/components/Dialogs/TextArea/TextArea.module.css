@@ -2,12 +2,13 @@
     display: flex;
     gap: 16px;
     margin-top: 70px;
+    overflow: hidden;
 }
 
 .textArea {
     background-color: #FEF8EC;
     width: 100%;
-    min-width: 450px;
+    min-width: 250px;
     padding: 24px;
     border: none;
     border-radius: 24px;
