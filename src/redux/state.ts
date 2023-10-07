@@ -78,7 +78,7 @@ export const store: StoreType = {
     },
 
     _callSubscriber(state: StateType) {
-        console.log('render')
+        // console.log('render')
     },
 
     getState() {

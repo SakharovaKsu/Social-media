@@ -39,7 +39,6 @@ const LoginForm= () => {
             return errors
         },
         onSubmit: values => {
-            // еще не писала
             dispatch(loginTC(values))
 
             // очищаем форму после отправки
