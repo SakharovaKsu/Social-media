@@ -29,7 +29,7 @@ const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMes
                     <TextArea
                         name={'Send'}
                         addMessagesCallback={addMessagesCallback}
-                        updateNewMessageTextCallback={updateNewMessageTextCallback}
+                        placeholder={'Type your message'} updateNewMessageTextCallback={updateNewMessageTextCallback}
                     />
                 </div>
             </div>

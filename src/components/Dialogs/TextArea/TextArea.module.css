@@ -3,18 +3,19 @@
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
-    margin-top: 70px;
+    margin-top: 30px;
     padding-bottom: 25px;
 }
 
 .textArea {
+    flex: 1;
+    box-sizing: border-box;
     background-color: #FEF8EC;
-    max-width: 78%;
-    min-width: 250px;
+    width: 100%;
     padding: 24px;
-    border: none;
-    border-radius: 24px;
+    border-radius: 20px;
     resize: none;
+    border: 2px solid #2772F0;
 
     @media (max-width: 1024px) {
         min-width: 180px;

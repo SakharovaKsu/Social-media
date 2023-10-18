@@ -7,7 +7,8 @@ import {validateMessage} from '../../../utils/validate';
 type TextAreaType = {
     name: string
     addMessagesCallback: () => void
-    updateNewMessageTextCallback: (text: string) => void
+    updateNewMessageTextCallback: (text: string) => unknown
+    placeholder: string
 }
 
 export type FormValuesType = {
@@ -16,21 +17,21 @@ export type FormValuesType = {
 
 const MAX_MESSAGE_LENGTH = 3
 
-const TextArea:FC<TextAreaType> = ({name, addMessagesCallback, updateNewMessageTextCallback}) => {
+const TextArea:FC<TextAreaType> = ({name, addMessagesCallback, updateNewMessageTextCallback, placeholder}) => {
 
     const formik = useFormik({
         initialValues: {
             message: '',
         } as FormValuesType,
         validate: (values) => {
-            let errors = {message: ''}
-            if (!values.message.trim()) {
-                errors.message = 'Message cannot be empty'
-            } else if (values.message.length > MAX_MESSAGE_LENGTH) {
-                errors.message = `Message cannot be longer than ${MAX_MESSAGE_LENGTH} characters`
+
+            let errors: { message?: string } = {}
+            const validationMessage = validateMessage(MAX_MESSAGE_LENGTH, values.message)
+
+            if (validationMessage) {
+                errors.message = validationMessage
             }
             return errors
-            // validateMessage(5, values.message)
         },
         onSubmit: values => {
             updateNewMessageTextCallback(values.message)
@@ -50,15 +51,18 @@ const TextArea:FC<TextAreaType> = ({name, addMessagesCallback, updateNewMessageT
 
     return (
         <form className={s.wrapper} onSubmit={formik.handleSubmit}>
-            <textarea className={s.textArea}
-                      placeholder={'Type your message'}
-                      onKeyPress={handleKeyPress}
-                      {...formik.getFieldProps('message')}>
-            </textarea>
-            {formik.touched.message && formik.errors.message && <span className={s.error}>{formik.errors.message}</span>}
-            <Button color={'blue'} name={name} type='submit'/>
+    <textarea
+        className={s.textArea}
+        placeholder={placeholder}
+        onKeyPress={handleKeyPress}
+        {...formik.getFieldProps('message')}>
+    </textarea>
+            {formik.touched.message && formik.errors.message && (
+                <span className={s.error}>{formik.errors.message}</span>
+            )}
+            <Button color={'blue'} name={name} type='submit' />
         </form>
-    );
+    )
 };
 
 export default TextArea;
