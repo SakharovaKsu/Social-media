@@ -24,14 +24,14 @@ const Header: FC<HeaderType> = ({isAuth, login}) => {
                 <img src='https://i.ibb.co/BThLGnf/Logo.png' />
             </a>
             <div className={s.loginBlock}>
-                <div>
+                <div className={s.container}>
                     { !isAuth
                         ? <span>login</span>
-                        : <div>
+                        : <div className={s.loginContainer}>
                             <div className={s.imgUser}>
                                 <img  src={user} alt={'Фото пользователя.'}/>
                             </div>
-                            <NavLink to={'/login'}>{login}</NavLink>
+                            <NavLink to={'/profile'}>{login}</NavLink>
                         </div>
                     }
                     {isAuth && <button className={s.button} type={'button'} onClick={logOutHandler}>Log out</button>}

@@ -46,7 +46,7 @@ export const setAuthTC = () => {
         authAPI.getAuthMe()
             .then(response => {
                 if(response.data.resultCode === RESULT_CODE.OK) {
-                    dispatch(setUserDataAC(response.data.data.login))
+                    dispatch(setUserDataAC(response.data.data))
                 }
             })
     }
