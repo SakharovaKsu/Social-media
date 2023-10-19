@@ -11,6 +11,7 @@ import axios from 'axios';
 import Preloader from '../Elements/Preloader/Preloader';
 import s from './Users.module.css'
 import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 export const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -70,4 +71,4 @@ const mapDispatchToProps = {
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export const UsersContainer = compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps))(Component)
+export const UsersContainer = compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps), withAuthRedirect)(Component)

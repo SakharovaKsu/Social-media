@@ -1,5 +1,7 @@
 import {Dispatch} from 'redux';
 import {authAPI, FormType} from '../api/api';
+import {setAppErrorAC, SetAppErrorType} from '../app-reducer';
+import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 
 export enum RESULT_CODE {
     OK = 0,
@@ -16,7 +18,7 @@ type InitialStateType = {
 
 type SetUserDataType = ReturnType<typeof setUserDataAC>;
 type SetIsLoggedInType = ReturnType<typeof setIsLoggedInAC>
-type ActionType = SetUserDataType | SetIsLoggedInType
+type ActionType = SetUserDataType | SetIsLoggedInType | SetAppErrorType
 
 const initialState : InitialStateType = {
     id: null,
@@ -57,7 +59,12 @@ export const loginTC = (data: FormType) => (dispatch: Dispatch<ActionType>) => {
         .then(response => {
             if(response.data.resultCode === RESULT_CODE.OK) {
                dispatch(setIsLoggedInAC(true))
+            } else {
+                handleServerAppError(response.data, dispatch)
             }
+        })
+        .catch(e => {
+            handleServerNetworkError((e as {message: string}).message, dispatch)
         })
 }
 

@@ -25,7 +25,6 @@ const App = () => {
 
                     {/* временная заглушка */}
                     <Route path='/' render={() => <ProfileContainer/>}/>
-                    
                     {/* :userId - параметр для отображения пользователя */}
                     {/* ? - означает что параметр не обязательный */}
                     <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>

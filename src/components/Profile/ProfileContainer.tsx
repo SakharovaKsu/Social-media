@@ -24,6 +24,8 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
 
         if(!userId) {
             userId = (29405).toString()
+            // userId = this.props.authorizedUserId.toString() - null
+            // console.log(this.props.authorizedUserId)
         }
 
         this.props.getProfileTC(userId)
@@ -40,7 +42,8 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
 const mapStateToProps = (state: StoreType) => {
     return {
         profile: state.postPage.profile,
-        status: state.postPage.status
+        status: state.postPage.status,
+        authorizedUserId: state.auth.id
     }
 }
 

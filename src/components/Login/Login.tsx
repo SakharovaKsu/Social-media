@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import s from './Login.module.css'
 import {useFormik} from 'formik';
 import Button from '../Elements/Button/Button';
@@ -12,10 +12,11 @@ type FormDataType = {
     rememberMe?: boolean
 }
 
-const LoginForm= () => {
+const LoginForm = () => {
 
     const history = useHistory()
     const isLoggedIn = useAppSelector(state => state.auth.isAuth)
+    const error = useAppSelector(state => state.app.error)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({
@@ -54,6 +55,7 @@ const LoginForm= () => {
 
     if (isLoggedIn) {
         history.push('/profile')
+        return null
     }
 
     return (
@@ -66,6 +68,7 @@ const LoginForm= () => {
                 <div className={s.containerInput}>
                     <input className={inputClassName} type='password' {...formik.getFieldProps('password')}/>
                     {formik.touched.password && formik.errors.password && <span className={s.spanError}>{formik.errors.password}</span>}
+                    {error && <span className={s.spanError}>{error}</span>}
                 </div>
                 <label className={s.label}>
                     <input type={'checkbox'} checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>

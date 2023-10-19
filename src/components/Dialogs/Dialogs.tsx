@@ -9,10 +9,9 @@ type DialogsType = {
     dialogsPage: DialogsPageType
     addMessagesCallback: () => void
     updateNewMessageTextCallback: (text: string) => void
-    isAuth: boolean
 }
 
-const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback, isAuth}) => {
+const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback}) => {
 
     const dialogsElements = dialogsPage.dialogsData.map(dialog =>
         <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
