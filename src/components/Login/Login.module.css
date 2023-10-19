@@ -66,6 +66,10 @@
     max-width: 350px;
 }
 
+.errorInput {
+    border: 1px solid #E6521F;
+}
+
 .spanError {
     position: absolute;
     content: '';

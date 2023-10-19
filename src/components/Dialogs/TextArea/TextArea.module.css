@@ -37,3 +37,7 @@
     color: #E6521F;
     font-size: 14px;
 }
+
+.errorTextArea {
+    border: 2px solid #E6521F;
+}

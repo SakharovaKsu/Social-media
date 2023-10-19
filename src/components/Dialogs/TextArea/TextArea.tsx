@@ -6,8 +6,8 @@ import {validateMessage} from '../../../utils/validate';
 
 type TextAreaType = {
     name: string
-    addMessagesCallback: () => void
-    updateNewMessageTextCallback: (text: string) => unknown
+    addTextCallback: () => void
+    updateTextCallback: (text: string) => unknown
     placeholder: string
 }
 
@@ -17,7 +17,7 @@ export type FormValuesType = {
 
 const MAX_MESSAGE_LENGTH = 3
 
-const TextArea:FC<TextAreaType> = ({name, addMessagesCallback, updateNewMessageTextCallback, placeholder}) => {
+const TextArea:FC<TextAreaType> = ({name, addTextCallback, updateTextCallback, placeholder}) => {
 
     const formik = useFormik({
         initialValues: {
@@ -34,8 +34,8 @@ const TextArea:FC<TextAreaType> = ({name, addMessagesCallback, updateNewMessageT
             return errors
         },
         onSubmit: values => {
-            updateNewMessageTextCallback(values.message)
-            addMessagesCallback()
+            updateTextCallback(values.message)
+            addTextCallback()
 
             // очищаем форму после отправки
             formik.resetForm()
@@ -49,10 +49,14 @@ const TextArea:FC<TextAreaType> = ({name, addMessagesCallback, updateNewMessageT
         }
     }
 
+    const textAreaClassName = `${s.textArea} ${
+        formik.touched.message && formik.errors.message ? s.errorTextArea : ''
+    }`
+
     return (
         <form className={s.wrapper} onSubmit={formik.handleSubmit}>
     <textarea
-        className={s.textArea}
+        className={textAreaClassName}
         placeholder={placeholder}
         onKeyPress={handleKeyPress}
         {...formik.getFieldProps('message')}>

@@ -35,8 +35,8 @@ const MyPosts:FC<MyPostsType> = ({postPage, newPostCallback, onPostChangeCallbac
             <div className={s.wrapper}>
                 <TextArea
                     name={'Add post'}
-                    addMessagesCallback={newPost}
-                    updateNewMessageTextCallback={onPostChangeCallback}
+                    addTextCallback={newPost}
+                    updateTextCallback={onPostChangeCallback}
                     placeholder={'That tell interesting'}
                 />
             </div>

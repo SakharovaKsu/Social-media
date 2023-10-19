@@ -4,6 +4,7 @@ import {useFormik} from 'formik';
 import Button from '../Elements/Button/Button';
 import {useAppDispatch, useAppSelector} from '../../redux/reduxStore';
 import {loginTC} from '../../redux/authReducer';
+import {useHistory} from 'react-router-dom';
 
 type FormDataType = {
     email?: string
@@ -13,6 +14,7 @@ type FormDataType = {
 
 const LoginForm= () => {
 
+    const history = useHistory()
     const isLoggedIn = useAppSelector(state => state.auth.isAuth)
     const dispatch = useAppDispatch()
 
@@ -46,15 +48,23 @@ const LoginForm= () => {
         },
     })
 
+    const hasEmailError = formik.touched.email && formik.errors.email;
+    const hasPasswordError = formik.touched.password && formik.errors.password;
+    const inputClassName = `${s.input} ${hasEmailError || hasPasswordError ? s.errorInput : ''}`
+
+    if (isLoggedIn) {
+        history.push('/profile')
+    }
+
     return (
         <div>
             <form className={s.form} onSubmit={formik.handleSubmit}>
                 <div className={s.containerInput}>
-                    <input className={s.input} {...formik.getFieldProps('email')}/>
+                    <input className={inputClassName} {...formik.getFieldProps('email')}/>
                     {formik.touched.email && formik.errors.email && <span className={s.spanError}>{formik.errors.email}</span>}
                 </div>
                 <div className={s.containerInput}>
-                    <input className={s.input} type='password' {...formik.getFieldProps('password')}/>
+                    <input className={inputClassName} type='password' {...formik.getFieldProps('password')}/>
                     {formik.touched.password && formik.errors.password && <span className={s.spanError}>{formik.errors.password}</span>}
                 </div>
                 <label className={s.label}>

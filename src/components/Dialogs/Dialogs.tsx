@@ -28,8 +28,8 @@ const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMes
                     <div className={s.messagesList}>{ messagesElements }</div>
                     <TextArea
                         name={'Send'}
-                        addMessagesCallback={addMessagesCallback}
-                        placeholder={'Type your message'} updateNewMessageTextCallback={updateNewMessageTextCallback}
+                        addTextCallback={addMessagesCallback}
+                        placeholder={'Type your message'} updateTextCallback={updateNewMessageTextCallback}
                     />
                 </div>
             </div>

@@ -12,9 +12,6 @@ import Login from './components/Login/Login';
 
 const App = () => {
 
-
-
-
     return (
         <BrowserRouter> {/*обрамляем весь компонент для route*/}
             <div className='app-wrapper'>
@@ -26,6 +23,9 @@ const App = () => {
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route exact path='/dialogs' render={() => <DialogsContainer/>}/>
 
+                    {/* временная заглушка */}
+                    <Route path='/' render={() => <ProfileContainer/>}/>
+                    
                     {/* :userId - параметр для отображения пользователя */}
                     {/* ? - означает что параметр не обязательный */}
                     <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
