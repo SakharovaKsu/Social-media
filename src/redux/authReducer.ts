@@ -44,11 +44,11 @@ export const setUserDataAC = (user: InitialStateType) => ({type: 'SET-USER-DATA'
 export const setIsLoggedInAC = (isAuth: boolean) => ({type: 'login/SET-IS-LOGGED-IN', isAuth} as const)
 
 export const loginTC = (data: FormType) => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setAppStatusAC('loading'))
     authAPI.login(data)
         .then(response => {
-            dispatch(setAppStatusAC('loading'))
             if(response.data.resultCode === RESULT_CODE.OK) {
-               dispatch(setIsLoggedInAC(true))
+                dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(response.data, dispatch)
@@ -60,9 +60,9 @@ export const loginTC = (data: FormType) => (dispatch: Dispatch<ActionType>) => {
 }
 
 export const logOutTC = () => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setAppStatusAC('loading'))
     authAPI.logOut()
         .then(response => {
-            dispatch(setAppStatusAC('loading'))
             if(response.data.resultCode === RESULT_CODE.OK) {
                 dispatch(setIsLoggedInAC(false))
                 dispatch(setAppStatusAC('succeeded'))

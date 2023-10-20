@@ -51,7 +51,8 @@ input {
 
 .containerPreloader {
   position: absolute;
-  top: 50%;
+  z-index: 10;
+  top: 200px;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100px;

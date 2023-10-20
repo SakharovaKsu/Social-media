@@ -11,17 +11,22 @@ import Login from './components/Login/Login';
 import {useAppDispatch, useAppSelector} from './redux/reduxStore';
 import {initializeAppTC} from './redux/appReducer';
 import Preloader from './components/Elements/Preloader/Preloader';
-import s from './components/Users/Users.module.css';
 
 export const App = () => {
 
     const dispatch = useAppDispatch()
     const status = useAppSelector(state => state.app.status)
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
 
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [])
-    // console.log(status)
+
+    if(!isInitialized) {
+        return <div className={'containerPreloader'}>
+            <Preloader />
+        </div>
+    }
 
     return (
         <BrowserRouter> {/*обрамляем весь компонент для route*/}
@@ -29,11 +34,15 @@ export const App = () => {
                 <HeaderContainer />
                 <Navbar />
                 <div className="app-wrapper-content">
-                    <div className={s.containerPreloader}>
-                        {status === 'loading' && <Preloader/>}
-                    </div>
+
+                    {status === 'loading' &&
+                        <div className={'containerPreloader'}>
+                            <Preloader />
+                        </div>
+                    }
 
                     <Route path="/login" component={() => <Login />} />
+
                     {/*отрисовка компонента по клику на страничке*/}
                     {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
                     <Route exact path="/dialogs" render={() => <DialogsContainer />} />

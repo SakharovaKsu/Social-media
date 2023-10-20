@@ -45,8 +45,10 @@ export const setAppStatusAC = (status: RequestStatusType) => ({type: 'SET-APP-ST
 export const isAppIsInitializedAC = (isInitialized: boolean) => ({type: 'SET-IS-INITIALIZED-ERROR', isInitialized} as const)
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     authAPI.getAuthMe()
         .then((res) => {
+            dispatch(setAppStatusAC('succeeded'))
             if (res.data.resultCode === RESULT_CODE.OK) {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setUserDataAC(res.data.data))

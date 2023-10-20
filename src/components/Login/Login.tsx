@@ -13,7 +13,6 @@ type FormDataType = {
 }
 
 const LoginForm = () => {
-
     const history = useHistory()
     const isLoggedIn = useAppSelector(state => state.auth.isAuth)
     const error = useAppSelector(state => state.app.error)

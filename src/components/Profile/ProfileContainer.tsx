@@ -6,6 +6,8 @@ import {getProfileTC, getStatusTC, updateStatusTC} from '../../redux/postPageRed
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import s from '../Users/Users.module.css';
+import Preloader from '../Elements/Preloader/Preloader';
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -24,8 +26,6 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
 
         if(!userId) {
             userId = (29405).toString()
-            // userId = this.props.authorizedUserId.toString() - null
-            // console.log(this.props.authorizedUserId)
         }
 
         this.props.getProfileTC(userId)
@@ -33,8 +33,14 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
     }
 
     render() {
-        return (
+
+        return (<>
+                <div className={s.containerPreloader}>
+                    {this.props.status === 'loading' && <Preloader/>}
+                </div>
+
                 <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatusTC={this.props.updateStatusTC}/>
+        </>
         );
     }
 }
@@ -43,7 +49,8 @@ const mapStateToProps = (state: StoreType) => {
     return {
         profile: state.postPage.profile,
         status: state.postPage.status,
-        authorizedUserId: state.auth.id
+        authorizedUserId: state.auth.id,
+        appStatus: state.app.status,
     }
 }
 
