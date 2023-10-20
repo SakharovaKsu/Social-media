@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {authAPI, FormType} from '../api/api';
-import {setAppErrorAC, SetAppErrorType} from '../app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
+import {SetAppErrorType, setAppStatusAC, SetAppStatusType} from './appReducer';
 
 export enum RESULT_CODE {
     OK = 0,
@@ -18,13 +18,13 @@ type InitialStateType = {
 
 type SetUserDataType = ReturnType<typeof setUserDataAC>;
 type SetIsLoggedInType = ReturnType<typeof setIsLoggedInAC>
-type ActionType = SetUserDataType | SetIsLoggedInType | SetAppErrorType
+type ActionType = SetUserDataType | SetIsLoggedInType | SetAppErrorType | SetAppStatusType
 
-const initialState : InitialStateType = {
+const initialState: InitialStateType = {
     id: null,
     login: null,
     email: null,
-    isAuth: false
+    isAuth: false,
 }
 
 export const authReducer = (state = initialState, action: ActionType): InitialStateType => {
@@ -43,22 +43,13 @@ export const authReducer = (state = initialState, action: ActionType): InitialSt
 export const setUserDataAC = (user: InitialStateType) => ({type: 'SET-USER-DATA', payload: {user}} as const)
 export const setIsLoggedInAC = (isAuth: boolean) => ({type: 'login/SET-IS-LOGGED-IN', isAuth} as const)
 
-export const setAuthTC = () => {
-    return (dispatch: Dispatch) => {
-        authAPI.getAuthMe()
-            .then(response => {
-                if(response.data.resultCode === RESULT_CODE.OK) {
-                    dispatch(setUserDataAC(response.data.data))
-                }
-            })
-    }
-}
-
 export const loginTC = (data: FormType) => (dispatch: Dispatch<ActionType>) => {
     authAPI.login(data)
         .then(response => {
+            dispatch(setAppStatusAC('loading'))
             if(response.data.resultCode === RESULT_CODE.OK) {
                dispatch(setIsLoggedInAC(true))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(response.data, dispatch)
             }
@@ -71,8 +62,10 @@ export const loginTC = (data: FormType) => (dispatch: Dispatch<ActionType>) => {
 export const logOutTC = () => (dispatch: Dispatch<ActionType>) => {
     authAPI.logOut()
         .then(response => {
+            dispatch(setAppStatusAC('loading'))
             if(response.data.resultCode === RESULT_CODE.OK) {
                 dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
             }
         })
 }

@@ -48,3 +48,12 @@ input {
   border: 2px solid #2f2f2f;
   font-size: 14px;
 }
+
+.containerPreloader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+}

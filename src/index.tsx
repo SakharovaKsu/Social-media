@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from "./App";
 import {StateType} from './redux/state';
 import store from './redux/reduxStore'
 import {Provider} from 'react-redux';
+import {App} from './App';
 
 export const renderEntireTree = (state: StateType) => {
     // store.getState() - нужно вызвать, что б получить state.

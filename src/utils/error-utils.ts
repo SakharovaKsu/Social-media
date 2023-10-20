@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
-import {setAppErrorAC, SetAppErrorType} from '../app-reducer';
+import {setAppErrorAC, SetAppErrorType} from '../redux/appReducer';
+
 
 type ResponseType<T = {}> = {
     resultCode: number
