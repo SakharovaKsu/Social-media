@@ -5,6 +5,8 @@ import Button from '../Elements/Button/Button';
 import {useAppDispatch, useAppSelector} from '../../redux/reduxStore';
 import {loginTC} from '../../redux/authReducer';
 import {useHistory} from 'react-router-dom';
+import {errorSelector} from '../../redux/appSelector';
+import {isAuthSelector} from '../../redux/authSelector';
 
 type FormDataType = {
     email?: string
@@ -14,8 +16,8 @@ type FormDataType = {
 
 const LoginForm = () => {
     const history = useHistory()
-    const isLoggedIn = useAppSelector(state => state.auth.isAuth)
-    const error = useAppSelector(state => state.app.error)
+    const isLoggedIn = useAppSelector(isAuthSelector)
+    const error = useAppSelector(errorSelector)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({

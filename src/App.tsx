@@ -11,12 +11,13 @@ import Login from './components/Login/Login';
 import {useAppDispatch, useAppSelector} from './redux/reduxStore';
 import {initializeAppTC} from './redux/appReducer';
 import Preloader from './components/Elements/Preloader/Preloader';
+import {isInitializedSelector, statusSelector} from './redux/appSelector';
 
 export const App = () => {
 
     const dispatch = useAppDispatch()
-    const status = useAppSelector(state => state.app.status)
-    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const status = useAppSelector(statusSelector)
+    const isInitialized = useAppSelector(isInitializedSelector)
 
     useEffect(() => {
         dispatch(initializeAppTC())
