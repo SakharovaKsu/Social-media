@@ -8,6 +8,8 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import s from '../Users/Users.module.css';
 import Preloader from '../Elements/Preloader/Preloader';
+import {profileSelector, statusSelector} from '../../redux/selectors/postPageSelector';
+import {idSelector} from '../../redux/selectors/authSelector';
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -47,9 +49,9 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
 
 const mapStateToProps = (state: StoreType) => {
     return {
-        profile: state.postPage.profile,
-        status: state.postPage.status,
-        authorizedUserId: state.auth.id,
+        profile: profileSelector(state),
+        status: statusSelector(state),
+        authorizedUserId: idSelector(state),
         appStatus: state.app.status,
     }
 }

@@ -3,11 +3,12 @@ import {addPostAC, updateNewPostTextAC} from '../../../redux/postPageReducer';
 import MyPosts from './MyPosts';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
-import {StateType} from '../../../redux/state';
+import {postPageSelector} from '../../../redux/selectors/postPageSelector';
+import {StoreType} from '../../../redux/reduxStore';
 
-const mapStateToProps = (state: StateType) => {
+const mapStateToProps = (state: StoreType) => {
     return {
-        postPage: state.postPage
+        postPage: postPageSelector(state)
     }
 }
 

@@ -11,7 +11,7 @@ import Login from './components/Login/Login';
 import {useAppDispatch, useAppSelector} from './redux/reduxStore';
 import {initializeAppTC} from './redux/appReducer';
 import Preloader from './components/Elements/Preloader/Preloader';
-import {isInitializedSelector, statusSelector} from './redux/appSelector';
+import {isInitializedSelector, statusSelector} from './redux/selectors/appSelector';
 
 export const App = () => {
 

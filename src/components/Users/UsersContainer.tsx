@@ -12,6 +12,14 @@ import Preloader from '../Elements/Preloader/Preloader';
 import s from './Users.module.css'
 import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {
+    currentPageSelector,
+    followingInProgressSelector,
+    isFetchingSelector,
+    pageSizeSelector,
+    totalUsersCountSelector,
+    usersSelector
+} from '../../redux/selectors/usersSelector';
 
 export const axiosInstance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -55,12 +63,12 @@ class Component extends React.Component<FromReduxType> {
 
 const mapStateToProps = (state: StoreType) => {
     return {
-        usersPage: state.usersPage,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        usersPage: usersSelector(state),
+        pageSize: pageSizeSelector(state),
+        totalUsersCount: totalUsersCountSelector(state),
+        currentPage: currentPageSelector(state),
+        isFetching: isFetchingSelector(state),
+        followingInProgress: followingInProgressSelector(state)
     }
 }
 

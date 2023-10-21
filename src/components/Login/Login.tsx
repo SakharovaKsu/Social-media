@@ -5,8 +5,8 @@ import Button from '../Elements/Button/Button';
 import {useAppDispatch, useAppSelector} from '../../redux/reduxStore';
 import {loginTC} from '../../redux/authReducer';
 import {useHistory} from 'react-router-dom';
-import {errorSelector} from '../../redux/appSelector';
-import {isAuthSelector} from '../../redux/authSelector';
+import {errorSelector} from '../../redux/selectors/appSelector';
+import {isAuthSelector} from '../../redux/selectors/authSelector';
 
 type FormDataType = {
     email?: string
