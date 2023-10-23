@@ -15,7 +15,7 @@ type ProfileInfoType = {
     updateStatusTC: (status: string) => void
 }
 
-const ProfileInfo:FC<ProfileInfoType> = ({profile, status, updateStatusTC}) => {
+const ProfileInfo:FC<ProfileInfoType> = React.memo(({profile, status, updateStatusTC}) => {
 
     // Если Profile null или не определен, то показываем Preloader
     if(!profile) {
@@ -55,6 +55,6 @@ const ProfileInfo:FC<ProfileInfoType> = ({profile, status, updateStatusTC}) => {
             </div>
         </div>
     )
-}
+})
 
 export default ProfileInfo;

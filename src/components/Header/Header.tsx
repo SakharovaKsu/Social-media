@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import s from './Header.module.css';
 import {NavLink} from 'react-router-dom';
 import user from '../../images/avatar-user/user-5.svg';
@@ -10,13 +10,13 @@ type HeaderType = {
     login: string | null
 }
 
-const Header: FC<HeaderType> = ({isAuth, login}) => {
+const Header: FC<HeaderType> = React.memo(({isAuth, login}) => {
 
     const dispatch = useAppDispatch()
 
-    const logOutHandler = () => {
+    const logOutHandler = useCallback(() => {
         dispatch(logOutTC())
-    }
+    }, [])
 
     return (
         <header className={s.header}>
@@ -39,6 +39,6 @@ const Header: FC<HeaderType> = ({isAuth, login}) => {
             </div>
         </header>
     )
-}
+})
 
 export default Header;

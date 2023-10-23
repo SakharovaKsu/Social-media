@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
+import React, {ChangeEvent, FC, KeyboardEvent, useCallback} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
 import {PostPageType} from '../../../redux/postPageReducer';
@@ -10,15 +10,15 @@ type MyPostsType = {
     onPostChangeCallback: (text: string) => void
 }
 
-const MyPosts:FC<MyPostsType> = ({postPage, newPostCallback, onPostChangeCallback}) => {
+const MyPosts:FC<MyPostsType> = React.memo(({postPage, newPostCallback, onPostChangeCallback}) => {
 
     const postsElements =
         postPage.postsData.map(
             post => <Post key={post.id} message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
 
-    const newPost = () => {
+    const newPost = useCallback(() => {
         newPostCallback()
-    }
+    }, [])
 
     const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
@@ -42,6 +42,6 @@ const MyPosts:FC<MyPostsType> = ({postPage, newPostCallback, onPostChangeCallbac
             </div>
         </div>
     )
-}
+})
 
 export default MyPosts;

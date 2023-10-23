@@ -9,7 +9,7 @@ type ProfileType = {
     updateStatusTC: (status: string) => void
 }
 
-const Profile: FC<ProfileType> = ({profile, status, updateStatusTC}) => {
+const Profile: FC<ProfileType> = React.memo(({profile, status, updateStatusTC}) => {
 
     return (
         <div className={s.content}>
@@ -17,6 +17,6 @@ const Profile: FC<ProfileType> = ({profile, status, updateStatusTC}) => {
             <MyPostsContainer/>
         </div>
     )
-}
+})
 
 export default Profile;

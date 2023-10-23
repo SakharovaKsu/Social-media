@@ -17,7 +17,7 @@ type UsersCType = {
     unfollowTC: (id: number) => void
 }
 
-export const Users:FC<UsersCType> = ({
+export const Users:FC<UsersCType> = React.memo(({
                                    totalUsersCount,
                                    pageSize,
                                    usersPage,
@@ -102,4 +102,4 @@ export const Users:FC<UsersCType> = ({
             </div>
         </div>
     );
-};
+})

@@ -34,6 +34,20 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
         this.props.getStatusTC(userId)
     }
 
+    shouldComponentUpdate(nextProps: ProfileContainer) {
+        // Проверяем, изменились ли необходимые свойства, которые влияют на рендер компонента
+        if (
+            nextProps.match.params.userId !== this.props.match.params.userId ||
+            nextProps.profile !== this.props.profile ||
+            nextProps.status !== this.props.status ||
+            nextProps.authorizedUserId !== this.props.authorizedUserId ||
+            nextProps.appStatus !== this.props.appStatus
+        ) {
+            return true; // Рендер компонента
+        }
+        return false; // Пропускаем рендер компонента
+    }
+
     render() {
 
         return (<>

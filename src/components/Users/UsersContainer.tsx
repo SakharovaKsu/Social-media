@@ -36,6 +36,21 @@ class Component extends React.Component<FromReduxType> {
         this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
+    houldComponentUpdate(nextProps: FromReduxType) {
+        // Проверяем, изменились ли необходимые свойства, которые влияют на рендер компонента
+        if (
+            nextProps.totalUsersCount !== this.props.totalUsersCount ||
+            nextProps.pageSize !== this.props.pageSize ||
+            nextProps.currentPage !== this.props.currentPage ||
+            nextProps.isFetching !== this.props.isFetching ||
+            nextProps.followingInProgress !== this.props.followingInProgress ||
+            nextProps.usersPage !== this.props.usersPage
+        ) {
+            return true; // Рендер компонента
+        }
+        return false; // Пропускаем рендер компонента
+    }
+
     // Меняем страничку пользователей
     onPageChanged = (pageNumber: number) => {
         this.props.onPageChangedTC(pageNumber, this.props.pageSize)

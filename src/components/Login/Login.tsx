@@ -14,7 +14,7 @@ type FormDataType = {
     rememberMe?: boolean
 }
 
-const LoginForm = () => {
+const LoginForm = React.memo( () => {
     const history = useHistory()
     const isLoggedIn = useAppSelector(isAuthSelector)
     const error = useAppSelector(errorSelector)
@@ -81,9 +81,9 @@ const LoginForm = () => {
         </div>
 
     )
-}
+})
 
-const Login = () => {
+const Login = React.memo(() => {
     return (
         <div className={s.login}>
             <div className={s.containerLogin}>
@@ -92,7 +92,7 @@ const Login = () => {
                 <LoginForm />
             </div>
         </div>
-    );
-};
+    )
+});
 
 export default Login;

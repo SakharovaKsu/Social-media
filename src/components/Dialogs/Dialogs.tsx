@@ -11,7 +11,7 @@ type DialogsType = {
     updateNewMessageTextCallback: (text: string) => void
 }
 
-const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMessageTextCallback}) => {
+const Dialogs:FC<DialogsType> = React.memo(({dialogsPage, addMessagesCallback, updateNewMessageTextCallback}) => {
 
     const dialogsElements = dialogsPage.dialogsData.map(dialog =>
         <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} src={dialog.src}/>);
@@ -34,6 +34,6 @@ const Dialogs:FC<DialogsType> = ({dialogsPage, addMessagesCallback, updateNewMes
             </div>
         </div>
     )
-}
+})
 
 export default Dialogs;
