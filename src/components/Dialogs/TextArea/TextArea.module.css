@@ -11,12 +11,12 @@
 .textArea {
     flex: 1;
     box-sizing: border-box;
-    background-color: #FEF8EC;
+    background-color: #fef8ec;
     width: 100%;
     padding: 24px;
     border-radius: 20px;
     resize: none;
-    border: 2px solid #2772F0;
+    border: 2px solid #2772f0;
 
     @media (max-width: 1024px) {
         min-width: 180px;
@@ -24,7 +24,7 @@
 }
 
 .textArea::placeholder {
-    color: #9CA0A6;
+    color: #9ca0a6;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -34,10 +34,10 @@
     width: 100%;
     bottom: 0;
     left: 0;
-    color: #E6521F;
+    color: #e6521f;
     font-size: 14px;
 }
 
 .errorTextArea {
-    border: 2px solid #E6521F;
+    border: 2px solid #e6521f;
 }

@@ -1,8 +1,8 @@
-import React, {ChangeEvent, FC, KeyboardEvent, useCallback} from 'react';
-import Post from './Post/Post';
-import s from './MyPosts.module.css';
-import {PostPageType} from '../../../redux/postPageReducer';
-import TextArea from '../../Dialogs/TextArea/TextArea';
+import React, { ChangeEvent, FC, KeyboardEvent, useCallback } from 'react'
+import Post from './Post/Post'
+import s from './MyPosts.module.css'
+import { PostPageType } from '../../../redux/postPageReducer'
+import TextArea from '../../Dialogs/TextArea/TextArea'
 
 type MyPostsType = {
     postPage: PostPageType
@@ -10,20 +10,19 @@ type MyPostsType = {
     onPostChangeCallback: (text: string) => void
 }
 
-const MyPosts:FC<MyPostsType> = React.memo(({postPage, newPostCallback, onPostChangeCallback}) => {
-
-    const postsElements =
-        postPage.postsData.map(
-            post => <Post key={post.id} message={post.message} likeCount={post.likeCount} id={post.id} src={post.src}/>)
+const MyPosts: FC<MyPostsType> = React.memo(({ postPage, newPostCallback, onPostChangeCallback }) => {
+    const postsElements = postPage.postsData.map((post) => (
+        <Post key={post.id} message={post.message} likeCount={post.likeCount} id={post.id} src={post.src} />
+    ))
 
     const newPost = useCallback(() => {
         newPostCallback()
     }, [])
 
-    const onPostChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
 
-        if(text) {
+        if (text) {
             onPostChangeCallback(text)
         }
     }
@@ -44,4 +43,4 @@ const MyPosts:FC<MyPostsType> = React.memo(({postPage, newPostCallback, onPostCh
     )
 })
 
-export default MyPosts;
+export default MyPosts

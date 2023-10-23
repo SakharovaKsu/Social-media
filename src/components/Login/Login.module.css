@@ -1,7 +1,7 @@
 .login {
     position: relative;
     height: 100%;
-    background-color: #FEF8EC;
+    background-color: #fef8ec;
     padding-top: 150px;
     overflow: hidden;
 }
@@ -13,7 +13,7 @@
     left: -155px;
     width: 100%;
     height: 100%;
-    background-image: url("../../images/Side-elements-1.png");
+    background-image: url('../../images/Side-elements-1.png');
     background-size: 750px auto;
     background-repeat: no-repeat;
     z-index: 0;
@@ -26,7 +26,7 @@
     left: 650px;
     width: 100%;
     height: 100%;
-    background-image: url("../../images/Side-elements-2.png");
+    background-image: url('../../images/Side-elements-2.png');
     background-size: 250px auto;
     background-repeat: no-repeat;
     z-index: 0;
@@ -43,7 +43,7 @@
 
 .subtitle {
     padding-bottom: 30px;
-    color: #9DA4B1;
+    color: #9da4b1;
 }
 
 .form {
@@ -67,7 +67,7 @@
 }
 
 .errorInput {
-    border: 1px solid #E6521F;
+    border: 1px solid #e6521f;
 }
 
 .spanError {
@@ -77,12 +77,12 @@
     bottom: -55px;
     height: 100%;
     font-size: 14px;
-    color: #E6521F;
+    color: #e6521f;
 }
 
 .containerLogin {
     padding: 40px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     max-width: 400px;
     margin: 0 auto;
     border-radius: 25px;
@@ -93,6 +93,6 @@
     padding-bottom: 20px;
 }
 
-.label span{
+.label span {
     padding-left: 10px;
 }

@@ -1,8 +1,8 @@
-import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
+import React, { ChangeEvent, FC, KeyboardEvent } from 'react'
 import s from './TextArea.module.css'
-import Button from '../../Elements/Button/Button';
-import {useFormik} from 'formik';
-import {validateMessage} from '../../../utils/validate';
+import Button from '../../Elements/Button/Button'
+import { useFormik } from 'formik'
+import { validateMessage } from '../../../utils/validate'
 
 type TextAreaType = {
     name: string
@@ -17,14 +17,12 @@ export type FormValuesType = {
 
 const MAX_MESSAGE_LENGTH = 3
 
-const TextArea:FC<TextAreaType> = ({name, addTextCallback, updateTextCallback, placeholder}) => {
-
+const TextArea: FC<TextAreaType> = ({ name, addTextCallback, updateTextCallback, placeholder }) => {
     const formik = useFormik({
         initialValues: {
             message: '',
         } as FormValuesType,
         validate: (values) => {
-
             let errors: { message?: string } = {}
             const validationMessage = validateMessage(MAX_MESSAGE_LENGTH, values.message)
 
@@ -33,7 +31,7 @@ const TextArea:FC<TextAreaType> = ({name, addTextCallback, updateTextCallback, p
             }
             return errors
         },
-        onSubmit: values => {
+        onSubmit: (values) => {
             updateTextCallback(values.message)
             addTextCallback()
 
@@ -44,29 +42,27 @@ const TextArea:FC<TextAreaType> = ({name, addTextCallback, updateTextCallback, p
 
     const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            formik.handleSubmit();
+            e.preventDefault()
+            formik.handleSubmit()
         }
     }
 
-    const textAreaClassName = `${s.textArea} ${
-        formik.touched.message && formik.errors.message ? s.errorTextArea : ''
-    }`
+    const textAreaClassName = `${s.textArea} ${formik.touched.message && formik.errors.message ? s.errorTextArea : ''}`
 
     return (
         <form className={s.wrapper} onSubmit={formik.handleSubmit}>
-    <textarea
-        className={textAreaClassName}
-        placeholder={placeholder}
-        onKeyPress={handleKeyPress}
-        {...formik.getFieldProps('message')}>
-    </textarea>
+            <textarea
+                className={textAreaClassName}
+                placeholder={placeholder}
+                onKeyPress={handleKeyPress}
+                {...formik.getFieldProps('message')}
+            ></textarea>
             {formik.touched.message && formik.errors.message && (
                 <span className={s.error}>{formik.errors.message}</span>
             )}
-            <Button color={'blue'} name={name} type='submit' />
+            <Button color={'blue'} name={name} type="submit" />
         </form>
     )
-};
+}
 
-export default TextArea;
+export default TextArea

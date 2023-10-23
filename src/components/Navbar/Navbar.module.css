@@ -1,6 +1,6 @@
 .nav {
     grid-area: n;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     height: 100vh;
 }
 
@@ -17,7 +17,7 @@
 
 .item a {
     text-decoration: none;
-    color: #9DA4B1;
+    color: #9da4b1;
     font-weight: 600;
 }
 

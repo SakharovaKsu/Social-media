@@ -1,13 +1,12 @@
-import React, {FC} from 'react';
-import s from './ProfileInfo.module.css';
-import Preloader from '../../Elements/Preloader/Preloader';
-import {ProfileType} from '../../../redux/postPageReducer';
+import React, { FC } from 'react'
+import s from './ProfileInfo.module.css'
+import Preloader from '../../Elements/Preloader/Preloader'
+import { ProfileType } from '../../../redux/postPageReducer'
 import work from '../../../images/work.svg'
 import notWork from '../../../images/workFalse.svg'
-import ProfileContacts from './ProfileContacts/ProfileContacts';
-import user1 from '../../../images/avatar-user/user-1.svg';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
-
+import ProfileContacts from './ProfileContacts/ProfileContacts'
+import user1 from '../../../images/avatar-user/user-1.svg'
+import ProfileStatus from './ProfileStatus/ProfileStatus'
 
 type ProfileInfoType = {
     profile: ProfileType
@@ -15,11 +14,10 @@ type ProfileInfoType = {
     updateStatusTC: (status: string) => void
 }
 
-const ProfileInfo:FC<ProfileInfoType> = React.memo(({profile, status, updateStatusTC}) => {
-
+const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateStatusTC }) => {
     // Если Profile null или не определен, то показываем Preloader
-    if(!profile) {
-        return <Preloader/>
+    if (!profile) {
+        return <Preloader />
     }
 
     const styleIcons = profile.lookingForAJob === true ? work : notWork
@@ -29,13 +27,13 @@ const ProfileInfo:FC<ProfileInfoType> = React.memo(({profile, status, updateStat
         website: profile.contacts.website,
         twitter: profile.contacts.twitter,
         instagram: profile.contacts.instagram,
-        youtube:profile.contacts.youtube,
+        youtube: profile.contacts.youtube,
         vk: profile.contacts.vk,
     }
 
     return (
         <div className={s.container}>
-            <img className={s.picture} src={profile.photos.large ? profile.photos.large : user1}/>
+            <img className={s.picture} src={profile.photos.large ? profile.photos.large : user1} />
             <div className={s.containerInfo}>
                 <h2 className={s.title}>{profile.fullName}</h2>
                 <p className={s.text}>{profile.aboutMe}</p>
@@ -43,18 +41,18 @@ const ProfileInfo:FC<ProfileInfoType> = React.memo(({profile, status, updateStat
             <div className={s.boxInfo}>
                 <h3 className={s.subTitle}>Статус работы</h3>
                 <div className={s.box}>
-                    <img className={s.icon} src={styleIcons}/>
+                    <img className={s.icon} src={styleIcons} />
                     <p>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'I"m not looking'}</p>
                 </div>
             </div>
             <div className={s.boxContact}>
-                <ProfileContacts contacts={profileContacts}/>
+                <ProfileContacts contacts={profileContacts} />
             </div>
             <div className={s.boxStatus}>
-                <ProfileStatus status={status} updateStatusTC={updateStatusTC}/>
+                <ProfileStatus status={status} updateStatusTC={updateStatusTC} />
             </div>
         </div>
     )
 })
 
-export default ProfileInfo;
+export default ProfileInfo

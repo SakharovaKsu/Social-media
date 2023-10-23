@@ -1,5 +1,5 @@
 .users {
-    background-color: #FEF8EC;
+    background-color: #fef8ec;
     height: 100%;
     padding: 64px;
 }
@@ -23,7 +23,7 @@
 
 .item {
     padding: 24px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 16px;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .img {
-    background-color: #2772F0;
+    background-color: #2772f0;
     width: 68px;
     height: 68px;
     border-radius: 16px;
@@ -46,7 +46,7 @@
 
 .text {
     font-size: 14px;
-    color: #9DA4B1;
+    color: #9da4b1;
     padding-bottom: 10px;
 }
 

@@ -2,14 +2,16 @@ import {
     addPostAC,
     postPageReducer,
     PostPageType,
-    setStatusAC, setUserProfileAC,
-    updateNewPostTextAC, updateStatusAC
-} from './postPageReducer';
-import {v1} from 'uuid';
+    setStatusAC,
+    setUserProfileAC,
+    updateNewPostTextAC,
+    updateStatusAC,
+} from './postPageReducer'
+import { v1 } from 'uuid'
 
 // Тестирование редьюсера postPageReducer
 describe('postPageReducer', () => {
-    let initialState: PostPageType;
+    let initialState: PostPageType
 
     beforeEach(() => {
         initialState = {
@@ -18,13 +20,13 @@ describe('postPageReducer', () => {
                     id: v1(),
                     message: 'Global Travel And Vacations Luxury Travel On A Tight Budget',
                     src: 'https://i.ibb.co/6w8wDCj/MyPost-1.jpg',
-                    likeCount: 1000
+                    likeCount: 1000,
                 },
                 {
                     id: v1(),
                     message: 'A morning bike trip to the mountains is the best rest from the bustle of the city',
                     src: 'https://i.ibb.co/xLPQLDG/MyPost-2.jpg',
-                    likeCount: 232
+                    likeCount: 232,
                 },
             ],
             newPostText: '',
@@ -46,8 +48,8 @@ describe('postPageReducer', () => {
                 userId: 2,
                 photos: {
                     small: '',
-                    large: ''
-                }
+                    large: '',
+                },
             },
             status: '',
         }
@@ -60,15 +62,15 @@ describe('postPageReducer', () => {
         expect(newState.postsData.length).toBe(initialState.postsData.length + 1)
         expect(newState.postsData[newState.postsData.length - 1].message).toBe(initialState.newPostText)
         expect(newState.newPostText).toBe('')
-    });
+    })
 
     test('updating the text of a new post', () => {
-        const newText = 'New post text';
-        const action = updateNewPostTextAC(newText);
-        const newState = postPageReducer(initialState, action);
+        const newText = 'New post text'
+        const action = updateNewPostTextAC(newText)
+        const newState = postPageReducer(initialState, action)
 
-        expect(newState.newPostText).toBe(newText);
-    });
+        expect(newState.newPostText).toBe(newText)
+    })
 
     test('adding a user', () => {
         const newUsers = {
@@ -89,30 +91,30 @@ describe('postPageReducer', () => {
             userId: 21,
             photos: {
                 small: '',
-                large: ''
-            }
-        };
-        const action = setUserProfileAC(newUsers);
-        const newState = postPageReducer(initialState, action);
+                large: '',
+            },
+        }
+        const action = setUserProfileAC(newUsers)
+        const newState = postPageReducer(initialState, action)
 
-        expect(newState.profile).toBe(newUsers);
-    });
+        expect(newState.profile).toBe(newUsers)
+    })
 
     test('check for adding a new status', () => {
-        const newStatus = 'New post text';
-        const action = setStatusAC(newStatus);
-        const newState = postPageReducer(initialState, action);
+        const newStatus = 'New post text'
+        const action = setStatusAC(newStatus)
+        const newState = postPageReducer(initialState, action)
 
-        expect(newState.status).toBe(newStatus);
-        expect(newState.status.length).toBe(13);
-    });
+        expect(newState.status).toBe(newStatus)
+        expect(newState.status.length).toBe(13)
+    })
 
     test('checking for status changes', () => {
-        const updateStatus = 'update status';
-        const action = updateStatusAC(updateStatus);
-        const newState = postPageReducer(initialState, action);
+        const updateStatus = 'update status'
+        const action = updateStatusAC(updateStatus)
+        const newState = postPageReducer(initialState, action)
 
-        expect(newState.status).toBe(updateStatus);
-        expect(newState.status.length).toBe(13);
-    });
-});
+        expect(newState.status).toBe(updateStatus)
+        expect(newState.status.length).toBe(13)
+    })
+})

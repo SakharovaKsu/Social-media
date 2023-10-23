@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import s from './Login.module.css'
-import {useFormik} from 'formik';
-import Button from '../Elements/Button/Button';
-import {useAppDispatch, useAppSelector} from '../../redux/reduxStore';
-import {loginTC} from '../../redux/authReducer';
-import {useHistory} from 'react-router-dom';
-import {errorSelector} from '../../redux/selectors/appSelector';
-import {isAuthSelector} from '../../redux/selectors/authSelector';
+import { useFormik } from 'formik'
+import Button from '../Elements/Button/Button'
+import { useAppDispatch, useAppSelector } from '../../redux/reduxStore'
+import { loginTC } from '../../redux/authReducer'
+import { useHistory } from 'react-router-dom'
+import { errorSelector } from '../../redux/selectors/appSelector'
+import { isAuthSelector } from '../../redux/selectors/authSelector'
 
 type FormDataType = {
     email?: string
@@ -14,7 +14,7 @@ type FormDataType = {
     rememberMe?: boolean
 }
 
-const LoginForm = React.memo( () => {
+const LoginForm = React.memo(() => {
     const history = useHistory()
     const isLoggedIn = useAppSelector(isAuthSelector)
     const error = useAppSelector(errorSelector)
@@ -24,7 +24,7 @@ const LoginForm = React.memo( () => {
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
         },
         validate: (values) => {
             const errors: FormDataType = {}
@@ -42,7 +42,7 @@ const LoginForm = React.memo( () => {
             }
             return errors
         },
-        onSubmit: values => {
+        onSubmit: (values) => {
             dispatch(loginTC(values))
 
             // очищаем форму после отправки
@@ -50,8 +50,8 @@ const LoginForm = React.memo( () => {
         },
     })
 
-    const hasEmailError = formik.touched.email && formik.errors.email;
-    const hasPasswordError = formik.touched.password && formik.errors.password;
+    const hasEmailError = formik.touched.email && formik.errors.email
+    const hasPasswordError = formik.touched.password && formik.errors.password
     const inputClassName = `${s.input} ${hasEmailError || hasPasswordError ? s.errorInput : ''}`
 
     if (isLoggedIn) {
@@ -63,23 +63,30 @@ const LoginForm = React.memo( () => {
         <div>
             <form className={s.form} onSubmit={formik.handleSubmit}>
                 <div className={s.containerInput}>
-                    <input className={inputClassName} {...formik.getFieldProps('email')}/>
-                    {formik.touched.email && formik.errors.email && <span className={s.spanError}>{formik.errors.email}</span>}
+                    <input className={inputClassName} {...formik.getFieldProps('email')} />
+                    {formik.touched.email && formik.errors.email && (
+                        <span className={s.spanError}>{formik.errors.email}</span>
+                    )}
                 </div>
                 <div className={s.containerInput}>
-                    <input className={inputClassName} type='password' {...formik.getFieldProps('password')}/>
-                    {formik.touched.password && formik.errors.password && <span className={s.spanError}>{formik.errors.password}</span>}
+                    <input className={inputClassName} type="password" {...formik.getFieldProps('password')} />
+                    {formik.touched.password && formik.errors.password && (
+                        <span className={s.spanError}>{formik.errors.password}</span>
+                    )}
                     {error && <span className={s.spanError}>{error}</span>}
                 </div>
                 <label className={s.label}>
-                    <input type={'checkbox'} checked={formik.values.rememberMe} {...formik.getFieldProps('rememberMe')}/>
+                    <input
+                        type={'checkbox'}
+                        checked={formik.values.rememberMe}
+                        {...formik.getFieldProps('rememberMe')}
+                    />
                     <span>Remember Me</span>
                 </label>
 
-                <Button name={'Login'} type={'submit'} color={''}/>
+                <Button name={'Login'} type={'submit'} color={''} />
             </form>
         </div>
-
     )
 })
 
@@ -93,6 +100,6 @@ const Login = React.memo(() => {
             </div>
         </div>
     )
-});
+})
 
-export default Login;
+export default Login

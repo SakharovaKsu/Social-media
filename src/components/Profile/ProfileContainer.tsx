@@ -1,15 +1,15 @@
-import React from 'react';
-import Profile from './Profile';
-import {connect} from 'react-redux';
-import {StoreType} from '../../redux/reduxStore';
-import {getProfileTC, getStatusTC, updateStatusTC} from '../../redux/postPageReducer';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
-import {compose} from 'redux';
-import s from '../Users/Users.module.css';
-import Preloader from '../Elements/Preloader/Preloader';
-import {profileSelector, statusSelector} from '../../redux/selectors/postPageSelector';
-import {idSelector} from '../../redux/selectors/authSelector';
+import React from 'react'
+import Profile from './Profile'
+import { connect } from 'react-redux'
+import { StoreType } from '../../redux/reduxStore'
+import { getProfileTC, getStatusTC, updateStatusTC } from '../../redux/postPageReducer'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { compose } from 'redux'
+import s from '../Users/Users.module.css'
+import Preloader from '../Elements/Preloader/Preloader'
+import { profileSelector, statusSelector } from '../../redux/selectors/postPageSelector'
+import { idSelector } from '../../redux/selectors/authSelector'
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -19,14 +19,13 @@ type MapDispatchToPropsType = {
     updateStatusTC: (status: string) => void
 }
 type ProfileContainerType = MapStateToPropsType & MapDispatchToPropsType
-type ProfileContainer = RouteComponentProps<PathParamsType> & ProfileContainerType;
+type ProfileContainer = RouteComponentProps<PathParamsType> & ProfileContainerType
 
 class ProfileAPIContainer extends React.Component<ProfileContainer> {
-
     componentDidMount() {
         let userId = this.props.match.params.userId
 
-        if(!userId) {
+        if (!userId) {
             userId = (29405).toString()
         }
 
@@ -43,21 +42,24 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
             nextProps.authorizedUserId !== this.props.authorizedUserId ||
             nextProps.appStatus !== this.props.appStatus
         ) {
-            return true; // Рендер компонента
+            return true // Рендер компонента
         }
-        return false; // Пропускаем рендер компонента
+        return false // Пропускаем рендер компонента
     }
 
     render() {
+        return (
+            <>
+                <div className={s.containerPreloader}>{this.props.status === 'loading' && <Preloader />}</div>
 
-        return (<>
-                <div className={s.containerPreloader}>
-                    {this.props.status === 'loading' && <Preloader/>}
-                </div>
-
-                <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatusTC={this.props.updateStatusTC}/>
-        </>
-        );
+                <Profile
+                    {...this.props}
+                    profile={this.props.profile}
+                    status={this.props.status}
+                    updateStatusTC={this.props.updateStatusTC}
+                />
+            </>
+        )
     }
 }
 
@@ -70,12 +72,12 @@ const mapStateToProps = (state: StoreType) => {
     }
 }
 
-const mapDispatchToProps =  {getProfileTC, getStatusTC, updateStatusTC}
+const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC }
 
 export const ProfileContainer = compose<React.ComponentType>(
     withAuthRedirect,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
 )(ProfileAPIContainer)
 
 // withRouter возвращает новую компоненту, в которую закинет данные из url

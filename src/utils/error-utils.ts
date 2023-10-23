@@ -1,10 +1,9 @@
 import { Dispatch } from 'redux'
-import {setAppErrorAC, SetAppErrorType} from '../redux/appReducer';
-
+import { setAppErrorAC, SetAppErrorType } from '../redux/appReducer'
 
 type ResponseType<T = {}> = {
     resultCode: number
-    messages: string[],
+    messages: string[]
     fieldsErrors?: string[]
     data: T
 }

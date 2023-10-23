@@ -1,19 +1,10 @@
-import { createSelector } from 'reselect';
-import { StoreType } from '../reduxStore';
+import { createSelector } from 'reselect'
+import { StoreType } from '../reduxStore'
 
-const getAppSelector = (state: StoreType) => state.app;
+const getAppSelector = (state: StoreType) => state.app
 
-export const statusSelector = createSelector(
-    getAppSelector,
-    app => app.status
-)
+export const statusSelector = createSelector(getAppSelector, (app) => app.status)
 
-export const isInitializedSelector = createSelector(
-    getAppSelector,
-    app => app.isInitialized
-)
+export const isInitializedSelector = createSelector(getAppSelector, (app) => app.isInitialized)
 
-export const errorSelector = createSelector(
-    getAppSelector,
-    app => app.error
-)
+export const errorSelector = createSelector(getAppSelector, (app) => app.error)

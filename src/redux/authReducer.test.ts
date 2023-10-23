@@ -1,14 +1,14 @@
-import {authReducer, setIsLoggedInAC, setUserDataAC} from './authReducer';
+import { authReducer, setIsLoggedInAC, setUserDataAC } from './authReducer'
 
 type InitialStateType = {
     id: number | null
     login: string | null
     email: string | null
     isAuth: boolean
-};
+}
 
 describe('authReducer', () => {
-    let initialState: InitialStateType;
+    let initialState: InitialStateType
 
     beforeEach(() => {
         initialState = {
@@ -20,7 +20,6 @@ describe('authReducer', () => {
     })
 
     it('must add user', () => {
-
         const setUser = {
             id: 2,
             login: 'gol',
@@ -28,18 +27,17 @@ describe('authReducer', () => {
             isAuth: true,
         }
 
-        const action = setUserDataAC(setUser);
-        const newState = authReducer(initialState, action);
+        const action = setUserDataAC(setUser)
+        const newState = authReducer(initialState, action)
 
-        expect(newState.login).toBe('gol');
-        expect(newState.id).toBe(2);
+        expect(newState.login).toBe('gol')
+        expect(newState.id).toBe(2)
     })
 
     it('the user must log out of the profile', () => {
+        const action = setIsLoggedInAC(false)
+        const newState = authReducer(initialState, action)
 
-        const action = setIsLoggedInAC(false);
-        const newState = authReducer(initialState, action);
-
-        expect(newState.isAuth).toBe(false);
-    });
+        expect(newState.isAuth).toBe(false)
+    })
 })

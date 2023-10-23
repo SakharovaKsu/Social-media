@@ -1,60 +1,61 @@
 body {
-  font-family: 'Poppins', sans-serif;
-  color: #091B3D;
+    font-family: 'Poppins', sans-serif;
+    color: #091b3d;
 }
 
 .app-wrapper {
-  display: grid;
-  grid-template-areas: 'h h h'
-  'n c c';
-  grid-template-columns: 2fr 10fr;
+    display: grid;
+    grid-template-areas:
+        'h h h'
+        'n c c';
+    grid-template-columns: 2fr 10fr;
 }
 
 .app-wrapper-content {
-  position: relative;
-  grid-area: c;
-  background-color: #FFF;
+    position: relative;
+    grid-area: c;
+    background-color: #fff;
 }
 
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 li {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 h2 {
-  font-size: 24px;
-  
-  @media (max-width: 767px) {
-    font-size: 18px;
-  }
+    font-size: 24px;
+
+    @media (max-width: 767px) {
+        font-size: 18px;
+    }
 }
 
 input {
-  padding: 10px;
-  border: 2px solid #2f2f2f;
-  font-size: 14px;
+    padding: 10px;
+    border: 2px solid #2f2f2f;
+    font-size: 14px;
 }
 
 .containerPreloader {
-  position: absolute;
-  z-index: 10;
-  top: 200px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+    position: absolute;
+    z-index: 10;
+    top: 200px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
 }

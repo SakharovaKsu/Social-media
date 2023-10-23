@@ -1,11 +1,11 @@
-import {AnyAction, applyMiddleware, combineReducers, createStore} from 'redux';
-import {postPageReducer} from './postPageReducer';
-import {dialogsReducer} from './dialogsReducer';
-import {usersReducer} from './usersReducer';
-import {authReducer} from './authReducer';
-import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {appReducer} from './appReducer';
+import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
+import { postPageReducer } from './postPageReducer'
+import { dialogsReducer } from './dialogsReducer'
+import { usersReducer } from './usersReducer'
+import { authReducer } from './authReducer'
+import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { appReducer } from './appReducer'
 
 // объединяем функции, создаем объект
 const reducers = combineReducers({
@@ -13,7 +13,7 @@ const reducers = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    app: appReducer
+    app: appReducer,
 })
 
 // создаем store

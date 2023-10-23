@@ -1,20 +1,19 @@
-import React, {useEffect} from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route} from 'react-router-dom';
-import News from './components/News/News';
-import {DialogsContainer} from './components/Dialogs/DialogsContainer';
-import {UsersContainer} from './components/Users/UsersContainer';
-import {ProfileContainer} from './components/Profile/ProfileContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
-import {useAppDispatch, useAppSelector} from './redux/reduxStore';
-import {initializeAppTC} from './redux/appReducer';
-import Preloader from './components/Elements/Preloader/Preloader';
-import {isInitializedSelector, statusSelector} from './redux/selectors/appSelector';
+import React, { useEffect } from 'react'
+import './App.css'
+import Navbar from './components/Navbar/Navbar'
+import { BrowserRouter, Route } from 'react-router-dom'
+import News from './components/News/News'
+import { DialogsContainer } from './components/Dialogs/DialogsContainer'
+import { UsersContainer } from './components/Users/UsersContainer'
+import { ProfileContainer } from './components/Profile/ProfileContainer'
+import HeaderContainer from './components/Header/HeaderContainer'
+import Login from './components/Login/Login'
+import { useAppDispatch, useAppSelector } from './redux/reduxStore'
+import { initializeAppTC } from './redux/appReducer'
+import Preloader from './components/Elements/Preloader/Preloader'
+import { isInitializedSelector, statusSelector } from './redux/selectors/appSelector'
 
 export const App = () => {
-
     const dispatch = useAppDispatch()
     const status = useAppSelector(statusSelector)
     const isInitialized = useAppSelector(isInitializedSelector)
@@ -23,24 +22,27 @@ export const App = () => {
         dispatch(initializeAppTC())
     }, [])
 
-    if(!isInitialized) {
-        return <div className={'containerPreloader'}>
-            <Preloader />
-        </div>
+    if (!isInitialized) {
+        return (
+            <div className={'containerPreloader'}>
+                <Preloader />
+            </div>
+        )
     }
 
     return (
-        <BrowserRouter> {/*обрамляем весь компонент для route*/}
+        <BrowserRouter>
+            {' '}
+            {/*обрамляем весь компонент для route*/}
             <div className="app-wrapper">
                 <HeaderContainer />
                 <Navbar />
                 <div className="app-wrapper-content">
-
-                    {status === 'loading' &&
+                    {status === 'loading' && (
                         <div className={'containerPreloader'}>
                             <Preloader />
                         </div>
-                    }
+                    )}
 
                     <Route path="/login" component={() => <Login />} />
 
@@ -59,5 +61,5 @@ export const App = () => {
                 </div>
             </div>
         </BrowserRouter>
-    );
+    )
 }
