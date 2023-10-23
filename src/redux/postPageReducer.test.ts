@@ -1,9 +1,8 @@
 import {
     addPostAC,
-    getProfileTC,
     postPageReducer,
     PostPageType,
-    PostsDataType, setStatusAC, setUserProfileAC,
+    setStatusAC, setUserProfileAC,
     updateNewPostTextAC, updateStatusAC
 } from './postPageReducer';
 import {v1} from 'uuid';

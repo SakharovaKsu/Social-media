@@ -4,7 +4,7 @@ import {RESULT_CODE, setIsLoggedInAC, setUserDataAC} from './authReducer';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-type InitialStateType = {
+export type InitialStateType = {
     error: string | null
     status: RequestStatusType
     isInitialized: boolean
