@@ -1,10 +1,8 @@
 import React, { FC } from 'react'
 import s from './Users.module.css'
 import { InitialStateUsersType, UserType } from '../../redux/usersReducer'
-import Button from '../Elements/Button/Button'
-import user1 from '../../images/avatar-user/user-1.svg'
-import ButtonPagination from '../Elements/ButtonPagination/ButtonPagination'
-import { NavLink } from 'react-router-dom'
+import Paginator from '../Elements/Paginator/Paginator'
+import User from './User/User'
 
 type UsersCType = {
     totalUsersCount: number
@@ -45,72 +43,25 @@ export const Users: FC<UsersCType> = React.memo(
                 <div className={s.box}>
                     <ul className={s.list}>
                         {displayedUsers().map((u: UserType) => {
-                            const followHandler = () => followTC(u.id)
-                            const unfollowHandler = () => unfollowTC(u.id)
-                            const followingInProgressUser = followingInProgress.some((id) => id === u.id)
-
                             return (
-                                <li key={u.id} className={s.item}>
-                                    <div className={s.container}>
-                                        <NavLink to={'/profile/' + u.id}>
-                                            <img
-                                                className={s.img}
-                                                src={u.photos.small || user1}
-                                                alt={'Фото пользователя.'}
-                                            />
-                                        </NavLink>
-                                        <div>
-                                            <h3 className={s.name}>{u.name}</h3>
-                                            <p className={s.text}>{'u.location.country' + ' ' + 'u.location.city'}</p>
-                                            <p className={s.description}>{u.status}</p>
-                                        </div>
-                                    </div>
-                                    <div className={s.boxButton}>
-                                        {u.followed ? (
-                                            <Button
-                                                className={s.buttonNoColor}
-                                                color={'white'}
-                                                name={'Unfollow'}
-                                                followingInProgress={followingInProgressUser}
-                                                callback={unfollowHandler}
-                                            />
-                                        ) : (
-                                            <Button
-                                                className={s.buttonNoColor}
-                                                color={'white'}
-                                                name={'Follow'}
-                                                followingInProgress={followingInProgressUser}
-                                                callback={followHandler}
-                                            />
-                                        )}
-                                        <Button className={s.buttonColor} color={'blue'} name={'Message'} />
-                                    </div>
-                                </li>
+                                <User
+                                    key={u.id}
+                                    user={u}
+                                    followingInProgress={followingInProgress}
+                                    followTC={followTC}
+                                    unfollowTC={unfollowTC}
+                                />
                             )
                         })}
                     </ul>
 
-                    <div>
-                        {pages.map((p) => {
-                            const currentPageHandler = () => {
-                                onPageChanged(p)
-                            }
-
-                            if (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1)) {
-                                const styleActiveButton = currentPage === p ? true : false
-                                return p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1) ? (
-                                    <ButtonPagination
-                                        key={p}
-                                        buttonActive={styleActiveButton}
-                                        name={p.toString()}
-                                        callback={currentPageHandler}
-                                    />
-                                ) : p === currentPage - 2 || p === currentPage + 2 ? (
-                                    <ButtonPagination key={p} name={'...'} />
-                                ) : null
-                            }
-                        })}
-                    </div>
+                    <Paginator
+                        usersPage={usersPage}
+                        totalUsersCount={totalUsersCount}
+                        pageSize={pageSize}
+                        currentPage={currentPage}
+                        onPageChanged={onPageChanged}
+                    />
                 </div>
             </div>
         )

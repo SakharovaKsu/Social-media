@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { getUsersTC, onPageChangedTC, unfollowTC, followTC } from '../../redux/usersReducer'
 import { StoreType } from '../../redux/reduxStore'
 import { Users } from './Users'
 import axios from 'axios'
 import Preloader from '../Elements/Preloader/Preloader'
-import s from './Users.module.css'
+import s from './UsersContainer.module.css'
 import { compose } from 'redux'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import {
