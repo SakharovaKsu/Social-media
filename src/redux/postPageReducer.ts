@@ -97,7 +97,7 @@ const postPage: PostPageType = {
 
 export const postPageReducer = (state = postPage, action: AllActionType): PostPageType => {
     switch (action.type) {
-        case 'ADD-POST': {
+        case 'POST-PAGE/ADD-POST': {
             const newPost = {
                 id: v1(),
                 message: state.newPostText,
@@ -107,16 +107,16 @@ export const postPageReducer = (state = postPage, action: AllActionType): PostPa
             state.newPostText = '' // обнуляем инпут
             return { ...state, postsData: [...state.postsData, newPost] }
         }
-        case 'UPDATE-NEW-POST-TEXT': {
+        case 'POST-PAGE/UPDATE-NEW-POST-TEXT': {
             return { ...state, newPostText: action.payload.text }
         }
-        case 'SET-USER-PROFILE': {
+        case 'POST-PAGE/SET-USER-PROFILE': {
             return { ...state, profile: action.payload.profile }
         }
-        case 'SET-STATUS': {
+        case 'POST-PAGE/SET-STATUS': {
             return { ...state, status: action.payload.status }
         }
-        case 'UPDATE-STATUS': {
+        case 'POST-PAGE/UPDATE-STATUS': {
             return { ...state, status: action.payload.status }
         }
         default:
@@ -124,30 +124,39 @@ export const postPageReducer = (state = postPage, action: AllActionType): PostPa
     }
 }
 
-export const addPostAC = () => ({ type: 'ADD-POST' }) as const
-export const updateNewPostTextAC = (text: string) => ({ type: 'UPDATE-NEW-POST-TEXT', payload: { text } }) as const
-export const setUserProfileAC = (profile: ProfileType) => ({ type: 'SET-USER-PROFILE', payload: { profile } }) as const
-export const setStatusAC = (status: string) => ({ type: 'SET-STATUS', payload: { status } }) as const
-export const updateStatusAC = (status: string) => ({ type: 'UPDATE-STATUS', payload: { status } }) as const
+export const addPostAC = () => ({ type: 'POST-PAGE/ADD-POST' }) as const
+export const updateNewPostTextAC = (text: string) =>
+    ({ type: 'POST-PAGE/UPDATE-NEW-POST-TEXT', payload: { text } }) as const
+export const setUserProfileAC = (profile: ProfileType) =>
+    ({ type: 'POST-PAGE/SET-USER-PROFILE', payload: { profile } }) as const
+export const setStatusAC = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
+export const updateStatusAC = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
 
-export const getProfileTC = (userId: string) => {
-    return (dispatch: Dispatch) => {
-        profileAPI.getProfile(userId).then((response) => {
-            dispatch(setUserProfileAC(response.payload.profile))
-        })
+export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
+    try {
+        const response = await profileAPI.getProfile(userId)
+        dispatch(setUserProfileAC(response.payload.profile))
+    } catch (error) {
+        // Обработка ошибок, если необходимо
     }
 }
 
-export const getStatusTC = (userId: string) => (dispatch: Dispatch) => {
-    return profileAPI.getUserStatus(userId).then((res) => {
-        dispatch(setStatusAC(res.data))
-    })
+export const getStatusTC = (userId: string) => async (dispatch: Dispatch) => {
+    try {
+        const response = await profileAPI.getUserStatus(userId)
+        dispatch(setStatusAC(response.data))
+    } catch (error) {
+        // Обработка ошибок, если необходимо
+    }
 }
 
-export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
-    return profileAPI.updateStatus(status).then((res) => {
-        if (res.data.resultCode === 0) {
+export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
+    try {
+        const response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
             dispatch(updateStatusAC(status))
         }
-    })
+    } catch (error) {
+        // Обработка ошибок, если необходимо
+    }
 }

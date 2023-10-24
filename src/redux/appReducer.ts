@@ -26,13 +26,13 @@ const initialState: InitialStateType = {
 
 export const appReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case 'SET-APP-ERROR': {
+        case 'APP/SET-APP-ERROR': {
             return { ...state, error: action.error }
         }
-        case 'SET-APP-STATUS': {
+        case 'APP/SET-APP-STATUS': {
             return { ...state, status: action.status }
         }
-        case 'SET-IS-INITIALIZED-ERROR': {
+        case 'APP/SET-IS-INITIALIZED-ERROR': {
             return { ...state, isInitialized: action.isInitialized }
         }
         default:
@@ -40,20 +40,23 @@ export const appReducer = (state = initialState, action: ActionType): InitialSta
     }
 }
 
-export const setAppErrorAC = (error: string | null) => ({ type: 'SET-APP-ERROR', error }) as const
-export const setAppStatusAC = (status: RequestStatusType) => ({ type: 'SET-APP-STATUS', status }) as const
+export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-APP-ERROR', error }) as const
+export const setAppStatusAC = (status: RequestStatusType) => ({ type: 'APP/SET-APP-STATUS', status }) as const
 export const isAppIsInitializedAC = (isInitialized: boolean) =>
-    ({ type: 'SET-IS-INITIALIZED-ERROR', isInitialized }) as const
+    ({ type: 'APP/SET-IS-INITIALIZED-ERROR', isInitialized }) as const
 
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    authAPI.getAuthMe().then((res) => {
+export const initializeAppTC = () => async (dispatch: Dispatch) => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+
+        const response = await authAPI.getAuthMe()
+
         dispatch(setAppStatusAC('succeeded'))
-        if (res.data.resultCode === RESULT_CODE.OK) {
+        if (response.data.resultCode === RESULT_CODE.OK) {
             dispatch(setIsLoggedInAC(true))
-            dispatch(setUserDataAC(res.data.data))
+            dispatch(setUserDataAC(response.data.data))
         }
 
         dispatch(isAppIsInitializedAC(true))
-    })
+    } catch (error) {}
 }

@@ -50,7 +50,7 @@ const dialogsPage: DialogsPageType = {
 
 export const dialogsReducer = (state = dialogsPage, action: AllActionType): DialogsPageType => {
     switch (action.type) {
-        case 'ADD-MESSAGE': {
+        case 'DIALOGS/ADD-MESSAGE': {
             let newMessage = {
                 id: v1(),
                 message: state.newMessageText,
@@ -58,7 +58,7 @@ export const dialogsReducer = (state = dialogsPage, action: AllActionType): Dial
             state.newMessageText = ''
             return { ...state, messageData: [...state.messageData, newMessage] }
         }
-        case 'UPDATE-NEW-MESSAGE-TEXT': {
+        case 'DIALOGS/UPDATE-NEW-MESSAGE-TEXT': {
             return { ...state, newMessageText: action.payload.text }
         }
         default:
@@ -66,6 +66,6 @@ export const dialogsReducer = (state = dialogsPage, action: AllActionType): Dial
     }
 }
 
-export const addMassageAC = () => ({ type: 'ADD-MESSAGE' }) as const
+export const addMassageAC = () => ({ type: 'DIALOGS/ADD-MESSAGE' }) as const
 export const updateNewMessageTextAC = (text: string) =>
-    ({ type: 'UPDATE-NEW-MESSAGE-TEXT', payload: { text } }) as const
+    ({ type: 'DIALOGS/UPDATE-NEW-MESSAGE-TEXT', payload: { text } }) as const
