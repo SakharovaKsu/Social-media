@@ -1,65 +1,27 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './App.css'
-import Navbar from './components/Navbar/Navbar'
-import { BrowserRouter, Route } from 'react-router-dom'
-import News from './components/News/News'
-import { DialogsContainer } from './components/Dialogs/DialogsContainer'
-import { UsersContainer } from './components/Users/UsersContainer'
-import { ProfileContainer } from './components/Profile/ProfileContainer'
-import HeaderContainer from './components/Header/HeaderContainer'
-import Login from './components/Login/Login'
-import { useAppDispatch, useAppSelector } from './redux/reduxStore'
-import { initializeAppTC } from './redux/appReducer'
-import Preloader from './components/Elements/Preloader/Preloader'
-import { isInitializedSelector, statusSelector } from './redux/selectors/appSelector'
+import store from './redux/reduxStore'
+import { Provider } from 'react-redux'
+import { renderEntireTree } from './index'
+import { AppContainer } from './AppContainer'
+
+// store.getState() - нужно вызвать, что б получить state.
+// Когда мы отдаем кому-то метод (в нашем случае пропсам), то что б при вызове этого метода не было undefined, то используем такой лайфхак -> store.dispatch.bind(store) (через bind мы связываем метод со store)
+
+// Provider - обеспечивает доступ к Redux Store для всех компонентов, которые находятся внутри его дочерних элементов.
 
 export const App = () => {
-    const dispatch = useAppDispatch()
-    const status = useAppSelector(statusSelector)
-    const isInitialized = useAppSelector(isInitializedSelector)
-
-    useEffect(() => {
-        dispatch(initializeAppTC())
-    }, [])
-
-    if (!isInitialized) {
-        return (
-            <div className={'containerPreloader'}>
-                <Preloader />
-            </div>
-        )
-    }
-
     return (
-        <BrowserRouter>
-            {' '}
-            {/*обрамляем весь компонент для route*/}
-            <div className="app-wrapper">
-                <HeaderContainer />
-                <Navbar />
-                <div className="app-wrapper-content">
-                    {status === 'loading' && (
-                        <div className={'containerPreloader'}>
-                            <Preloader />
-                        </div>
-                    )}
-
-                    <Route path="/login" component={() => <Login />} />
-
-                    {/*отрисовка компонента по клику на страничке*/}
-                    {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
-                    <Route exact path="/dialogs" render={() => <DialogsContainer />} />
-
-                    {/* временная заглушка */}
-                    {/*<Route path="/" render={() => <ProfileContainer />} />*/}
-
-                    {/* :userId - параметр для отображения пользователя */}
-                    {/* ? - означает что параметр не обязательный */}
-                    <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-                    <Route path="/users" render={() => <UsersContainer />} />
-                    <Route path="/news" component={News} />
-                </div>
-            </div>
-        </BrowserRouter>
+        <Provider store={store}>
+            <AppContainer />
+        </Provider>
     )
 }
+
+renderEntireTree(store.getState())
+
+// Добавляем анонимную функцию, для того что бы добавить туда стейт и перекинуть его в renderEntireTree. Зачем? При изменении стейта нам нужно каждый раз запрашивать его. Мы его повторно не получаем, у нас будет undefined, поэтому и передаем заново - renderEntireTree(state)
+store.subscribe(() => {
+    const state = store.getState()
+    renderEntireTree(state)
+})
