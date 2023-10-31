@@ -3,9 +3,7 @@
     font-weight: 600;
     font-size: 14px;
     border: none;
-    border-radius: 16px;
-    padding: 16px 40px;
-    min-width: 140px;
+    border-radius: 10px;
 }
 
 .white {
@@ -44,4 +42,14 @@
     &:disabled {
         background-color: #a9c7f9;
     }
+}
+
+.buttonSmall {
+    padding: 10px 15px;
+    min-width: 40px;
+}
+
+.buttonBig {
+    padding: 16px 40px;
+    min-width: 140px;
 }

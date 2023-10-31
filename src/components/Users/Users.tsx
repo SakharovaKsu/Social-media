@@ -56,10 +56,10 @@ export const Users: FC<UsersCType> = React.memo(
                     </ul>
 
                     <Paginator
-                        usersPage={usersPage}
-                        totalUsersCount={totalUsersCount}
+                        totalItemsCount={totalUsersCount}
                         pageSize={pageSize}
                         currentPage={currentPage}
+                        portionSize={5}
                         onPageChanged={onPageChanged}
                     />
                 </div>

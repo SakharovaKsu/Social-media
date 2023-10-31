@@ -32,22 +32,20 @@ const User: FC<UserComponentType> = ({ user, followTC, unfollowTC, followingInPr
             <div className={s.boxButton}>
                 {user.followed ? (
                     <Button
-                        className={s.buttonNoColor}
                         color={'white'}
                         name={'Unfollow'}
-                        followingInProgress={followingInProgressUser}
+                        disabledButton={followingInProgressUser}
                         callback={unfollowHandler}
                     />
                 ) : (
                     <Button
-                        className={s.buttonNoColor}
                         color={'white'}
                         name={'Follow'}
-                        followingInProgress={followingInProgressUser}
+                        disabledButton={followingInProgressUser}
                         callback={followHandler}
                     />
                 )}
-                <Button className={s.buttonColor} color={'blue'} name={'Message'} />
+                <Button color={'blue'} name={'Message'} />
             </div>
         </li>
     )

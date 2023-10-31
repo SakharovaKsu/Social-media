@@ -1,20 +1,21 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import ButtonPagination from '../ButtonPagination/ButtonPagination'
-import { InitialStateUsersType } from '../../../redux/usersReducer'
+import s from './Paginator.module.css'
+import Button from '../Button/Button'
 
 type PaginatorType = {
-    usersPage: InitialStateUsersType
-    totalUsersCount: number
+    totalItemsCount: number
     pageSize: number
     currentPage: number
+    portionSize: number
     onPageChanged: (p: number) => void
 }
 
-const Paginator: FC<PaginatorType> = ({ usersPage, totalUsersCount, pageSize, onPageChanged, currentPage }) => {
-    const displayedUsers = () => usersPage.users.slice(0, 8)
+const Paginator: FC<PaginatorType> = ({ totalItemsCount, pageSize, onPageChanged, currentPage, portionSize }) => {
+    const [portionNumber, setPortionNumber] = useState(1)
 
     // Узнаем количество пользователь, для понимая сколько нам нужно кнопок
-    let pagesCount = Math.ceil(totalUsersCount / pageSize)
+    let pagesCount = Math.ceil(totalItemsCount / pageSize)
 
     // Заполняем массив для пагинации
     let pages = []
@@ -22,27 +23,54 @@ const Paginator: FC<PaginatorType> = ({ usersPage, totalUsersCount, pageSize, on
         pages.push(i)
     }
 
-    return (
-        <div>
-            {pages.map((p) => {
-                const currentPageHandler = () => {
-                    onPageChanged(p)
-                }
+    const portionCount = Math.ceil(pagesCount / portionSize)
+    const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
+    const rightPortionPageNumber = portionNumber * portionSize
 
-                if (p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1)) {
-                    const styleActiveButton = currentPage === p ? true : false
-                    return p === 1 || p === pagesCount || (p >= currentPage - 2 && p <= currentPage + 1) ? (
-                        <ButtonPagination
-                            key={p}
-                            buttonActive={styleActiveButton}
-                            name={p.toString()}
-                            callback={currentPageHandler}
-                        />
-                    ) : p === currentPage - 2 || p === currentPage + 2 ? (
-                        <ButtonPagination key={p} name={'...'} />
-                    ) : null
-                }
-            })}
+    const onClickButtonBack = () => {
+        if (portionNumber > 1) {
+            setPortionNumber(portionNumber - 1)
+        }
+    }
+
+    const onClickButtonNext = () => {
+        if (portionNumber < portionCount - 1) {
+            setPortionNumber(portionNumber + 1)
+        }
+    }
+
+    return (
+        <div className={s.container}>
+            <Button
+                name={'Back'}
+                type={'button'}
+                buttonSize={'small'}
+                disabledButton={portionNumber === 1}
+                callback={onClickButtonBack}
+            />
+            <div>
+                {pages
+                    .filter((p) => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
+                    .map((p) => {
+                        const styleActiveButton = currentPage === p ? true : false
+
+                        return (
+                            <ButtonPagination
+                                key={p}
+                                buttonActive={styleActiveButton}
+                                name={p.toString()}
+                                callback={() => onPageChanged(p)}
+                            />
+                        )
+                    })}
+            </div>
+            <Button
+                name={'Next'}
+                type={'button'}
+                buttonSize={'small'}
+                disabledButton={portionNumber === portionCount - 1}
+                callback={onClickButtonNext}
+            />
         </div>
     )
 }
