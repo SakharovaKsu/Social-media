@@ -52,7 +52,7 @@ export type InitialStateUsersType = {
 
 export const initialStateUser: InitialStateUsersType = {
     users: [],
-    pageSize: 10,
+    pageSize: 8,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,

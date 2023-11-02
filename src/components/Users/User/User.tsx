@@ -17,6 +17,8 @@ const User: FC<UserComponentType> = ({ user, followTC, unfollowTC, followingInPr
     const unfollowHandler = () => unfollowTC(user.id)
     const followingInProgressUser = followingInProgress.some((id) => id === user.id)
 
+    const statusUser = !user.status || null ? 'no status' : user.status
+
     return (
         <li key={user.id} className={s.item}>
             <div className={s.container}>
@@ -25,8 +27,7 @@ const User: FC<UserComponentType> = ({ user, followTC, unfollowTC, followingInPr
                 </NavLink>
                 <div>
                     <h3 className={s.name}>{user.name}</h3>
-                    <p className={s.text}>{'u.location.country' + ' ' + 'u.location.city'}</p>
-                    <p className={s.description}>{user.status}</p>
+                    <p className={s.description}>{statusUser}</p>
                 </div>
             </div>
             <div className={s.boxButton}>
