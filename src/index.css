@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'Font Awesome';
+    src: url('./fonts/fontawesome-webfont.woff2') format('woff2'),
+    url('./fonts/fontawesome-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     box-sizing: border-box;
     margin: 0;

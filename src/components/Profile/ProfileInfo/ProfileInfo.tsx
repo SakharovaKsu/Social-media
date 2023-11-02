@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import React, { ChangeEvent, FC } from 'react'
 import s from './ProfileInfo.module.css'
 import Preloader from '../../Elements/Preloader/Preloader'
 import { ProfileType } from '../../../redux/postPageReducer'
-import work from '../../../images/work.svg'
-import notWork from '../../../images/workFalse.svg'
+import work from './../../../images/work.svg'
+import notWork from './../../../images/workFalse.svg'
 import ProfileContacts from './ProfileContacts/ProfileContacts'
 import user1 from '../../../images/avatar-user/user-1.svg'
 import ProfileStatus from './ProfileStatus/ProfileStatus'
@@ -11,10 +11,12 @@ import ProfileStatus from './ProfileStatus/ProfileStatus'
 type ProfileInfoType = {
     profile: ProfileType
     status: string
+    isOwner: boolean
     updateStatusTC: (status: string) => void
+    savePhoto: (photos: File) => void
 }
 
-const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateStatusTC }) => {
+const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateStatusTC, isOwner, savePhoto }) => {
     // Если Profile null или не определен, то показываем Preloader
     if (!profile) {
         return <Preloader />
@@ -31,12 +33,19 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
         vk: profile.contacts.vk,
     }
 
+    const onMainPhotoSelector = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.files && e.currentTarget.files.length) savePhoto(e.currentTarget.files[0])
+    }
+
     return (
         <div className={s.container}>
             <img className={s.picture} src={profile.photos.large ? profile.photos.large : user1} />
             <div className={s.containerInfo}>
                 <h2 className={s.title}>{profile.fullName}</h2>
                 <p className={s.text}>{profile.aboutMe}</p>
+                <label className={s.customInputPhoto}>
+                    {isOwner && <input className={s.inputPhoto} type={'file'} onChange={onMainPhotoSelector} />}
+                </label>
             </div>
             <div className={s.boxInfo}>
                 <h3 className={s.subTitle}>Статус работы</h3>

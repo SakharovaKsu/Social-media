@@ -8,12 +8,14 @@ type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 type setUserProfileType = ReturnType<typeof setUserProfileAC>
 type SetStatusType = ReturnType<typeof setStatusAC>
 type UpdateStatusType = ReturnType<typeof updateStatusAC>
+type SavePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
 export type AllPostActionType =
     | AddPostActionType
     | UpdateNewPostTextActionType
     | setUserProfileType
     | SetStatusType
     | UpdateStatusType
+    | SavePhotoSuccessType
 
 export type PostsDataType = {
     id: string
@@ -33,7 +35,7 @@ type ContactsType = {
     mainLink: string
 }
 
-type PhotosType = {
+export type PhotosType = {
     small: string
     large: string
 }
@@ -119,6 +121,9 @@ export const postPageReducer = (state = postPage, action: AllActionType): PostPa
         case 'POST-PAGE/UPDATE-STATUS': {
             return { ...state, status: action.payload.status }
         }
+        case 'SAVE-PHOTO-SUCCESS': {
+            return { ...state, profile: { ...state.profile, photos: action.payload.photos } }
+        }
         default:
             return state
     }
@@ -131,6 +136,7 @@ export const setUserProfileAC = (profile: ProfileType) =>
     ({ type: 'POST-PAGE/SET-USER-PROFILE', payload: { profile } }) as const
 export const setStatusAC = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
 export const updateStatusAC = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
+export const savePhotoSuccess = (photos: PhotosType) => ({ type: 'SAVE-PHOTO-SUCCESS', payload: { photos } }) as const
 
 export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
     try {
@@ -158,5 +164,13 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
         }
     } catch (error) {
         // Обработка ошибок, если необходимо
+    }
+}
+
+export const savePhoto = (photos: File) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.savePhoto(photos)
+    console.log(response)
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }

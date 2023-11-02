@@ -2,7 +2,7 @@ import React from 'react'
 import Profile from './Profile'
 import { connect } from 'react-redux'
 import { StoreType } from '../../redux/reduxStore'
-import { getProfileTC, getStatusTC, updateStatusTC } from '../../redux/postPageReducer'
+import { getProfileTC, getStatusTC, savePhoto, updateStatusTC } from '../../redux/postPageReducer'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux'
@@ -17,20 +17,33 @@ type MapDispatchToPropsType = {
     getProfileTC: (userId: string) => void
     getStatusTC: (userId: string) => void
     updateStatusTC: (status: string) => void
+    savePhoto: (photos: File) => void
 }
 type ProfileContainerType = MapStateToPropsType & MapDispatchToPropsType
 type ProfileContainer = RouteComponentProps<PathParamsType> & ProfileContainerType
 
 class ProfileAPIContainer extends React.Component<ProfileContainer> {
-    componentDidMount() {
-        let userId = this.props.match.params.userId
+    refreshProfile() {
+        let userId: string | null = this.props.match.params.userId
 
         if (!userId) {
-            userId = (29405).toString()
+            userId = String(this.props.authorizedUserId)
+            if (!userId) {
+                this.props.history.push('./login')
+            }
         }
 
-        this.props.getProfileTC(userId)
-        this.props.getStatusTC(userId)
+        this.props.getProfileTC(userId as string)
+        this.props.getStatusTC(userId as string)
+    }
+
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileContainer>, prevState: Readonly<{}>, snapshot?: any) {
+        // что б не было зациклиности, доьавляем проверку, что если id не совпадает с предыдущим id из стейта, то вызываем функ.
+        if (this.props.match.params.userId != prevProps.match.params.userId) this.refreshProfile()
     }
 
     shouldComponentUpdate(nextProps: ProfileContainer) {
@@ -40,7 +53,8 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
             nextProps.profile !== this.props.profile ||
             nextProps.status !== this.props.status ||
             nextProps.authorizedUserId !== this.props.authorizedUserId ||
-            nextProps.appStatus !== this.props.appStatus
+            nextProps.appStatus !== this.props.appStatus ||
+            nextProps.savePhoto !== this.props.savePhoto
         ) {
             return true // Рендер компонента
         }
@@ -54,9 +68,11 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
 
                 <Profile
                     {...this.props}
+                    isOwner={!this.props.match.params.userId}
                     profile={this.props.profile}
                     status={this.props.status}
                     updateStatusTC={this.props.updateStatusTC}
+                    savePhoto={this.props.savePhoto}
                 />
             </>
         )
@@ -72,7 +88,7 @@ const mapStateToProps = (state: StoreType) => {
     }
 }
 
-const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC }
+const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC, savePhoto }
 
 export const ProfileContainer = compose<React.ComponentType>(
     withAuthRedirect,

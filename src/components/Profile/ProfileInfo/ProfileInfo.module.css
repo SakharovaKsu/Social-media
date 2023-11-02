@@ -16,6 +16,7 @@
     width: 150px;
     height: auto;
     border-radius: 16px;
+    background-color: #2772f0;
 }
 
 .containerInfo {
@@ -33,6 +34,43 @@
 .text {
     color: #9da4b1;
     font-size: 14px;
+}
+
+.inputPhoto {
+    display: none;
+}
+
+.customInputPhoto {
+    display: inline-block;
+    position: relative;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.customInputPhoto::before {
+    content: '\f1c5'; /* Код иконки, например, Font Awesome */
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    font-family: 'Font Awesome';
+    font-size: 16px;
+    color: #2772f0;
+    padding-top: 4px;
+}
+
+.customInputPhoto::after {
+    content: 'Change avatar';
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.customInputPhoto:hover::after {
+    color: #2772f0;
+}
+
+.customInputPhoto:hover:active {
+    color: #9cbef8;
 }
 
 .box {

@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios'
-import { setUserProfileAC } from '../redux/postPageReducer'
+import { PhotosType, setUserProfileAC } from '../redux/postPageReducer'
 
 export type ResponseType<T = {}> = {
     resultCode: number
     messages: string[]
-    data: string
+    data: T
 }
 
 export type FormType = {
@@ -58,5 +58,13 @@ export const profileAPI = {
     updateStatus(status: string) {
         return axiosInstance.put<ResponseType>(`/profile/status/`, { status })
         // return axiosInstance.put<ResponseType, AxiosResponse<ResponseType>, { status: string }>(`/profile/status/`, {status})
+    },
+    savePhoto(filePhoto: File) {
+        const formData = new FormData()
+        // добавляем в конец
+        formData.append('image', filePhoto)
+        return axiosInstance.put<ResponseType<{ photos: PhotosType }>>('/profile/photo', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        })
     },
 }
