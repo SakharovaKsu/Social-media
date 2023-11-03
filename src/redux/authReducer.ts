@@ -18,7 +18,8 @@ type InitialStateType = {
 
 type SetUserDataType = ReturnType<typeof setUserDataAC>
 type SetIsLoggedInType = ReturnType<typeof setIsLoggedInAC>
-type ActionType = SetUserDataType | SetIsLoggedInType | SetAppErrorType | SetAppStatusType
+type SetUserIdType = ReturnType<typeof setUserIdAC>
+type ActionType = SetUserDataType | SetIsLoggedInType | SetAppErrorType | SetAppStatusType | SetUserIdType
 
 const initialState: InitialStateType = {
     id: null,
@@ -35,6 +36,9 @@ export const authReducer = (state = initialState, action: ActionType): InitialSt
         case 'AUTH/SET-IS-LOGGED-IN': {
             return { ...state, isAuth: action.isAuth }
         }
+        case 'AUTH/SET-USER-ID': {
+            return { ...state, id: action.id }
+        }
         default:
             return state
     }
@@ -42,6 +46,7 @@ export const authReducer = (state = initialState, action: ActionType): InitialSt
 
 export const setUserDataAC = (user: InitialStateType) => ({ type: 'AUTH/SET-USER-DATA', payload: { user } }) as const
 export const setIsLoggedInAC = (isAuth: boolean) => ({ type: 'AUTH/SET-IS-LOGGED-IN', isAuth }) as const
+export const setUserIdAC = (id: number) => ({ type: 'AUTH/SET-USER-ID', id }) as const
 
 export const loginTC = (data: FormType) => async (dispatch: Dispatch<ActionType>) => {
     try {
@@ -51,6 +56,7 @@ export const loginTC = (data: FormType) => async (dispatch: Dispatch<ActionType>
         if (response.data.resultCode === RESULT_CODE.OK) {
             dispatch(setIsLoggedInAC(true))
             dispatch(setAppStatusAC('succeeded'))
+            dispatch(setUserIdAC(response.data.data.userId))
         } else {
             handleServerAppError(response.data, dispatch)
         }

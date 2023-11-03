@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom'
 import user from '../../images/avatar-user/user-5.svg'
 import { logOutTC } from '../../redux/authReducer'
 import { useAppDispatch, useAppSelector } from '../../redux/reduxStore'
-import { photoUserSelector } from '../../redux/selectors/postPageSelector'
+import { photoUserSelector, UserSelector } from '../../redux/selectors/postPageSelector'
+import { idUserSelector } from '../../redux/selectors/authSelector'
 
 type HeaderType = {
     isAuth: boolean
@@ -14,6 +15,10 @@ type HeaderType = {
 const Header: FC<HeaderType> = React.memo(({ isAuth, login }) => {
     const dispatch = useAppDispatch()
     const photoUser = useAppSelector(photoUserSelector)
+    const userIdPostPage = useAppSelector(UserSelector)
+    const userId = useAppSelector(idUserSelector)
+
+    const avatarUser = userId === userIdPostPage ? photoUser : user
 
     const logOutHandler = useCallback(() => {
         dispatch(logOutTC())
@@ -31,7 +36,7 @@ const Header: FC<HeaderType> = React.memo(({ isAuth, login }) => {
                     ) : (
                         <div className={s.loginContainer}>
                             <div className={s.imgUser}>
-                                <img src={photoUser ? photoUser : user} alt={'Фото пользователя.'} />
+                                <img src={avatarUser} alt={'Фото пользователя.'} />
                             </div>
                             <NavLink to={'/profile'}>{login}</NavLink>
                         </div>

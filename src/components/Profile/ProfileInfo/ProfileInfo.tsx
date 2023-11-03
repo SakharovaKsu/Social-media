@@ -43,12 +43,16 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
             <div className={s.containerInfo}>
                 <h2 className={s.title}>{profile.fullName}</h2>
                 <p className={s.text}>{profile.aboutMe}</p>
-                <label className={s.customInputPhoto}>
-                    {isOwner && <input className={s.inputPhoto} type={'file'} onChange={onMainPhotoSelector} />}
-                </label>
+                {isOwner ? (
+                    <label className={s.customInputPhoto}>
+                        <input className={s.inputPhoto} type={'file'} onChange={onMainPhotoSelector} />
+                    </label>
+                ) : (
+                    ''
+                )}
             </div>
             <div className={s.boxInfo}>
-                <h3 className={s.subTitle}>Статус работы</h3>
+                <h3 className={s.subTitle}>Work status</h3>
                 <div className={s.box}>
                     <img className={s.icon} src={styleIcons} />
                     <p>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'I"m not looking'}</p>

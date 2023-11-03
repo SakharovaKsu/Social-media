@@ -9,7 +9,7 @@ import { compose } from 'redux'
 import s from '../Users/Users.module.css'
 import Preloader from '../Elements/Preloader/Preloader'
 import { profileSelector, statusSelector } from '../../redux/selectors/postPageSelector'
-import { idSelector } from '../../redux/selectors/authSelector'
+import { idUserSelector } from '../../redux/selectors/authSelector'
 
 type PathParamsType = { userId: string }
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -83,7 +83,7 @@ const mapStateToProps = (state: StoreType) => {
     return {
         profile: profileSelector(state),
         status: statusSelector(state),
-        authorizedUserId: idSelector(state),
+        authorizedUserId: idUserSelector(state),
         appStatus: state.app.status,
     }
 }
