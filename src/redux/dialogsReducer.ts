@@ -1,12 +1,9 @@
 import { v1 } from 'uuid'
-import { AllActionType } from './state'
 import user1 from '../images/avatar-user/user-1.svg'
 import user2 from '../images/avatar-user/user-2.svg'
 import user3 from '../images/avatar-user/user-3.svg'
 import user4 from '../images/avatar-user/user-4.svg'
 import user5 from '../images/avatar-user/user-5.svg'
-import { Dispatch } from 'redux'
-import { profileAPI } from '../api/api'
 
 type AddMessageActionType = ReturnType<typeof addMassageAC>
 type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
@@ -48,7 +45,7 @@ const dialogsPage: DialogsPageType = {
     newMessageText: '',
 }
 
-export const dialogsReducer = (state = dialogsPage, action: AllActionType): DialogsPageType => {
+export const dialogsReducer = (state = dialogsPage, action: AllDialogsActionType): DialogsPageType => {
     switch (action.type) {
         case 'DIALOGS/ADD-MESSAGE': {
             let newMessage = {

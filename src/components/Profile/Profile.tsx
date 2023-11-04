@@ -8,19 +8,12 @@ type ProfileType = {
     status: string
     isOwner: boolean
     updateStatusTC: (status: string) => void
-    savePhoto: (photos: File) => void
 }
 
-const Profile: FC<ProfileType> = React.memo(({ profile, status, updateStatusTC, isOwner, savePhoto }) => {
+const Profile: FC<ProfileType> = React.memo(({ profile, status, updateStatusTC, isOwner }) => {
     return (
         <div className={s.content}>
-            <ProfileInfo
-                profile={profile}
-                status={status}
-                updateStatusTC={updateStatusTC}
-                isOwner={isOwner}
-                savePhoto={savePhoto}
-            />
+            <ProfileInfo profile={profile} status={status} updateStatusTC={updateStatusTC} isOwner={isOwner} />
             <MyPostsContainer />
         </div>
     )

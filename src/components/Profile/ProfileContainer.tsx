@@ -2,7 +2,7 @@ import React from 'react'
 import Profile from './Profile'
 import { connect } from 'react-redux'
 import { StoreType } from '../../redux/reduxStore'
-import { getProfileTC, getStatusTC, savePhotoTC, updateStatusTC } from '../../redux/postPageReducer'
+import { getProfileTC, getStatusTC, updateStatusTC } from '../../redux/postPageReducer'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux'
@@ -72,7 +72,6 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
                     profile={this.props.profile}
                     status={this.props.status}
                     updateStatusTC={this.props.updateStatusTC}
-                    savePhoto={this.props.savePhoto}
                 />
             </>
         )
@@ -88,7 +87,7 @@ const mapStateToProps = (state: StoreType) => {
     }
 }
 
-const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC, savePhoto: savePhotoTC }
+const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC }
 
 export const ProfileContainer = compose<React.ComponentType>(
     withAuthRedirect,

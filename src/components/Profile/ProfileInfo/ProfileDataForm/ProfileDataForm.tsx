@@ -2,9 +2,10 @@ import React, { FC } from 'react'
 import s from './ProfileDataForm.module.css'
 import { useFormik } from 'formik'
 import Button from '../../../Elements/Button/Button'
-import { useAppDispatch } from '../../../../redux/reduxStore'
+import { useAppDispatch, useAppSelector } from '../../../../redux/reduxStore'
 import { ProfileType, saveProfileTC } from '../../../../redux/postPageReducer'
 import ProfileContacts from '../ProfileContacts/ProfileContacts'
+import { idUserSelector } from '../../../../redux/selectors/authSelector'
 
 type ProfileDataFormType = {
     editMode: boolean
@@ -12,7 +13,9 @@ type ProfileDataFormType = {
 }
 
 const ProfileDataForm: FC<ProfileDataFormType> = ({ editMode, profile }) => {
+    const userId = useAppSelector(idUserSelector)
     const dispatch = useAppDispatch()
+
     const formik = useFormik({
         initialValues: {
             aboutMe: '',
@@ -29,7 +32,11 @@ const ProfileDataForm: FC<ProfileDataFormType> = ({ editMode, profile }) => {
             lookingForAJob: false,
             lookingForAJobDescription: '',
             fullName: '',
-            userId: 29405,
+            photos: {
+                small: '',
+                large: '',
+            },
+            userId: userId,
         },
         onSubmit: (values) => {
             dispatch(saveProfileTC(values))

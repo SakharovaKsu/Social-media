@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { StateType } from './redux/state'
 import { App } from './App'
-import store from './redux/reduxStore'
+import store, { StoreType } from './redux/reduxStore'
 
-export const renderEntireTree = (state: StateType) => {
+export const renderEntireTree = (state: StoreType) => {
     ReactDOM.render(<App />, document.getElementById('root'))
 }
 renderEntireTree(store.getState())

@@ -1,13 +1,13 @@
 import React, { ChangeEvent, FC, useState } from 'react'
 import s from './ProfileInfo.module.css'
 import Preloader from '../../Elements/Preloader/Preloader'
-import { ProfileType } from '../../../redux/postPageReducer'
+import { ProfileType, savePhotoTC } from '../../../redux/postPageReducer'
 import user1 from '../../../images/avatar-user/user-1.svg'
 import ProfileStatus from './ProfileStatus/ProfileStatus'
 import ProfileData from './ProfileData/ProfileData'
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
 import ButtonSmall from '../../Elements/ButtonSmall/ButtonSmall'
-import { useAppSelector } from '../../../redux/reduxStore'
+import { useAppDispatch, useAppSelector } from '../../../redux/reduxStore'
 import { photoUserSelector } from '../../../redux/selectors/postPageSelector'
 
 type ProfileInfoType = {
@@ -15,20 +15,22 @@ type ProfileInfoType = {
     status: string
     isOwner: boolean
     updateStatusTC: (status: string) => void
-    savePhoto: (photos: File) => void
 }
 
-const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateStatusTC, isOwner, savePhoto }) => {
+const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateStatusTC, isOwner }) => {
+    const dispatch = useAppDispatch()
+
     const photo = useAppSelector(photoUserSelector)
-    // Если Profile null или не определен, то показываем Preloader
+    console.log(photo)
     const [editMode, setEditMode] = useState(false)
 
+    // Если Profile null или не определен, то показываем Preloader
     if (!profile) {
         return <Preloader />
     }
 
     const onMainPhotoSelector = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.files && e.currentTarget.files.length) savePhoto(e.currentTarget.files[0])
+        if (e.currentTarget.files && e.currentTarget.files.length) dispatch(savePhotoTC(e.currentTarget.files[0]))
     }
 
     const HandlerButtonToggleEditMode = () => {
