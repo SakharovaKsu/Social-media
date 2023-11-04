@@ -1,16 +1,16 @@
-.container {
-    display: flex;
-    gap: 5px;
-    cursor: pointer;
+.title {
+    font-size: 20px;
+    color: #2772f0;
 }
 
-.containerInput {
+.boxForm {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.nameInput {
+.text {
+    font-weight: 400;
     padding-right: 10px;
 }
 

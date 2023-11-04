@@ -69,7 +69,7 @@ const LoginForm = React.memo(() => {
                     )}
                 </div>
                 <div className={s.containerInput}>
-                    <input className={inputClassName} type="password" {...formik.getFieldProps('password')} />
+                    <input className={inputClassName} type={'password'} {...formik.getFieldProps('password')} />
                     {formik.touched.password && formik.errors.password && (
                         <span className={s.spanError}>{formik.errors.password}</span>
                     )}

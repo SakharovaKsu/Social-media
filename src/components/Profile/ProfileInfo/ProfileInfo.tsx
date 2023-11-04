@@ -1,12 +1,14 @@
-import React, { ChangeEvent, FC } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 import s from './ProfileInfo.module.css'
 import Preloader from '../../Elements/Preloader/Preloader'
 import { ProfileType } from '../../../redux/postPageReducer'
-import work from './../../../images/work.svg'
-import notWork from './../../../images/workFalse.svg'
-import ProfileContacts from './ProfileContacts/ProfileContacts'
 import user1 from '../../../images/avatar-user/user-1.svg'
 import ProfileStatus from './ProfileStatus/ProfileStatus'
+import ProfileData from './ProfileData/ProfileData'
+import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
+import ButtonSmall from '../../Elements/ButtonSmall/ButtonSmall'
+import { useAppSelector } from '../../../redux/reduxStore'
+import { photoUserSelector } from '../../../redux/selectors/postPageSelector'
 
 type ProfileInfoType = {
     profile: ProfileType
@@ -17,32 +19,35 @@ type ProfileInfoType = {
 }
 
 const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateStatusTC, isOwner, savePhoto }) => {
+    const photo = useAppSelector(photoUserSelector)
     // Если Profile null или не определен, то показываем Preloader
+    const [editMode, setEditMode] = useState(false)
+
     if (!profile) {
         return <Preloader />
-    }
-
-    const styleIcons = profile.lookingForAJob === true ? work : notWork
-
-    const profileContacts = {
-        github: profile.contacts.github,
-        website: profile.contacts.website,
-        twitter: profile.contacts.twitter,
-        instagram: profile.contacts.instagram,
-        youtube: profile.contacts.youtube,
-        vk: profile.contacts.vk,
     }
 
     const onMainPhotoSelector = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files && e.currentTarget.files.length) savePhoto(e.currentTarget.files[0])
     }
 
+    const HandlerButtonToggleEditMode = () => {
+        setEditMode(!editMode)
+    }
+
     return (
         <div className={s.container}>
-            <img className={s.picture} src={profile.photos.large ? profile.photos.large : user1} />
+            <img className={s.picture} src={photo.large ? photo.large : user1} />
             <div className={s.containerInfo}>
-                <h2 className={s.title}>{profile.fullName}</h2>
-                <p className={s.text}>{profile.aboutMe}</p>
+                <div className={s.boxTitle}>
+                    <h2>{profile.fullName}</h2>
+                    {editMode ? (
+                        <ButtonSmall name={'Save'} type={'submit'} callback={HandlerButtonToggleEditMode} />
+                    ) : (
+                        <ButtonSmall name={'Edit'} type={'submit'} callback={HandlerButtonToggleEditMode} />
+                    )}
+                </div>
+                <ProfileStatus status={status} updateStatusTC={updateStatusTC} />
                 {isOwner ? (
                     <label className={s.customInputPhoto}>
                         <input className={s.inputPhoto} type={'file'} onChange={onMainPhotoSelector} />
@@ -51,19 +56,11 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
                     ''
                 )}
             </div>
-            <div className={s.boxInfo}>
-                <h3 className={s.subTitle}>Work status</h3>
-                <div className={s.box}>
-                    <img className={s.icon} src={styleIcons} />
-                    <p>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'I"m not looking'}</p>
-                </div>
-            </div>
-            <div className={s.boxContact}>
-                <ProfileContacts contacts={profileContacts} />
-            </div>
-            <div className={s.boxStatus}>
-                <ProfileStatus status={status} updateStatusTC={updateStatusTC} />
-            </div>
+            {editMode ? (
+                <ProfileDataForm profile={profile} editMode={editMode} />
+            ) : (
+                <ProfileData profile={profile} editMode={editMode} />
+            )}
         </div>
     )
 })

@@ -70,10 +70,10 @@ export const store: StoreType = {
                 lookingForAJobDescription: '',
                 fullName: '',
                 userId: 2,
-                photos: {
-                    small: '',
-                    large: '',
-                },
+            },
+            photos: {
+                small: '',
+                large: '',
             },
             status: '',
         },

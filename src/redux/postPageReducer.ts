@@ -2,6 +2,7 @@ import { AllActionType } from './state'
 import { v1 } from 'uuid'
 import { Dispatch } from 'redux'
 import { profileAPI } from '../api/api'
+import { RESULT_CODE } from './authReducer'
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
@@ -9,6 +10,7 @@ type setUserProfileType = ReturnType<typeof setUserProfileAC>
 type SetStatusType = ReturnType<typeof setStatusAC>
 type UpdateStatusType = ReturnType<typeof updateStatusAC>
 type SavePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
+type SaveProfileType = ReturnType<typeof saveProfileAC>
 export type AllPostActionType =
     | AddPostActionType
     | UpdateNewPostTextActionType
@@ -16,6 +18,7 @@ export type AllPostActionType =
     | SetStatusType
     | UpdateStatusType
     | SavePhotoSuccessType
+    | SaveProfileType
 
 export type PostsDataType = {
     id: string
@@ -24,15 +27,15 @@ export type PostsDataType = {
     likeCount: number
 }
 
-type ContactsType = {
-    facebook: string
-    website: string
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: string
-    github: string
-    mainLink: string
+export type ContactsType = {
+    facebook: string | null
+    github: string | null
+    website: string | null
+    twitter: string | null
+    instagram: string | null
+    youtube: string | null
+    vk: string | null
+    mainLink: string | null
 }
 
 export type PhotosType = {
@@ -46,14 +49,14 @@ export type ProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    userId: number
-    photos: PhotosType
+    userId: number | null
 }
 
 export type PostPageType = {
     postsData: PostsDataType[]
     newPostText: string
     profile: ProfileType
+    photos: PhotosType
     status: string
 }
 
@@ -88,11 +91,11 @@ const postPage: PostPageType = {
         lookingForAJob: true,
         lookingForAJobDescription: '',
         fullName: '',
-        userId: 2,
-        photos: {
-            small: '',
-            large: '',
-        },
+        userId: null,
+    },
+    photos: {
+        small: '',
+        large: '',
     },
     status: '',
 }
@@ -122,7 +125,10 @@ export const postPageReducer = (state = postPage, action: AllActionType): PostPa
             return { ...state, status: action.payload.status }
         }
         case 'SAVE-PHOTO-SUCCESS': {
-            return { ...state, profile: { ...state.profile, photos: action.payload.photos } }
+            return { ...state, photos: action.payload.photos }
+        }
+        case 'SAVE-PROFILE': {
+            return { ...state, profile: action.payload.profile }
         }
         default:
             return state
@@ -137,6 +143,7 @@ export const setUserProfileAC = (profile: ProfileType) =>
 export const setStatusAC = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
 export const updateStatusAC = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
 export const savePhotoSuccess = (photos: PhotosType) => ({ type: 'SAVE-PHOTO-SUCCESS', payload: { photos } }) as const
+export const saveProfileAC = (profile: any) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const
 
 export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
     try {
@@ -159,7 +166,7 @@ export const getStatusTC = (userId: string) => async (dispatch: Dispatch) => {
 export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
     try {
         const response = await profileAPI.updateStatus(status)
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === RESULT_CODE.OK) {
             dispatch(updateStatusAC(status))
         }
     } catch (error) {
@@ -167,10 +174,17 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
     }
 }
 
-export const savePhoto = (photos: File) => async (dispatch: Dispatch) => {
+export const savePhotoTC = (photos: File) => async (dispatch: Dispatch) => {
     const response = await profileAPI.savePhoto(photos)
     console.log(response)
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === RESULT_CODE.OK) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+
+export const saveProfileTC = (profile: ProfileType) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.saveProfile(profile)
+    if (response.data.resultCode === RESULT_CODE.OK) {
+        dispatch(saveProfileAC(response.data.data.profile))
     }
 }

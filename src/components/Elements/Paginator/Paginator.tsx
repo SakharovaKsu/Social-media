@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import ButtonPagination from '../ButtonPagination/ButtonPagination'
+import ButtonSmall from '../ButtonSmall/ButtonSmall'
 import s from './Paginator.module.css'
 import Button from '../Button/Button'
 
@@ -55,9 +55,10 @@ const Paginator: FC<PaginatorType> = ({ totalItemsCount, pageSize, onPageChanged
                         const styleActiveButton = currentPage === p ? true : false
 
                         return (
-                            <ButtonPagination
+                            <ButtonSmall
                                 key={p}
                                 buttonActive={styleActiveButton}
+                                type={'button'}
                                 name={p.toString()}
                                 callback={() => onPageChanged(p)}
                             />

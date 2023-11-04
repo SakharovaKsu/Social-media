@@ -1,5 +1,3 @@
-import { FormValuesType } from '../components/Dialogs/TextArea/TextArea'
-
 export const validateMessage = (length: number, values: string) => {
     let errors: any = {}
     if (!values.trim()) {

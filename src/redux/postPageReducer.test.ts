@@ -46,10 +46,10 @@ describe('postPageReducer', () => {
                 lookingForAJobDescription: '',
                 fullName: '',
                 userId: 2,
-                photos: {
-                    small: '',
-                    large: '',
-                },
+            },
+            photos: {
+                small: '',
+                large: '',
             },
             status: '',
         }
@@ -89,10 +89,6 @@ describe('postPageReducer', () => {
             lookingForAJobDescription: '',
             fullName: 'Anna',
             userId: 21,
-            photos: {
-                small: '',
-                large: '',
-            },
         }
         const action = setUserProfileAC(newUsers)
         const newState = postPageReducer(initialState, action)

@@ -2,7 +2,7 @@ import React from 'react'
 import Profile from './Profile'
 import { connect } from 'react-redux'
 import { StoreType } from '../../redux/reduxStore'
-import { getProfileTC, getStatusTC, savePhoto, updateStatusTC } from '../../redux/postPageReducer'
+import { getProfileTC, getStatusTC, savePhotoTC, updateStatusTC } from '../../redux/postPageReducer'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux'
@@ -88,7 +88,7 @@ const mapStateToProps = (state: StoreType) => {
     }
 }
 
-const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC, savePhoto }
+const mapDispatchToProps = { getProfileTC, getStatusTC, updateStatusTC, savePhoto: savePhotoTC }
 
 export const ProfileContainer = compose<React.ComponentType>(
     withAuthRedirect,

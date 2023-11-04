@@ -3,7 +3,6 @@
     font-weight: 600;
     font-size: 14px;
     border: none;
-    border-radius: 10px;
 }
 
 .white {
@@ -31,7 +30,7 @@
     color: #fff;
 
     &:hover {
-        background-color: #246ade;
+        background-color: #1e67e0;
         color: #ffffff;
     }
 
@@ -45,11 +44,14 @@
 }
 
 .buttonSmall {
+    border-radius: 5px;
     padding: 10px 15px;
     min-width: 40px;
+    max-width: 150px;
 }
 
 .buttonBig {
+    border-radius: 10px;
     padding: 16px 40px;
     min-width: 140px;
 }

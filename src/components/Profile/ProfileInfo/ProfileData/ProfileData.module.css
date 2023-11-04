@@ -1,0 +1,23 @@
+.box {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.text {
+    font-weight: 800;
+}
+
+.boxInfo {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.boxContact {
+    grid-area: 3 / 2 / 4 / 3;
+}

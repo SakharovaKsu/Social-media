@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { PhotosType, setUserProfileAC } from '../redux/postPageReducer'
+import { PhotosType, ProfileType, setUserProfileAC } from '../redux/postPageReducer'
 
 export type ResponseType<T = {}> = {
     resultCode: number
@@ -66,5 +66,8 @@ export const profileAPI = {
         return axiosInstance.put<ResponseType<{ photos: PhotosType }>>('/profile/photo', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         })
+    },
+    saveProfile(profile: ProfileType) {
+        return axiosInstance.put<ResponseType<{ profile: ProfileType }>>('/profile', profile)
     },
 }

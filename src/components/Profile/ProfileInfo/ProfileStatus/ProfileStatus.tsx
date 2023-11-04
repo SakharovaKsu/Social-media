@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import s from '../ProfileInfo.module.css'
 
 type ProfileStatusType = {
     status: string
@@ -30,9 +31,9 @@ export const ProfileStatus: FC<ProfileStatusType> = ({ status, updateStatusTC })
     return (
         <div>
             {!editMode && (
-                <div>
-                    <span onDoubleClick={activateEditMode}>{status || 'No status'}</span>
-                </div>
+                <span className={s.boxStatus} onDoubleClick={activateEditMode}>
+                    {status || 'No status'}
+                </span>
             )}
             {editMode && (
                 <div>
