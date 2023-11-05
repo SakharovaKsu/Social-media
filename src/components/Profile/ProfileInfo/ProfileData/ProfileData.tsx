@@ -7,34 +7,35 @@ import notWork from '../../../../images/workFalse.svg'
 
 type ProfileDataType = {
     profile: ProfileType
-    editMode: boolean
 }
 
-const ProfileData: FC<ProfileDataType> = ({ profile, editMode }) => {
+const ProfileData: FC<ProfileDataType> = ({ profile }) => {
     const styleIcons = profile.lookingForAJob === true ? work : notWork
 
     return (
         <div>
             <div className={s.boxInfo}>
-                <h3>Work status</h3>
-                <div className={s.box}>
-                    <img className={s.icon} src={styleIcons} />
-                    <p>{profile.lookingForAJob ? "I'm looking for a job" : 'I"m not looking'}</p>
+                <h4>Work status</h4>
+                <div>
+                    <div className={s.box}>
+                        <img className={s.icon} src={styleIcons} />
+                        <p>{profile.lookingForAJob ? "I'm looking for a job" : 'I"m not looking'}</p>
+                    </div>
                     {profile.lookingForAJob && (
-                        <div>
-                            <p className={s.text}>My professonal skills:</p>
+                        <div className={s.box}>
+                            <p className={s.text}>Skills:</p>
                             <span>{profile.lookingForAJobDescription}</span>
                         </div>
                     )}
                 </div>
-                <div>
+                <div className={s.box}>
                     <p className={s.text}>About me:</p>
                     <span>{profile.aboutMe ? profile.aboutMe : 'No description'}</span>
                 </div>
             </div>
-            {/*<div className={s.boxContact}>*/}
-            {/*    <ProfileContacts profile={profile} editMode={editMode} />*/}
-            {/*</div>*/}
+            <div className={s.boxContact}>
+                <ProfileContacts />
+            </div>
         </div>
     )
 }

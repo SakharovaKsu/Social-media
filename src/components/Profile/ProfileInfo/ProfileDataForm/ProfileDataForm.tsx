@@ -6,45 +6,65 @@ import { useAppDispatch, useAppSelector } from '../../../../redux/reduxStore'
 import { ProfileType, saveProfileTC } from '../../../../redux/postPageReducer'
 import ProfileContacts from '../ProfileContacts/ProfileContacts'
 import { idUserSelector } from '../../../../redux/selectors/authSelector'
+import { photoUserSelector } from '../../../../redux/selectors/postPageSelector'
+import githubImg from '../../../../images/icons/icons-github.svg'
+import websiteImg from '../../../../images/icons/icons-website.svg'
+import twitterImg from '../../../../images/icons/icons-twitter.svg'
+import instagramImg from '../../../../images/icons/icons-instagram.svg'
+import youtubeImg from '../../../../images/icons/icons-youtube.svg'
+import vkImg from '../../../../images/icons/icons-vk.svg'
 
 type ProfileDataFormType = {
-    editMode: boolean
     profile: ProfileType
+    editMode: boolean
+    setEditMode: (editMode: boolean) => void
 }
 
-const ProfileDataForm: FC<ProfileDataFormType> = ({ editMode, profile }) => {
+const ProfileDataForm: FC<ProfileDataFormType> = ({ profile, editMode, setEditMode }) => {
     const userId = useAppSelector(idUserSelector)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {
-            aboutMe: '',
-            contacts: {
-                facebook: '',
-                github: '',
-                website: '',
-                twitter: '',
-                instagram: '',
-                youtube: '',
-                vk: '',
-                mainLink: '',
-            },
-            lookingForAJob: false,
-            lookingForAJobDescription: '',
-            fullName: '',
-            photos: {
-                small: '',
-                large: '',
-            },
-            userId: userId,
+            aboutMe: profile.aboutMe || '',
+            facebook: profile.contacts.facebook || '',
+            github: profile.contacts.github || '',
+            website: profile.contacts.website || '',
+            twitter: profile.contacts.twitter || '',
+            instagram: profile.contacts.instagram || '',
+            youtube: profile.contacts.youtube || '',
+            vk: profile.contacts.vk || '',
+            mainLink: profile.contacts.mainLink || '',
+            lookingForAJob: profile.lookingForAJob || false,
+            lookingForAJobDescription: profile.lookingForAJobDescription || '',
+            fullName: profile.fullName || '',
         },
         onSubmit: (values) => {
-            dispatch(saveProfileTC(values))
+            dispatch(
+                saveProfileTC({
+                    aboutMe: values.aboutMe,
+                    userId: userId || 0,
+                    lookingForAJob: values.lookingForAJob,
+                    lookingForAJobDescription: values.lookingForAJobDescription,
+                    fullName: values.fullName,
+                    contacts: {
+                        facebook: values.facebook,
+                        github: values.github,
+                        website: values.website,
+                        twitter: values.twitter,
+                        instagram: values.instagram,
+                        youtube: values.youtube,
+                        vk: values.vk,
+                        mainLink: values.mainLink,
+                    },
+                }),
+            )
+            setEditMode(false)
         },
     })
 
     return (
-        <div>
+        <div className={s.containerForm}>
             <h3 className={s.title}>Edit form</h3>
             <form className={s.boxForm} onSubmit={formik.handleSubmit}>
                 <label>
@@ -64,11 +84,7 @@ const ProfileDataForm: FC<ProfileDataFormType> = ({ editMode, profile }) => {
                     <input className={s.input} type="text" {...formik.getFieldProps('aboutMe')} />
                 </label>
                 <div className={s.boxContact}>
-                    <ProfileContacts
-                        profile={profile}
-                        editMode={editMode}
-                        contactValues={formik.initialValues.contacts}
-                    />
+                    <ProfileContacts editMode={editMode} formik={formik} />
                 </div>
                 <Button name={'Save'} type={'submit'} color={''} buttonSize={'small'} />
             </form>

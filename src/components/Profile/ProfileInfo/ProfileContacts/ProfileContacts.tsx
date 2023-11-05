@@ -7,47 +7,26 @@ import instagramImg from '../../../../images/icons/icons-instagram.svg'
 import youtubeImg from '../../../../images/icons/icons-youtube.svg'
 import githubImg from '../../../../images/icons/icons-github.svg'
 import { ContactLink } from '../../../Elements/ContactLink/ContactLink'
-import { ProfileType, saveProfileTC } from '../../../../redux/postPageReducer'
-import { useFormik } from 'formik'
 
 type ProfileContactsType = {
-    profile: ProfileType
+    formik?: any
     editMode?: boolean
-    contactValues: {
-        [key: string]: string
-    }
 }
 
-const ProfileContacts: FC<ProfileContactsType> = ({ profile, editMode, contactValues }) => {
-    const formik = useFormik({
-        initialValues: {
-            aboutMe: '',
-            contacts: {
-                facebook: '',
-                github: '',
-                website: '',
-                twitter: '',
-                instagram: '',
-                youtube: '',
-                vk: '',
-                mainLink: '',
-            },
-            lookingForAJob: false,
-            lookingForAJobDescription: '',
-            fullName: '',
-            userId: null,
-        },
-        onSubmit: (values) => {},
-    })
+const ProfileContacts: FC<ProfileContactsType> = ({ editMode, formik }) => {
+    console.log('formikContacts', formik?.values)
+    // const contactValues = formik?.values?.contacts || {}
+    // console.log('contactValues', contactValues)
 
     const contactLinks = [
-        { name: 'github', url: profile.contacts.github, imgSrc: githubImg },
-        { name: 'website', url: profile.contacts.website, imgSrc: websiteImg },
-        { name: 'twitter', url: profile.contacts.twitter, imgSrc: twitterImg },
-        { name: 'instagram', url: profile.contacts.instagram, imgSrc: instagramImg },
-        { name: 'youtube', url: profile.contacts.youtube, imgSrc: youtubeImg },
-        { name: 'vk', url: profile.contacts.vk, imgSrc: vkImg },
+        { name: 'github', url: formik?.values?.github, imgSrc: githubImg },
+        { name: 'website', url: formik?.values?.website, imgSrc: websiteImg },
+        { name: 'twitter', url: formik?.values?.twitter, imgSrc: twitterImg },
+        { name: 'instagram', url: formik?.values?.instagram, imgSrc: instagramImg },
+        { name: 'youtube', url: formik?.values?.youtube, imgSrc: youtubeImg },
+        { name: 'vk', url: formik?.values?.vk, imgSrc: vkImg },
     ]
+    console.log('contactLinks', contactLinks)
 
     const styles = !editMode ? s.container : s.containerInput
 
@@ -59,13 +38,7 @@ const ProfileContacts: FC<ProfileContactsType> = ({ profile, editMode, contactVa
                 : contactLinks.map((link, index) => (
                       <label key={index}>
                           <span className={s.nameInput}>{link.name}</span>
-                          <input
-                              className={s.input}
-                              type={'text'}
-                              // value={contactValues[link.name]}
-                              {...formik.getFieldProps(`contacts.${link.name}`)}
-                              // onChange={(e) => formik.setFieldValue(`contacts.${link.name}`, e.target.value)}
-                          />
+                          <input className={s.input} type={'text'} {...formik.getFieldProps(link.name)} />
                       </label>
                   ))}
         </div>

@@ -10,6 +10,6 @@ export const profileSelector = createSelector(getPostPageSelector, (postPage) =>
 export const statusSelector = createSelector(getPostPageSelector, (postPage) => postPage.status)
 
 export const photoUserSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile.photos)
-export const photoUserSmallSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile.photos.small)
+export const photoUserSmallSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile?.photos.small)
 
 export const UserSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile.userId)

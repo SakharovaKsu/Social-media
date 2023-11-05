@@ -21,7 +21,7 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
     const dispatch = useAppDispatch()
 
     const photo = useAppSelector(photoUserSelector)
-    console.log(photo)
+
     const [editMode, setEditMode] = useState(false)
 
     // Если Profile null или не определен, то показываем Preloader
@@ -39,7 +39,7 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
 
     return (
         <div className={s.container}>
-            <img className={s.picture} src={photo.large ? photo.large : user1} />
+            <img className={s.picture} src={photo?.large ? photo.large : user1} />
             <div className={s.containerInfo}>
                 <div className={s.boxTitle}>
                     <h2>{profile.fullName}</h2>
@@ -59,9 +59,9 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
                 )}
             </div>
             {editMode ? (
-                <ProfileDataForm profile={profile} editMode={editMode} />
+                <ProfileDataForm profile={profile} editMode={editMode} setEditMode={setEditMode} />
             ) : (
-                <ProfileData profile={profile} editMode={editMode} />
+                <ProfileData profile={profile} />
             )}
         </div>
     )

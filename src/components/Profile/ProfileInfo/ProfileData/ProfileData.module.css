@@ -2,7 +2,7 @@
     display: flex;
     gap: 10px;
     margin-top: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .icon {
@@ -15,6 +15,7 @@
 }
 
 .boxInfo {
+    padding-top: 20px;
     grid-area: 2 / 2 / 3 / 3;
 }
 

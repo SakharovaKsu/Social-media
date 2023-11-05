@@ -2,6 +2,7 @@ import { v1 } from 'uuid'
 import { Dispatch } from 'redux'
 import { profileAPI } from '../api/api'
 import { RESULT_CODE } from './authReducer'
+import { AppDispatchType, StoreType } from './reduxStore'
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
@@ -142,7 +143,7 @@ export const setUserProfileAC = (profile: ProfileType) =>
 export const setStatusAC = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
 export const updateStatusAC = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
 export const savePhotoSuccess = (photos: PhotosType) => ({ type: 'SAVE-PHOTO-SUCCESS', payload: { photos } }) as const
-export const saveProfileAC = (profile: any) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const
+export const saveProfileAC = (profile: ProfileType) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const
 
 export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
     try {
@@ -177,14 +178,16 @@ export const savePhotoTC = (photos: File) => async (dispatch: Dispatch) => {
     const response = await profileAPI.savePhoto(photos)
     debugger
     if (response.data.resultCode === RESULT_CODE.OK) {
-        debugger
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
 
-export const saveProfileTC = (profile: ProfileType) => async (dispatch: Dispatch) => {
-    const response = await profileAPI.saveProfile(profile)
-    if (response.data.resultCode === RESULT_CODE.OK) {
-        dispatch(saveProfileAC(response.data.data))
+export const saveProfileTC =
+    (profile: Omit<ProfileType, 'photos'>) => async (dispatch: AppDispatchType, getState: () => StoreType) => {
+        const idUser = getState().auth.id
+        const response = await profileAPI.saveProfile(profile)
+        if (response.data.resultCode === RESULT_CODE.OK) {
+            idUser && dispatch(getProfileTC(idUser.toString()))
+            //dispatch(saveProfileAC(response.data.data.profile))
+        }
     }
-}
