@@ -1,7 +1,5 @@
 .container {
     display: grid;
-    grid-template-columns: 150px 3fr;
-    grid-template-rows: 1fr 2fr;
     gap: 0 25px;
 
     background-color: #ffffff;
@@ -9,6 +7,16 @@
     padding: 24px;
     margin-bottom: 100px;
     max-width: 700px;
+}
+
+.containerInfo {
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 150px 3fr;
+}
+
+.containerInfoForm {
+    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 150px 5fr;
 }
 
 .picture {

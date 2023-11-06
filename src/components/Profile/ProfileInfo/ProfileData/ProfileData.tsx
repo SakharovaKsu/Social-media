@@ -15,8 +15,8 @@ const ProfileData: FC<ProfileDataType> = ({ profile }) => {
     return (
         <div>
             <div className={s.boxInfo}>
-                <h4>Work status</h4>
-                <div>
+                <h4>A few details about myself</h4>
+                <div className={s.container}>
                     <div className={s.box}>
                         <img className={s.icon} src={styleIcons} />
                         <p>{profile.lookingForAJob ? "I'm looking for a job" : 'I"m not looking'}</p>
@@ -27,10 +27,10 @@ const ProfileData: FC<ProfileDataType> = ({ profile }) => {
                             <span>{profile.lookingForAJobDescription}</span>
                         </div>
                     )}
-                </div>
-                <div className={s.box}>
-                    <p className={s.text}>About me:</p>
-                    <span>{profile.aboutMe ? profile.aboutMe : 'No description'}</span>
+                    <div className={s.box}>
+                        <p className={s.text}>About me:</p>
+                        <span>{profile.aboutMe ? profile.aboutMe : 'No description'}</span>
+                    </div>
                 </div>
             </div>
             <div className={s.boxContact}>

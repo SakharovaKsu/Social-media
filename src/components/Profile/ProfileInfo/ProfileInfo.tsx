@@ -37,17 +37,25 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
         setEditMode(!editMode)
     }
 
+    const styleContainer = !editMode ? s.containerInfo : s.containerInfoForm
+
+    const buttonEdit = isOwner ? (
+        editMode ? (
+            <ButtonSmall name={'Save'} type={'submit'} callback={HandlerButtonToggleEditMode} />
+        ) : (
+            <ButtonSmall name={'Edit'} type={'submit'} callback={HandlerButtonToggleEditMode} />
+        )
+    ) : (
+        ''
+    )
+
     return (
-        <div className={s.container}>
+        <div className={s.container + ' ' + styleContainer}>
             <img className={s.picture} src={photo?.large ? photo.large : user1} />
             <div className={s.containerInfo}>
                 <div className={s.boxTitle}>
                     <h2>{profile.fullName}</h2>
-                    {editMode ? (
-                        <ButtonSmall name={'Save'} type={'submit'} callback={HandlerButtonToggleEditMode} />
-                    ) : (
-                        <ButtonSmall name={'Edit'} type={'submit'} callback={HandlerButtonToggleEditMode} />
-                    )}
+                    {buttonEdit}
                 </div>
                 <ProfileStatus status={status} updateStatusTC={updateStatusTC} />
                 {isOwner ? (

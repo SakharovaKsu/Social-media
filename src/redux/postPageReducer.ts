@@ -176,7 +176,6 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
 
 export const savePhotoTC = (photos: File) => async (dispatch: Dispatch) => {
     const response = await profileAPI.savePhoto(photos)
-    debugger
     if (response.data.resultCode === RESULT_CODE.OK) {
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
@@ -188,6 +187,5 @@ export const saveProfileTC =
         const response = await profileAPI.saveProfile(profile)
         if (response.data.resultCode === RESULT_CODE.OK) {
             idUser && dispatch(getProfileTC(idUser.toString()))
-            //dispatch(saveProfileAC(response.data.data.profile))
         }
     }

@@ -6,13 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../../../redux/reduxStore'
 import { ProfileType, saveProfileTC } from '../../../../redux/postPageReducer'
 import ProfileContacts from '../ProfileContacts/ProfileContacts'
 import { idUserSelector } from '../../../../redux/selectors/authSelector'
-import { photoUserSelector } from '../../../../redux/selectors/postPageSelector'
-import githubImg from '../../../../images/icons/icons-github.svg'
-import websiteImg from '../../../../images/icons/icons-website.svg'
-import twitterImg from '../../../../images/icons/icons-twitter.svg'
-import instagramImg from '../../../../images/icons/icons-instagram.svg'
-import youtubeImg from '../../../../images/icons/icons-youtube.svg'
-import vkImg from '../../../../images/icons/icons-vk.svg'
 
 type ProfileDataFormType = {
     profile: ProfileType

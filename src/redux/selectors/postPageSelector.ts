@@ -13,3 +13,5 @@ export const photoUserSelector = createSelector(getPostPageSelector, (postPage) 
 export const photoUserSmallSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile?.photos.small)
 
 export const UserSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile.userId)
+
+export const ContactsSelector = createSelector(getPostPageSelector, (postPage) => postPage.profile.contacts)

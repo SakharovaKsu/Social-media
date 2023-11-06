@@ -23,3 +23,19 @@
 .input:hover {
     border: 1px solid #9ca0a6;
 }
+
+.icon {
+    width: 25px;
+    height: auto;
+    fill: #9da4b1;
+}
+
+.link {
+    padding: 5px 5px 0 5px;
+}
+
+.link:hover {
+    background-color: #fedfbb;
+    border-radius: 3px;
+    fill: #091b3d;
+}
