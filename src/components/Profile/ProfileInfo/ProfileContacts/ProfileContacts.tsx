@@ -46,7 +46,15 @@ const ProfileContacts: FC<ProfileContactsType> = ({ editMode, formik }) => {
                 : contactLinks.map((link, index) => (
                       <label key={index}>
                           <span className={s.nameInput}>{link.name}</span>
-                          <input className={s.input} type={'text'} {...formik.getFieldProps(link.name)} />
+                          <input
+                              className={s.input}
+                              type={'text'}
+                              {...formik.getFieldProps(link.name)}
+                              error={formik.touched[link.name] && formik.errors[link.name]}
+                          />
+                          {formik.touched[link.name] && formik.errors[link.name] && (
+                              <span className={s.spanError}>{formik.errors[link.name]}</span>
+                          )}
                       </label>
                   ))}
         </div>

@@ -1,8 +1,9 @@
 import { v1 } from 'uuid'
 import { Dispatch } from 'redux'
-import { profileAPI } from '../api/api'
 import { RESULT_CODE } from './authReducer'
 import { AppDispatchType, StoreType } from './reduxStore'
+import { profileAPI } from '../api/api'
+import { setAppErrorAC } from './appReducer'
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
@@ -186,6 +187,9 @@ export const saveProfileTC =
         const idUser = getState().auth.id
         const response = await profileAPI.saveProfile(profile)
         if (response.data.resultCode === RESULT_CODE.OK) {
+            dispatch(setAppErrorAC(null))
             idUser && dispatch(getProfileTC(idUser.toString()))
+        } else if (response.data.resultCode === RESULT_CODE.ERROR) {
+            dispatch(setAppErrorAC(response.data?.messages[0]))
         }
     }

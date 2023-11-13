@@ -28,3 +28,9 @@
 .input:hover {
     border: 1px solid #9ca0a6;
 }
+
+.spanError {
+    display: block;
+    color: #e6521f;
+    font-size: 14px;
+}
