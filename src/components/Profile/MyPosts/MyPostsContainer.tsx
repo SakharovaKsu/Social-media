@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { addPostAC, updateNewPostTextAC } from '../../../redux/postPageReducer'
+import { addPost, updateNewPostText } from '../../../redux/postPageReducer'
 import MyPosts from './MyPosts'
 import { connect } from 'react-redux'
 import { compose, Dispatch } from 'redux'
@@ -15,11 +15,11 @@ const mapStateToProps = (state: StoreType) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         newPostCallback: () => {
-            dispatch(addPostAC())
+            dispatch(addPost())
         },
         onPostChangeCallback: (text: string) => {
             if (text) {
-                dispatch(updateNewPostTextAC(text))
+                dispatch(updateNewPostText(text))
             }
         },
     }

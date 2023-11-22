@@ -3,15 +3,15 @@ import { Dispatch } from 'redux'
 import { RESULT_CODE } from './authReducer'
 import { AppDispatchType, StoreType } from './reduxStore'
 import { profileAPI } from '../api/api'
-import { setAppErrorAC } from './appReducer'
+import { setAppError } from './appReducer'
 
-type AddPostActionType = ReturnType<typeof addPostAC>
-type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
-type setUserProfileType = ReturnType<typeof setUserProfileAC>
-type SetStatusType = ReturnType<typeof setStatusAC>
-type UpdateStatusType = ReturnType<typeof updateStatusAC>
+type AddPostActionType = ReturnType<typeof addPost>
+type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>
+type setUserProfileType = ReturnType<typeof setUserProfile>
+type SetStatusType = ReturnType<typeof setStatus>
+type UpdateStatusType = ReturnType<typeof updateStatus>
 type SavePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
-type SaveProfileType = ReturnType<typeof saveProfileAC>
+type SaveProfileType = ReturnType<typeof saveProfile>
 export type AllPostActionType =
     | AddPostActionType
     | UpdateNewPostTextActionType
@@ -136,20 +136,20 @@ export const postPageReducer = (state = postPage, action: AllPostActionType): Po
     }
 }
 
-export const addPostAC = () => ({ type: 'POST-PAGE/ADD-POST' }) as const
-export const updateNewPostTextAC = (text: string) =>
+export const addPost = () => ({ type: 'POST-PAGE/ADD-POST' }) as const
+export const updateNewPostText = (text: string) =>
     ({ type: 'POST-PAGE/UPDATE-NEW-POST-TEXT', payload: { text } }) as const
-export const setUserProfileAC = (profile: ProfileType) =>
+export const setUserProfile = (profile: ProfileType) =>
     ({ type: 'POST-PAGE/SET-USER-PROFILE', payload: { profile } }) as const
-export const setStatusAC = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
-export const updateStatusAC = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
+export const setStatus = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
+export const updateStatus = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
 export const savePhotoSuccess = (photos: PhotosType) => ({ type: 'SAVE-PHOTO-SUCCESS', payload: { photos } }) as const
-export const saveProfileAC = (profile: ProfileType) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const
+export const saveProfile = (profile: ProfileType) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const
 
 export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
     try {
         const response = await profileAPI.getProfile(userId)
-        dispatch(setUserProfileAC(response.payload.profile))
+        dispatch(setUserProfile(response.payload.profile))
     } catch (error) {
         // Обработка ошибок, если необходимо
     }
@@ -158,7 +158,7 @@ export const getProfileTC = (userId: string) => async (dispatch: Dispatch) => {
 export const getStatusTC = (userId: string) => async (dispatch: Dispatch) => {
     try {
         const response = await profileAPI.getUserStatus(userId)
-        dispatch(setStatusAC(response.data))
+        dispatch(setStatus(response.data))
     } catch (error) {
         // Обработка ошибок, если необходимо
     }
@@ -168,7 +168,7 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
     try {
         const response = await profileAPI.updateStatus(status)
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(updateStatusAC(status))
+            dispatch(updateStatus(status))
         }
     } catch (error) {
         // Обработка ошибок, если необходимо
@@ -187,9 +187,9 @@ export const saveProfileTC =
         const idUser = getState().auth.id
         const response = await profileAPI.saveProfile(profile)
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(setAppErrorAC(null))
+            dispatch(setAppError(null))
             idUser && dispatch(getProfileTC(idUser.toString()))
         } else if (response.data.resultCode === RESULT_CODE.ERROR) {
-            dispatch(setAppErrorAC(response.data?.messages[0]))
+            dispatch(setAppError(response.data?.messages[0]))
         }
     }

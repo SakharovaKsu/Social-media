@@ -1,4 +1,4 @@
-import { addMassageAC, DialogsPageType, dialogsReducer, updateNewMessageTextAC } from './dialogsReducer'
+import { addMassage, DialogsPageType, dialogsReducer, updateNewMessageText } from './dialogsReducer'
 import { v1 } from 'uuid'
 
 describe('dialogsReducer', () => {
@@ -25,14 +25,14 @@ describe('dialogsReducer', () => {
     })
 
     it('should add a new message', () => {
-        const action = addMassageAC()
+        const action = addMassage()
         const newState = dialogsReducer(initialState, action)
 
         expect(newState.messageData.length).toBe(6)
     })
 
     it('should update the new message text', () => {
-        const action = updateNewMessageTextAC('Hello, there!')
+        const action = updateNewMessageText('Hello, there!')
         const newState = dialogsReducer(initialState, action)
 
         expect(newState.newMessageText).toBe('Hello, there!')

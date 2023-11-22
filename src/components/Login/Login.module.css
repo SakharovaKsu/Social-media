@@ -96,3 +96,11 @@
 .label span {
     padding-left: 10px;
 }
+
+.captchaUrl {
+    display: block;
+    margin: 0 auto;
+    width: 250px;
+    height: auto;
+    padding-top: 25px;
+}

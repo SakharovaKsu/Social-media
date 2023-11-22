@@ -5,8 +5,8 @@ import user3 from '../images/avatar-user/user-3.svg'
 import user4 from '../images/avatar-user/user-4.svg'
 import user5 from '../images/avatar-user/user-5.svg'
 
-type AddMessageActionType = ReturnType<typeof addMassageAC>
-type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
+type AddMessageActionType = ReturnType<typeof addMassage>
+type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageText>
 
 export type AllDialogsActionType = AddMessageActionType | UpdateNewMessageTextActionType
 
@@ -63,6 +63,6 @@ export const dialogsReducer = (state = dialogsPage, action: AllDialogsActionType
     }
 }
 
-export const addMassageAC = () => ({ type: 'DIALOGS/ADD-MESSAGE' }) as const
-export const updateNewMessageTextAC = (text: string) =>
+export const addMassage = () => ({ type: 'DIALOGS/ADD-MESSAGE' }) as const
+export const updateNewMessageText = (text: string) =>
     ({ type: 'DIALOGS/UPDATE-NEW-MESSAGE-TEXT', payload: { text } }) as const

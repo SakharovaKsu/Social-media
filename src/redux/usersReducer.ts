@@ -13,13 +13,13 @@ type AllActionType =
     | ToggleIsFetchingType
     | ToggleIsFollowingProgressType
 
-type FollowType = ReturnType<typeof followAC>
-type UnfollowType = ReturnType<typeof unfollowAC>
-type SetUsersType = ReturnType<typeof setUsersAC>
-type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
-type SetUsersTotalCountType = ReturnType<typeof setUsersTotalCountAC>
-type ToggleIsFetchingType = ReturnType<typeof toggleIsFetchingAC>
-type ToggleIsFollowingProgressType = ReturnType<typeof toggleIsFollowingProgressAC>
+type FollowType = ReturnType<typeof follow>
+type UnfollowType = ReturnType<typeof unfollow>
+type SetUsersType = ReturnType<typeof setUsers>
+type SetCurrentPageType = ReturnType<typeof setCurrentPage>
+type SetUsersTotalCountType = ReturnType<typeof setUsersTotalCount>
+type ToggleIsFetchingType = ReturnType<typeof toggleIsFetching>
+type ToggleIsFollowingProgressType = ReturnType<typeof toggleIsFollowingProgress>
 
 type LocationType = {
     country: string
@@ -92,14 +92,14 @@ export const usersReducer = (state = initialStateUser, action: AllActionType): I
     }
 }
 
-export const followAC = (userId: number) => ({ type: 'USERS/FOLLOW', payload: { userId } }) as const
-export const unfollowAC = (userId: number) => ({ type: 'USERS/UNFOLLOW', payload: { userId } }) as const
-export const setUsersAC = (users: UserType[]) => ({ type: 'USERS/SET-USERS', payload: { users } }) as const
-export const setCurrentPageAC = (page: number) => ({ type: 'USERS/SET-CURRENT-PAGE', payload: { page } }) as const
-export const setUsersTotalCountAC = (count: number) => ({ type: 'USERS/SET-TOTAL-COUNT', payload: { count } }) as const
-export const toggleIsFetchingAC = (isFetching: boolean) =>
+export const follow = (userId: number) => ({ type: 'USERS/FOLLOW', payload: { userId } }) as const
+export const unfollow = (userId: number) => ({ type: 'USERS/UNFOLLOW', payload: { userId } }) as const
+export const setUsers = (users: UserType[]) => ({ type: 'USERS/SET-USERS', payload: { users } }) as const
+export const setCurrentPage = (page: number) => ({ type: 'USERS/SET-CURRENT-PAGE', payload: { page } }) as const
+export const setUsersTotalCount = (count: number) => ({ type: 'USERS/SET-TOTAL-COUNT', payload: { count } }) as const
+export const toggleIsFetching = (isFetching: boolean) =>
     ({ type: 'USERS/TOGGLE-IS-FETCHING', payload: { isFetching } }) as const
-export const toggleIsFollowingProgressAC = (isFetching: boolean, userId: number) =>
+export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =>
     ({ type: 'USERS/TOGGLE-IS-FOLLOWING-PROGRESS', payload: { isFetching, userId } }) as const
 
 const followUnfollowFlow = async (
@@ -108,7 +108,7 @@ const followUnfollowFlow = async (
     apiMethod: (id: number) => Promise<any>,
     actionCreator: (userId: number) => AnyAction,
 ) => {
-    dispatch(toggleIsFollowingProgressAC(true, id))
+    dispatch(toggleIsFollowingProgress(true, id))
 
     const response = await apiMethod(id)
 
@@ -116,47 +116,47 @@ const followUnfollowFlow = async (
     if (response.data.resultCode === RESULT_CODE.OK) {
         dispatch(actionCreator(id))
     }
-    dispatch(toggleIsFollowingProgressAC(false, id))
+    dispatch(toggleIsFollowingProgress(false, id))
 }
 
 export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
     try {
-        dispatch(toggleIsFetchingAC(true))
+        dispatch(toggleIsFetching(true))
 
         const response = await userAPI.getUsers(currentPage, pageSize)
 
         // запрос получили, меняем состояние
-        dispatch(toggleIsFetchingAC(false))
+        dispatch(toggleIsFetching(false))
 
         // сетаем
-        dispatch(setUsersAC(response.items))
-        dispatch(setUsersTotalCountAC(response.totalCount))
+        dispatch(setUsers(response.items))
+        dispatch(setUsersTotalCount(response.totalCount))
     } catch (error) {}
 }
 
 export const onPageChangedTC = (pageNumber: number, pageSize: number) => async (dispatch: Dispatch) => {
     try {
-        dispatch(toggleIsFetchingAC(true))
-        dispatch(setCurrentPageAC(pageNumber))
+        dispatch(toggleIsFetching(true))
+        dispatch(setCurrentPage(pageNumber))
 
         // делаем запрос на сервер для текущей странице по клике
         const response = await userAPI.getUsers(pageNumber, pageSize)
 
-        dispatch(toggleIsFetchingAC(false))
-        dispatch(setUsersAC(response.items))
+        dispatch(toggleIsFetching(false))
+        dispatch(setUsers(response.items))
     } catch (error) {}
 }
 
 export const followTC = (id: number) => async (dispatch: Dispatch) => {
     try {
         const apiMethod = userAPI.followUser.bind(id)
-        followUnfollowFlow(id, dispatch, apiMethod, followAC)
+        followUnfollowFlow(id, dispatch, apiMethod, follow)
     } catch (error) {}
 }
 
 export const unfollowTC = (id: number) => async (dispatch: Dispatch) => {
     try {
         const apiMethod = userAPI.unfollowUser.bind(id)
-        followUnfollowFlow(id, dispatch, apiMethod, unfollowAC)
+        followUnfollowFlow(id, dispatch, apiMethod, unfollow)
     } catch (error) {}
 }

@@ -1,10 +1,10 @@
 import {
     appReducer,
     InitialStateType,
-    isAppIsInitializedAC,
+    isAppIsInitialized,
     RequestStatusType,
-    setAppErrorAC,
-    setAppStatusAC,
+    setAppError,
+    setAppStatus,
 } from './appReducer'
 
 describe('appReducer', () => {
@@ -19,21 +19,21 @@ describe('appReducer', () => {
     })
 
     it('should set the error', () => {
-        const action = setAppErrorAC('Oops, an error occurred!')
+        const action = setAppError('Oops, an error occurred!')
         const newState = appReducer(initialState, action)
 
         expect(newState.error).toBe('Oops, an error occurred!')
     })
 
     it('should set the status', () => {
-        const action = setAppStatusAC('loading')
+        const action = setAppStatus('loading')
         const newState = appReducer(initialState, action)
 
         expect(newState.status).toBe('loading')
     })
 
     it('should set the initialized state', () => {
-        const action = isAppIsInitializedAC(true)
+        const action = isAppIsInitialized(true)
         const newState = appReducer(initialState, action)
 
         expect(newState.isInitialized).toBe(true)

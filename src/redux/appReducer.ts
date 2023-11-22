@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { authAPI } from '../api/api'
-import { RESULT_CODE, setIsLoggedInAC, setUserDataAC } from './authReducer'
+import { RESULT_CODE, setIsLoggedIn, setUserData } from './authReducer'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -10,9 +10,9 @@ export type InitialStateType = {
     isInitialized: boolean
 }
 
-export type SetAppErrorType = ReturnType<typeof setAppErrorAC>
-export type SetAppStatusType = ReturnType<typeof setAppStatusAC>
-export type SetAppIsInitializedType = ReturnType<typeof isAppIsInitializedAC>
+export type SetAppErrorType = ReturnType<typeof setAppError>
+export type SetAppStatusType = ReturnType<typeof setAppStatus>
+export type SetAppIsInitializedType = ReturnType<typeof isAppIsInitialized>
 type ActionType = SetAppErrorType | SetAppStatusType | SetAppIsInitializedType
 
 const initialState: InitialStateType = {
@@ -40,23 +40,23 @@ export const appReducer = (state = initialState, action: ActionType): InitialSta
     }
 }
 
-export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-APP-ERROR', error }) as const
-export const setAppStatusAC = (status: RequestStatusType) => ({ type: 'APP/SET-APP-STATUS', status }) as const
-export const isAppIsInitializedAC = (isInitialized: boolean) =>
+export const setAppError = (error: string | null) => ({ type: 'APP/SET-APP-ERROR', error }) as const
+export const setAppStatus = (status: RequestStatusType) => ({ type: 'APP/SET-APP-STATUS', status }) as const
+export const isAppIsInitialized = (isInitialized: boolean) =>
     ({ type: 'APP/SET-IS-INITIALIZED-ERROR', isInitialized }) as const
 
 export const initializeAppTC = () => async (dispatch: Dispatch) => {
     try {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatus('loading'))
 
         const response = await authAPI.getAuthMe()
 
-        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setAppStatus('succeeded'))
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(setIsLoggedInAC(true))
-            dispatch(setUserDataAC(response.data.data))
+            dispatch(setIsLoggedIn(true))
+            dispatch(setUserData(response.data.data))
         }
 
-        dispatch(isAppIsInitializedAC(true))
+        dispatch(isAppIsInitialized(true))
     } catch (error) {}
 }

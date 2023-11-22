@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { ContactsType, PhotosType, ProfileType, setUserProfileAC } from '../redux/postPageReducer'
+import { ContactsType, PhotosType, ProfileType, setUserProfile } from '../redux/postPageReducer'
 
 export type ResponseType<T = {}> = {
     resultCode: number
@@ -11,6 +11,7 @@ export type FormType = {
     email?: string
     password?: string
     rememberMe?: boolean
+    captcha?: string | null
 }
 
 export const axiosInstance = axios.create({
@@ -50,7 +51,7 @@ export const authAPI = {
 
 export const profileAPI = {
     getProfile(userId: string) {
-        return axiosInstance.get(`/profile/` + userId).then((response) => setUserProfileAC(response.data))
+        return axiosInstance.get(`/profile/` + userId).then((response) => setUserProfile(response.data))
     },
     getUserStatus(userId: string) {
         return axiosInstance.get(`/profile/status/` + userId)
@@ -69,5 +70,11 @@ export const profileAPI = {
     },
     saveProfile(profile: Omit<ProfileType, 'photos'>) {
         return axiosInstance.put<ResponseType<{ profile: ProfileType }>>('/profile', profile)
+    },
+}
+
+export const securityAPI = {
+    getCuptchaUrl() {
+        return axiosInstance.get(`/security/get-captcha-url`)
     },
 }

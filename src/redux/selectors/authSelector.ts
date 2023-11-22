@@ -8,3 +8,5 @@ export const isAuthSelector = createSelector(getAuthSelector, (auth) => auth.isA
 export const loginSelector = createSelector(getAuthSelector, (auth) => auth.login)
 
 export const idUserSelector = createSelector(getAuthSelector, (auth) => auth.id)
+
+export const captchaUrlSelector = createSelector(getAuthSelector, (auth) => auth.captchaUrl)

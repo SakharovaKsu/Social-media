@@ -1,10 +1,12 @@
-import { authReducer, setIsLoggedInAC, setUserDataAC } from './authReducer'
+import { authReducer, setIsLoggedIn, setUserData } from './authReducer'
+import { captchaUrlSelector } from './selectors/authSelector'
 
 type InitialStateType = {
     id: number | null
     login: string | null
     email: string | null
     isAuth: boolean
+    captchaUrl: string | null
 }
 
 describe('authReducer', () => {
@@ -16,6 +18,7 @@ describe('authReducer', () => {
             login: null,
             email: null,
             isAuth: false,
+            captchaUrl: null,
         }
     })
 
@@ -25,9 +28,10 @@ describe('authReducer', () => {
             login: 'gol',
             email: 'gol@gmail.com',
             isAuth: true,
+            captchaUrl: null,
         }
 
-        const action = setUserDataAC(setUser)
+        const action = setUserData(setUser)
         const newState = authReducer(initialState, action)
 
         expect(newState.login).toBe('gol')
@@ -35,7 +39,7 @@ describe('authReducer', () => {
     })
 
     it('the user must log out of the profile', () => {
-        const action = setIsLoggedInAC(false)
+        const action = setIsLoggedIn(false)
         const newState = authReducer(initialState, action)
 
         expect(newState.isAuth).toBe(false)

@@ -1,11 +1,11 @@
 import {
-    addPostAC,
+    addPost,
     postPageReducer,
     PostPageType,
-    setStatusAC,
-    setUserProfileAC,
-    updateNewPostTextAC,
-    updateStatusAC,
+    setStatus,
+    setUserProfile,
+    updateNewPostText,
+    updateStatus,
 } from './postPageReducer'
 import { v1 } from 'uuid'
 
@@ -56,7 +56,7 @@ describe('postPageReducer', () => {
     })
 
     test('adding a new post', () => {
-        const action = addPostAC()
+        const action = addPost()
         const newState = postPageReducer(initialState, action)
 
         expect(newState.postsData.length).toBe(initialState.postsData.length + 1)
@@ -66,7 +66,7 @@ describe('postPageReducer', () => {
 
     test('updating the text of a new post', () => {
         const newText = 'New post text'
-        const action = updateNewPostTextAC(newText)
+        const action = updateNewPostText(newText)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.newPostText).toBe(newText)
@@ -94,7 +94,7 @@ describe('postPageReducer', () => {
             },
             userId: 21,
         }
-        const action = setUserProfileAC(newUsers)
+        const action = setUserProfile(newUsers)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.profile).toBe(newUsers)
@@ -102,7 +102,7 @@ describe('postPageReducer', () => {
 
     test('check for adding a new status', () => {
         const newStatus = 'New post text'
-        const action = setStatusAC(newStatus)
+        const action = setStatus(newStatus)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.status).toBe(newStatus)
@@ -110,8 +110,8 @@ describe('postPageReducer', () => {
     })
 
     test('checking for status changes', () => {
-        const updateStatus = 'update status'
-        const action = updateStatusAC(updateStatus)
+        const newStatus = 'update status'
+        const action = updateStatus(newStatus)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.status).toBe(updateStatus)

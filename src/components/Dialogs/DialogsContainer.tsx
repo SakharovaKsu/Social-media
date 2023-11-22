@@ -1,5 +1,5 @@
 import React from 'react'
-import { addMassageAC, updateNewMessageTextAC } from '../../redux/dialogsReducer'
+import { addMassage, updateNewMessageText } from '../../redux/dialogsReducer'
 import { StoreType } from '../../redux/reduxStore'
 import { connect } from 'react-redux'
 import { compose, Dispatch } from 'redux'
@@ -18,10 +18,10 @@ const mapStateToProps = (state: StoreType) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         addMessagesCallback: () => {
-            dispatch(addMassageAC())
+            dispatch(addMassage())
         },
         updateNewMessageTextCallback: (text: string) => {
-            dispatch(updateNewMessageTextAC(text))
+            dispatch(updateNewMessageText(text))
         },
     }
 }
