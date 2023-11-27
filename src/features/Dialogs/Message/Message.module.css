@@ -1,7 +1,14 @@
 .message {
-    background-color: #f5f6f7;
     color: #091b3d;
     padding: 16px 24px;
     border-radius: 24px 24px 24px 4px;
     max-width: 527px;
+}
+
+.messageLight {
+    background-color: #f5f6f7;
+}
+
+.messageContrasting {
+    background-color: #ffe5c4;
 }

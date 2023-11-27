@@ -24,6 +24,7 @@ export type MessageDataType = {
 export type DialogsPageType = {
     dialogsData: DialogsDataType[]
     messageData: MessageDataType[]
+    friendMessage: MessageDataType[]
     newMessageText: string
 }
 
@@ -36,11 +37,12 @@ const dialogsPage: DialogsPageType = {
         { id: v1(), name: 'Martha Gross', src: user4 },
     ],
     messageData: [
-        { id: v1(), message: 'Hello Linh!' },
+        { id: v1(), message: 'Good morning ☀️' },
+        { id: v1(), message: 'Thank you, I also love it.' },
+    ],
+    friendMessage: [
         { id: v1(), message: '👋 Hi Gabriel' },
         { id: v1(), message: 'I really love your work, a great job 💪' },
-        { id: v1(), message: 'Thank you, I also love it.' },
-        { id: v1(), message: 'Good morning ☀️' },
     ],
     newMessageText: '',
 }

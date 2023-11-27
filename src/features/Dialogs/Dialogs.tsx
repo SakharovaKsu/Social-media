@@ -20,13 +20,20 @@ const Dialogs: FC<DialogsType> = React.memo(({ dialogsPage, addMessagesCallback,
         <Message key={message.id} message={message.message} id={message.id} />
     ))
 
+    const messagesFriend = dialogsPage.friendMessage.map((message) => (
+        <Message key={message.id} message={message.message} id={message.id} color={'contrasting'} />
+    ))
+
     return (
         <div className={s.dialogs}>
             <h2 className={s.title}>Chats</h2>
             <div className={s.box}>
                 <ul className={s.list}>{dialogsElements}</ul>
-                <div className={s.containerMessage}>
-                    <div className={s.messagesList}>{messagesElements}</div>
+                <div>
+                    <div className={s.containerMessage}>
+                        <div className={s.messagesFriend}>{messagesFriend}</div>
+                        <div className={s.messagesList}>{messagesElements}</div>
+                    </div>
                     <TextArea
                         name={'Send'}
                         addTextCallback={addMessagesCallback}

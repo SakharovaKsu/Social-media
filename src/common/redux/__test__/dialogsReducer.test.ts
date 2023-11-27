@@ -15,10 +15,12 @@ describe('dialogsReducer', () => {
             ],
             messageData: [
                 { id: v1(), message: 'Hello Linh!' },
-                { id: v1(), message: '👋 Hi Gabriel' },
                 { id: v1(), message: 'I really love your work, a great job 💪' },
-                { id: v1(), message: 'Thank you, I also love it.' },
                 { id: v1(), message: 'Good morning ☀️' },
+            ],
+            friendMessage: [
+                { id: v1(), message: '👋 Hi Gabriel' },
+                { id: v1(), message: 'Thank you, I also love it.' },
             ],
             newMessageText: '',
         }
