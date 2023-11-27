@@ -1,12 +1,12 @@
 import { Dispatch } from 'redux'
 import { FormType } from '../api/api.type'
 import { handleServerAppError, handleServerNetworkError } from '../utils/error-utils'
-import { actionsApp, ActionsApp, Thunk } from './appReducer'
+import { actionsApp, ActionsApp } from './appReducer'
 import { AppDispatchType } from './store'
 import { authAPI } from '../api/auth.api'
 import { securityAPI } from '../api/security.api'
 import { RESULT_CODE } from '../enums/enums'
-import { InferAction } from './ActionsType/InferAction'
+import { BaseThunk, InferAction } from './ActionsType/InferAction'
 
 type InitialStateType = {
     id: number | null
@@ -18,6 +18,7 @@ type InitialStateType = {
 
 type ActionsAuth = InferAction<typeof actionsAuth>
 type AllAction = ActionsAuth | ActionsApp
+type Thunk = BaseThunk<AllAction>
 
 const initialState: InitialStateType = {
     id: null,

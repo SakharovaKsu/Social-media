@@ -1,10 +1,8 @@
 import { Dispatch } from 'redux'
 import { actionsAuth } from './authReducer'
-import { ThunkAction } from 'redux-thunk'
-import { StoreType } from './store'
 import { authAPI } from '../api/auth.api'
 import { RESULT_CODE } from '../enums/enums'
-import { InferAction } from './ActionsType/InferAction'
+import { BaseThunk, InferAction } from './ActionsType/InferAction'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -15,6 +13,7 @@ export type InitialStateType = {
 }
 
 export type ActionsApp = InferAction<typeof actionsApp>
+type Thunk = BaseThunk<ActionsApp>
 
 const initialState: InitialStateType = {
     // если ошибка какая-то глобальная произойдёт - запишем текст ошибки сюда
@@ -62,5 +61,3 @@ export const initializeAppTC = (): Thunk => async (dispatch: Dispatch) => {
         dispatch(actionsApp.isAppIsInitialized(true))
     } catch (error) {}
 }
-
-export type Thunk = ThunkAction<Promise<void>, StoreType, unknown, ActionsApp>

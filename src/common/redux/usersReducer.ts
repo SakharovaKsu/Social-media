@@ -1,11 +1,11 @@
 import { AnyAction, Dispatch } from 'redux'
 import { boundFollowUnfollowFlow } from '../utils/ boundFollowUnfollowFlow'
-import { Thunk } from './appReducer'
 import { userAPI } from '../api/user.api'
 import { RESULT_CODE } from '../enums/enums'
-import { InferAction } from './ActionsType/InferAction'
+import { BaseThunk, InferAction } from './ActionsType/InferAction'
 
 export type ActionsUsers = InferAction<typeof actionsUsers>
+type Thunk = BaseThunk<ActionsUsers>
 
 type LocationType = {
     country: string

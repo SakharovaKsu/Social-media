@@ -1,12 +1,13 @@
 import { v1 } from 'uuid'
 import { Dispatch } from 'redux'
 import { AppDispatchType, StoreType } from './store'
-import { actionsApp, Thunk } from './appReducer'
+import { actionsApp } from './appReducer'
 import { profileAPI } from '../api/profile.api'
 import { RESULT_CODE } from '../enums/enums'
-import { InferAction } from './ActionsType/InferAction'
+import { BaseThunk, InferAction } from './ActionsType/InferAction'
 
 export type ActionsPostPage = InferAction<typeof actionsPostPage>
+type Thunk = BaseThunk<ActionsPostPage>
 
 export type PostsDataType = {
     id: string
