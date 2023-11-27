@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { setAppError, SetAppErrorType } from '../redux/appReducer'
+import { ActionsApp, actionsApp } from '../redux/appReducer'
 
 type ResponseType<T = {}> = {
     resultCode: number
@@ -10,14 +10,14 @@ type ResponseType<T = {}> = {
 
 export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: ErrorUtilsDispatchType) => {
     if (data.messages.length) {
-        dispatch(setAppError(data.messages[0]))
+        dispatch(actionsApp.setAppError(data.messages[0]))
     } else {
-        dispatch(setAppError('Some error occurred'))
+        dispatch(actionsApp.setAppError('Some error occurred'))
     }
 }
 
 export const handleServerNetworkError = (error: string, dispatch: ErrorUtilsDispatchType) => {
-    dispatch(setAppError(error))
+    dispatch(actionsApp.setAppError(error))
 }
 
-type ErrorUtilsDispatchType = Dispatch<SetAppErrorType>
+type ErrorUtilsDispatchType = Dispatch<ActionsApp>

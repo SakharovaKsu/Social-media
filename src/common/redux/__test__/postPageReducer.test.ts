@@ -1,12 +1,4 @@
-import {
-    addPost,
-    postPageReducer,
-    PostPageType,
-    setStatus,
-    setUserProfile,
-    updateNewPostText,
-    updateStatus,
-} from '../postPageReducer'
+import { actionsPostPage, postPageReducer, PostPageType } from '../postPageReducer'
 import { v1 } from 'uuid'
 
 // Тестирование редьюсера postPageReducer
@@ -56,7 +48,7 @@ describe('postPageReducer', () => {
     })
 
     test('adding a new post', () => {
-        const action = addPost()
+        const action = actionsPostPage.addPost()
         const newState = postPageReducer(initialState, action)
 
         expect(newState.postsData.length).toBe(initialState.postsData.length + 1)
@@ -66,7 +58,7 @@ describe('postPageReducer', () => {
 
     test('updating the text of a new post', () => {
         const newText = 'New post text'
-        const action = updateNewPostText(newText)
+        const action = actionsPostPage.updateNewPostText(newText)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.newPostText).toBe(newText)
@@ -94,7 +86,7 @@ describe('postPageReducer', () => {
             },
             userId: 21,
         }
-        const action = setUserProfile(newUsers)
+        const action = actionsPostPage.setUserProfile(newUsers)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.profile).toBe(newUsers)
@@ -102,7 +94,7 @@ describe('postPageReducer', () => {
 
     test('check for adding a new status', () => {
         const newStatus = 'New post text'
-        const action = setStatus(newStatus)
+        const action = actionsPostPage.setStatus(newStatus)
         const newState = postPageReducer(initialState, action)
 
         expect(newState.status).toBe(newStatus)
@@ -111,10 +103,9 @@ describe('postPageReducer', () => {
 
     test('checking for status changes', () => {
         const newStatus = 'update status'
-        const action = updateStatus(newStatus)
+        const action = actionsPostPage.updateStatus(newStatus)
         const newState = postPageReducer(initialState, action)
 
-        expect(newState.status).toBe(updateStatus)
         expect(newState.status.length).toBe(13)
     })
 })

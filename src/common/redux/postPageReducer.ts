@@ -1,25 +1,12 @@
 import { v1 } from 'uuid'
 import { Dispatch } from 'redux'
 import { AppDispatchType, StoreType } from './store'
-import { setAppError, Thunk } from './appReducer'
+import { actionsApp, Thunk } from './appReducer'
 import { profileAPI } from '../api/profile.api'
 import { RESULT_CODE } from '../enums/enums'
+import { InferAction } from './ActionsType/InferAction'
 
-type AddPostActionType = ReturnType<typeof addPost>
-type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>
-type setUserProfileType = ReturnType<typeof setUserProfile>
-type SetStatusType = ReturnType<typeof setStatus>
-type UpdateStatusType = ReturnType<typeof updateStatus>
-type SavePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
-type SaveProfileType = ReturnType<typeof saveProfile>
-export type AllPostActionType =
-    | AddPostActionType
-    | UpdateNewPostTextActionType
-    | setUserProfileType
-    | SetStatusType
-    | UpdateStatusType
-    | SavePhotoSuccessType
-    | SaveProfileType
+export type ActionsPostPage = InferAction<typeof actionsPostPage>
 
 export type PostsDataType = {
     id: string
@@ -101,7 +88,7 @@ const postPage: PostPageType = {
     status: '',
 }
 
-export const postPageReducer = (state = postPage, action: AllPostActionType): PostPageType => {
+export const postPageReducer = (state = postPage, action: ActionsPostPage): PostPageType => {
     switch (action.type) {
         case 'POST-PAGE/ADD-POST': {
             const newPost = {
@@ -136,22 +123,22 @@ export const postPageReducer = (state = postPage, action: AllPostActionType): Po
     }
 }
 
-export const addPost = () => ({ type: 'POST-PAGE/ADD-POST' }) as const
-export const updateNewPostText = (text: string) =>
-    ({ type: 'POST-PAGE/UPDATE-NEW-POST-TEXT', payload: { text } }) as const
-export const setUserProfile = (profile: ProfileType) =>
-    ({ type: 'POST-PAGE/SET-USER-PROFILE', payload: { profile } }) as const
-export const setStatus = (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const
-export const updateStatus = (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const
-export const savePhotoSuccess = (photos: PhotosType) => ({ type: 'SAVE-PHOTO-SUCCESS', payload: { photos } }) as const
-export const saveProfile = (profile: ProfileType) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const
+export const actionsPostPage = {
+    addPost: () => ({ type: 'POST-PAGE/ADD-POST' }) as const,
+    updateNewPostText: (text: string) => ({ type: 'POST-PAGE/UPDATE-NEW-POST-TEXT', payload: { text } }) as const,
+    setUserProfile: (profile: ProfileType) => ({ type: 'POST-PAGE/SET-USER-PROFILE', payload: { profile } }) as const,
+    setStatus: (status: string) => ({ type: 'POST-PAGE/SET-STATUS', payload: { status } }) as const,
+    updateStatus: (status: string) => ({ type: 'POST-PAGE/UPDATE-STATUS', payload: { status } }) as const,
+    savePhotoSuccess: (photos: PhotosType) => ({ type: 'SAVE-PHOTO-SUCCESS', payload: { photos } }) as const,
+    saveProfile: (profile: ProfileType) => ({ type: 'SAVE-PROFILE', payload: { profile } }) as const,
+}
 
 export const getProfileTC =
     (userId: string): Thunk =>
     async (dispatch: Dispatch) => {
         try {
             const response = await profileAPI.getProfile(userId)
-            dispatch(setUserProfile(response.payload.profile))
+            dispatch(actionsPostPage.setUserProfile(response.payload.profile))
         } catch (error) {
             // Обработка ошибок, если необходимо
         }
@@ -162,7 +149,7 @@ export const getStatusTC =
     async (dispatch: Dispatch) => {
         try {
             const response = await profileAPI.getUserStatus(userId)
-            dispatch(setStatus(response.data))
+            dispatch(actionsPostPage.setStatus(response.data))
         } catch (error) {
             // Обработка ошибок, если необходимо
         }
@@ -174,7 +161,7 @@ export const updateStatusTC =
         try {
             const response = await profileAPI.updateStatus(status)
             if (response.data.resultCode === RESULT_CODE.OK) {
-                dispatch(updateStatus(status))
+                dispatch(actionsPostPage.updateStatus(status))
             }
         } catch (error) {
             // Обработка ошибок, если необходимо
@@ -186,7 +173,7 @@ export const savePhotoTC =
     async (dispatch: Dispatch) => {
         const response = await profileAPI.savePhoto(photos)
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(savePhotoSuccess(response.data.data.photos))
+            dispatch(actionsPostPage.savePhotoSuccess(response.data.data.photos))
         }
     }
 
@@ -196,9 +183,9 @@ export const saveProfileTC =
         const idUser = getState().auth.id
         const response = await profileAPI.saveProfile(profile)
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(setAppError(null))
+            dispatch(actionsApp.setAppError(null))
             idUser && dispatch(getProfileTC(idUser.toString()))
         } else if (response.data.resultCode === RESULT_CODE.ERROR) {
-            dispatch(setAppError(response.data?.messages[0]))
+            dispatch(actionsApp.setAppError(response.data?.messages[0]))
         }
     }

@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import { addPost, updateNewPostText } from '../../../common/redux/postPageReducer'
+import React from 'react'
+import { actionsPostPage } from '../../../common/redux/postPageReducer'
 import MyPosts from './MyPosts'
 import { connect } from 'react-redux'
 import { compose, Dispatch } from 'redux'
@@ -15,11 +15,11 @@ const mapStateToProps = (state: StoreType) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         newPostCallback: () => {
-            dispatch(addPost())
+            dispatch(actionsPostPage.addPost())
         },
         onPostChangeCallback: (text: string) => {
             if (text) {
-                dispatch(updateNewPostText(text))
+                dispatch(actionsPostPage.updateNewPostText(text))
             }
         },
     }

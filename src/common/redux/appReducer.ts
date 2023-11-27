@@ -1,9 +1,10 @@
 import { Dispatch } from 'redux'
-import { setIsLoggedIn, setUserData } from './authReducer'
+import { actionsAuth } from './authReducer'
 import { ThunkAction } from 'redux-thunk'
 import { StoreType } from './store'
 import { authAPI } from '../api/auth.api'
 import { RESULT_CODE } from '../enums/enums'
+import { InferAction } from './ActionsType/InferAction'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -13,10 +14,7 @@ export type InitialStateType = {
     isInitialized: boolean
 }
 
-export type SetAppErrorType = ReturnType<typeof setAppError>
-export type SetAppStatusType = ReturnType<typeof setAppStatus>
-export type SetAppIsInitializedType = ReturnType<typeof isAppIsInitialized>
-type ActionType = SetAppErrorType | SetAppStatusType | SetAppIsInitializedType
+export type ActionsApp = InferAction<typeof actionsApp>
 
 const initialState: InitialStateType = {
     // если ошибка какая-то глобальная произойдёт - запишем текст ошибки сюда
@@ -27,7 +25,7 @@ const initialState: InitialStateType = {
     isInitialized: false,
 }
 
-export const appReducer = (state = initialState, action: ActionType): InitialStateType => {
+export const appReducer = (state = initialState, action: ActionsApp): InitialStateType => {
     switch (action.type) {
         case 'APP/SET-APP-ERROR': {
             return { ...state, error: action.error }
@@ -43,25 +41,26 @@ export const appReducer = (state = initialState, action: ActionType): InitialSta
     }
 }
 
-export const setAppError = (error: string | null) => ({ type: 'APP/SET-APP-ERROR', error }) as const
-export const setAppStatus = (status: RequestStatusType) => ({ type: 'APP/SET-APP-STATUS', status }) as const
-export const isAppIsInitialized = (isInitialized: boolean) =>
-    ({ type: 'APP/SET-IS-INITIALIZED-ERROR', isInitialized }) as const
+export const actionsApp = {
+    setAppError: (error: string | null) => ({ type: 'APP/SET-APP-ERROR', error }) as const,
+    setAppStatus: (status: RequestStatusType) => ({ type: 'APP/SET-APP-STATUS', status }) as const,
+    isAppIsInitialized: (isInitialized: boolean) => ({ type: 'APP/SET-IS-INITIALIZED-ERROR', isInitialized }) as const,
+}
 
 export const initializeAppTC = (): Thunk => async (dispatch: Dispatch) => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(actionsApp.setAppStatus('loading'))
 
         const response = await authAPI.getAuthMe()
 
-        dispatch(setAppStatus('succeeded'))
+        dispatch(actionsApp.setAppStatus('succeeded'))
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(setIsLoggedIn(true))
-            dispatch(setUserData(response.data.data))
+            dispatch(actionsAuth.setIsLoggedIn(true))
+            dispatch(actionsAuth.setUserData(response.data.data))
         }
 
-        dispatch(isAppIsInitialized(true))
+        dispatch(actionsApp.isAppIsInitialized(true))
     } catch (error) {}
 }
 
-export type Thunk = ThunkAction<Promise<void>, StoreType, unknown, ActionType>
+export type Thunk = ThunkAction<Promise<void>, StoreType, unknown, ActionsApp>

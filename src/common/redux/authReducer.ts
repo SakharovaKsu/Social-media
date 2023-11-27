@@ -1,11 +1,12 @@
 import { Dispatch } from 'redux'
 import { FormType } from '../api/api.type'
 import { handleServerAppError, handleServerNetworkError } from '../utils/error-utils'
-import { SetAppErrorType, setAppStatus, SetAppStatusType, Thunk } from './appReducer'
+import { actionsApp, ActionsApp, Thunk } from './appReducer'
 import { AppDispatchType } from './store'
 import { authAPI } from '../api/auth.api'
 import { securityAPI } from '../api/security.api'
 import { RESULT_CODE } from '../enums/enums'
+import { InferAction } from './ActionsType/InferAction'
 
 type InitialStateType = {
     id: number | null
@@ -15,17 +16,8 @@ type InitialStateType = {
     captchaUrl: string | null
 }
 
-type SetUserDataType = ReturnType<typeof setUserData>
-type SetIsLoggedInType = ReturnType<typeof setIsLoggedIn>
-type SetUserIdType = ReturnType<typeof setUserId>
-type GetCaptchaUrlSuccessType = ReturnType<typeof getCaptchaUrlSuccess>
-type ActionType =
-    | SetUserDataType
-    | SetIsLoggedInType
-    | SetAppErrorType
-    | SetAppStatusType
-    | SetUserIdType
-    | GetCaptchaUrlSuccessType
+type ActionsAuth = InferAction<typeof actionsAuth>
+type AllAction = ActionsAuth | ActionsApp
 
 const initialState: InitialStateType = {
     id: null,
@@ -35,7 +27,7 @@ const initialState: InitialStateType = {
     captchaUrl: null,
 }
 
-export const authReducer = (state = initialState, action: ActionType): InitialStateType => {
+export const authReducer = (state = initialState, action: ActionsAuth): InitialStateType => {
     switch (action.type) {
         case 'AUTH/SET-USER-DATA': {
             return { ...state, ...action.payload.user, isAuth: true }
@@ -54,21 +46,23 @@ export const authReducer = (state = initialState, action: ActionType): InitialSt
     }
 }
 
-export const setUserData = (user: InitialStateType) => ({ type: 'AUTH/SET-USER-DATA', payload: { user } }) as const
-export const setIsLoggedIn = (isAuth: boolean) => ({ type: 'AUTH/SET-IS-LOGGED-IN', isAuth }) as const
-export const setUserId = (id: number) => ({ type: 'AUTH/SET-USER-ID', id }) as const
-export const getCaptchaUrlSuccess = (url: string) => ({ type: 'GET-CAPTCHA-URL', url }) as const
+export const actionsAuth = {
+    setUserData: (user: InitialStateType) => ({ type: 'AUTH/SET-USER-DATA', payload: { user } }) as const,
+    setIsLoggedIn: (isAuth: boolean) => ({ type: 'AUTH/SET-IS-LOGGED-IN', isAuth }) as const,
+    setUserId: (id: number) => ({ type: 'AUTH/SET-USER-ID', id }) as const,
+    getCaptchaUrlSuccess: (url: string) => ({ type: 'GET-CAPTCHA-URL', url }) as const,
+}
 
 export const loginTC =
     (data: FormType): Thunk =>
     async (dispatch: AppDispatchType) => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(actionsApp.setAppStatus('loading'))
             const response = await authAPI.login(data)
 
             if (response.data.resultCode === RESULT_CODE.OK) {
-                dispatch(setIsLoggedIn(true))
-                dispatch(setUserId(response.data.data.userId))
+                dispatch(actionsAuth.setIsLoggedIn(true))
+                dispatch(actionsAuth.setUserId(response.data.data.userId))
             } else {
                 if (response.data.resultCode === RESULT_CODE.ERROR_CAPTCHA) {
                     dispatch(getCaptchaUrl())
@@ -78,28 +72,28 @@ export const loginTC =
         } catch (error) {
             handleServerNetworkError((error as { message: string }).message, dispatch)
         } finally {
-            dispatch(setAppStatus('succeeded'))
+            dispatch(actionsApp.setAppStatus('succeeded'))
         }
     }
 
-export const logOutTC = (): Thunk => async (dispatch: Dispatch<ActionType>) => {
+export const logOutTC = (): Thunk => async (dispatch: Dispatch<AllAction>) => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(actionsApp.setAppStatus('loading'))
         const response = await authAPI.logOut()
         debugger
 
         if (response.data.resultCode === RESULT_CODE.OK) {
-            dispatch(setIsLoggedIn(false))
-            dispatch(setAppStatus('succeeded'))
+            dispatch(actionsAuth.setIsLoggedIn(false))
+            dispatch(actionsApp.setAppStatus('succeeded'))
         }
     } catch (error) {}
 }
 
-export const getCaptchaUrl = (): Thunk => async (dispatch: Dispatch<ActionType>) => {
+export const getCaptchaUrl = (): Thunk => async (dispatch: Dispatch<AllAction>) => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(actionsApp.setAppStatus('loading'))
         const response = await securityAPI.getCuptchaUrl()
         const captchaUrl = response.data.url
-        dispatch(getCaptchaUrlSuccess(captchaUrl))
+        dispatch(actionsAuth.getCaptchaUrlSuccess(captchaUrl))
     } catch (error) {}
 }

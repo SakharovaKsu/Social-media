@@ -1,10 +1,10 @@
 import { axiosInstance } from './axiosInstance'
-import { PhotosType, ProfileType, setUserProfile } from '../redux/postPageReducer'
+import { actionsPostPage, PhotosType, ProfileType } from '../redux/postPageReducer'
 import { ResponseType } from './api.type'
 
 export const profileAPI = {
     getProfile(userId: string) {
-        return axiosInstance.get(`/profile/` + userId).then((response) => setUserProfile(response.data))
+        return axiosInstance.get(`/profile/` + userId).then((response) => actionsPostPage.setUserProfile(response.data))
     },
     getUserStatus(userId: string) {
         return axiosInstance.get(`/profile/status/` + userId)
