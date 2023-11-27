@@ -1,17 +1,17 @@
-import { useAppDispatch, useAppSelector } from './redux/reduxStore'
-import { isInitializedSelector, statusSelector } from './redux/selectors/appSelector'
+import { useAppDispatch, useAppSelector } from './common/redux/store'
+import { isInitializedSelector, statusSelector } from './common/redux/selectors/appSelector'
 import React, { useEffect } from 'react'
-import { initializeAppTC } from './redux/appReducer'
-import Preloader from './components/Elements/Preloader/Preloader'
-import { BrowserRouter, Redirect, Route } from 'react-router-dom'
-import HeaderContainer from './components/Header/HeaderContainer'
-import Navbar from './components/Navbar/Navbar'
-import Login from './components/Login/Login'
-import { DialogsContainer } from './components/Dialogs/DialogsContainer'
-import { ProfileContainer } from './components/Profile/ProfileContainer'
-import { UsersContainer } from './components/Users/UsersContainer'
-import News from './components/News/News'
-import NotFound from './components/NotFound/NotFound'
+import { initializeAppTC } from './common/redux/appReducer'
+import Preloader from './features/Elements/Preloader/Preloader'
+import { BrowserRouter, Redirect, Route, Switch as Routes } from 'react-router-dom'
+import HeaderContainer from './features/Header/HeaderContainer'
+import Navbar from './features/Navbar/Navbar'
+import Login from './features/Login/Login'
+import { DialogsContainer } from './features/Dialogs/DialogsContainer'
+import { ProfileContainer } from './features/Profile/ProfileContainer'
+import { UsersContainer } from './features/Users/UsersContainer'
+import News from './features/News/News'
+import NotFound from './features/NotFound/NotFound'
 
 export const AppContainer = () => {
     const dispatch = useAppDispatch()
@@ -32,7 +32,6 @@ export const AppContainer = () => {
 
     return (
         <BrowserRouter>
-            {/*обрамляем весь компонент для route*/}
             <div className="app-wrapper">
                 <HeaderContainer />
                 <Navbar />
@@ -42,20 +41,15 @@ export const AppContainer = () => {
                             <Preloader />
                         </div>
                     )}
-
-                    <Route path="/login" component={() => <Login />} />
-                    <Route exact path="/" render={() => <Redirect to={'/profile'} />} />
-
-                    {/* :userId - параметр для отображения пользователя */}
-                    {/* ? - означает что параметр не обязательный */}
-                    <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-
-                    {/*отрисовка компонента по клику на страничке*/}
-                    {/*через render вызываем анонимную функцию, которая отрисовывает компонент*/}
-                    <Route exact path="/dialogs" render={() => <DialogsContainer />} />
-                    <Route path="/users" render={() => <UsersContainer />} />
-                    <Route path="/news" component={News} />
-                    <Route path="*" component={NotFound} />
+                    <Routes>
+                        <Route exact path="/" render={() => <Redirect to={'/profile'} />} />
+                        <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+                        <Route path="/login" render={() => <Login />} />
+                        <Route path="/dialogs" render={() => <DialogsContainer />} />
+                        <Route path="/users" render={() => <UsersContainer />} />
+                        <Route path="/news" render={() => News} />
+                        <Route path="*" render={() => <NotFound />} />
+                    </Routes>
                 </div>
             </div>
         </BrowserRouter>
