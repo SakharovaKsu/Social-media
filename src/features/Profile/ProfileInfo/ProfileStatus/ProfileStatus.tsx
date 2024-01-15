@@ -10,7 +10,6 @@ export const ProfileStatus: FC<ProfileStatusType> = ({ status, updateStatusTC })
     const [editMode, setEditMode] = useState(false)
     const [localStatus, setLocalStatus] = useState(status)
 
-    // условие обязательно делать, что б не было зацикленности при рендере
     useEffect(() => {
         setLocalStatus(status)
     }, [status])

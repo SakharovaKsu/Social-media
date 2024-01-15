@@ -33,7 +33,6 @@ class Component extends React.Component<FromReduxType> {
     }
 
     houldComponentUpdate(nextProps: FromReduxType) {
-        // Проверяем, изменились ли необходимые свойства, которые влияют на рендер компонента
         if (
             nextProps.totalUsersCount !== this.props.totalUsersCount ||
             nextProps.pageSize !== this.props.pageSize ||
@@ -42,12 +41,11 @@ class Component extends React.Component<FromReduxType> {
             nextProps.followingInProgress !== this.props.followingInProgress ||
             nextProps.usersPage !== this.props.usersPage
         ) {
-            return true // Рендер компонента
+            return true
         }
-        return false // Пропускаем рендер компонента
+        return false
     }
 
-    // Меняем страничку пользователей
     onPageChanged = (pageNumber: number) => {
         this.props.onPageChangedTC(pageNumber, this.props.pageSize)
     }

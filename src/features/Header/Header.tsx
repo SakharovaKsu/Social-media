@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import user from '../../images/avatar-user/user-5.svg'
 import { logOutTC } from '../../common/redux/authReducer'
 import { useAppDispatch, useAppSelector } from '../../common/redux/store'
-import { photoUserSelector, photoUserSmallSelector, UserSelector } from '../../common/redux/selectors/postPageSelector'
+import { photoUserSmallSelector, UserSelector } from '../../common/redux/selectors/postPageSelector'
 import { idUserSelector } from '../../common/redux/selectors/authSelector'
 
 type HeaderType = {

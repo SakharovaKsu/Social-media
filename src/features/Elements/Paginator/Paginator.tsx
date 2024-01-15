@@ -14,10 +14,8 @@ type PaginatorType = {
 const Paginator: FC<PaginatorType> = ({ totalItemsCount, pageSize, onPageChanged, currentPage, portionSize }) => {
     const [portionNumber, setPortionNumber] = useState(1)
 
-    // Узнаем количество пользователь, для понимая сколько нам нужно кнопок
     let pagesCount = Math.ceil(totalItemsCount / pageSize)
 
-    // Заполняем массив для пагинации
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)

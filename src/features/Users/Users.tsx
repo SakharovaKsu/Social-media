@@ -28,10 +28,8 @@ export const Users: FC<UsersCType> = React.memo(
     }) => {
         const displayedUsers = () => usersPage.users.slice(0, 8)
 
-        // Узнаем количество пользователь, для понимая сколько нам нужно кнопок
         let pagesCount = Math.ceil(totalUsersCount / pageSize)
 
-        // Заполняем массив для пагинации
         let pages = []
         for (let i = 1; i <= pagesCount; i++) {
             pages.push(i)

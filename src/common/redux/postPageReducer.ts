@@ -140,9 +140,7 @@ export const getProfileTC =
         try {
             const response = await profileAPI.getProfile(userId)
             dispatch(actionsPostPage.setUserProfile(response.payload.profile))
-        } catch (error) {
-            // Обработка ошибок, если необходимо
-        }
+        } catch (error) {}
     }
 
 export const getStatusTC =
@@ -151,9 +149,7 @@ export const getStatusTC =
         try {
             const response = await profileAPI.getUserStatus(userId)
             dispatch(actionsPostPage.setStatus(response.data))
-        } catch (error) {
-            // Обработка ошибок, если необходимо
-        }
+        } catch (error) {}
     }
 
 export const updateStatusTC =
@@ -164,9 +160,7 @@ export const updateStatusTC =
             if (response.data.resultCode === RESULT_CODE.OK) {
                 dispatch(actionsPostPage.updateStatus(status))
             }
-        } catch (error) {
-            // Обработка ошибок, если необходимо
-        }
+        } catch (error) {}
     }
 
 export const savePhotoTC =

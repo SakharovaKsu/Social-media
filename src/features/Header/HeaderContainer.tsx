@@ -4,7 +4,6 @@ import { connect, ConnectedProps } from 'react-redux'
 import { StoreType } from '../../common/redux/store'
 import { isAuthSelector, loginSelector } from '../../common/redux/selectors/authSelector'
 
-// Определение типов для пропсов, полученных через connect
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 class HeaderContainer extends React.Component<PropsFromRedux> {

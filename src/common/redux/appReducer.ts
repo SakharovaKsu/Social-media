@@ -16,11 +16,8 @@ export type ActionsApp = InferAction<typeof actionsApp>
 type Thunk = BaseThunk<ActionsApp>
 
 const initialState: InitialStateType = {
-    // если ошибка какая-то глобальная произойдёт - запишем текст ошибки сюда
     error: null as string | null,
-    // происходит ли сейчас взаимодействие с сервером
     status: 'idle' as RequestStatusType,
-    // true когда приложение проинициализировалось (проверили юзера, настройки получили и т.д.)
     isInitialized: false,
 }
 

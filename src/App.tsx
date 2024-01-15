@@ -2,13 +2,7 @@ import React from 'react'
 import './App.css'
 import store from './common/redux/store'
 import { Provider } from 'react-redux'
-import { renderEntireTree } from './index'
 import { AppContainer } from './AppContainer'
-
-// store.getState() - нужно вызвать, что б получить state.
-// Когда мы отдаем кому-то метод (в нашем случае пропсам), то что б при вызове этого метода не было undefined, то используем такой лайфхак -> store.dispatch.bind(store) (через bind мы связываем метод со store)
-
-// Provider - обеспечивает доступ к Redux Store для всех компонентов, которые находятся внутри его дочерних элементов.
 
 export const App = () => {
     return (

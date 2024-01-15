@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, KeyboardEvent } from 'react'
+import React, { FC, KeyboardEvent } from 'react'
 import s from './TextArea.module.css'
 import Button from '../../Elements/Button/Button'
 import { useFormik } from 'formik'
@@ -35,7 +35,6 @@ const TextArea: FC<TextAreaType> = ({ name, addTextCallback, updateTextCallback,
             updateTextCallback(values.message)
             addTextCallback()
 
-            // очищаем форму после отправки
             formik.resetForm()
         },
     })

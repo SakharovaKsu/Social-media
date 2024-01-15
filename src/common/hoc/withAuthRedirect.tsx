@@ -4,8 +4,6 @@ import { StoreType } from '../redux/store'
 import { connect } from 'react-redux'
 import { isAuthSelector } from '../redux/selectors/authSelector'
 
-// Хок проверяем залогинены или нет, если да то видим диалоги, профайл, если нет, то перенаправляет на логин
-
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 const mapStateToProps = (state: StoreType) => {

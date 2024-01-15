@@ -99,7 +99,6 @@ const followUnfollowFlow = async (
 
     const response = await apiMethod(id)
 
-    // всегда делаем проверку значения resultCode, который получаем из сервака
     if (response.data.resultCode === RESULT_CODE.OK) {
         dispatch(actionCreator(id))
     }

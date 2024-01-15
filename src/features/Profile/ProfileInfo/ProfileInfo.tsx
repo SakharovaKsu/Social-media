@@ -24,7 +24,6 @@ const ProfileInfo: FC<ProfileInfoType> = React.memo(({ profile, status, updateSt
 
     const [editMode, setEditMode] = useState(false)
 
-    // Если Profile null или не определен, то показываем Preloader
     if (!profile) {
         return <Preloader />
     }

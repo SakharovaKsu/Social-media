@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, KeyboardEvent, useCallback } from 'react'
+import React, { ChangeEvent, FC, useCallback } from 'react'
 import Post from './Post/Post'
 import s from './MyPosts.module.css'
 import { PostPageType } from '../../../common/redux/postPageReducer'

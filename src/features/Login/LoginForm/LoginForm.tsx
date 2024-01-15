@@ -43,9 +43,9 @@ export const LoginForm = React.memo(() => {
             } else if (values.password.length < 4) {
                 errors.password = 'Must be more than 3 symbols'
             }
-            // if (!values.captcha) {
-            //     errors.captcha = 'Required'
-            // }
+            if (!values.captcha) {
+                errors.captcha = 'Required'
+            }
             return errors
         },
         onSubmit: (values) => {

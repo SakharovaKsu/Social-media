@@ -47,7 +47,6 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
     }
 
     shouldComponentUpdate(nextProps: ProfileContainer) {
-        // Проверяем, изменились ли необходимые свойства, которые влияют на рендер компонента
         if (
             nextProps.match.params.userId !== this.props.match.params.userId ||
             nextProps.profile !== this.props.profile ||
@@ -56,9 +55,9 @@ class ProfileAPIContainer extends React.Component<ProfileContainer> {
             nextProps.appStatus !== this.props.appStatus ||
             nextProps.savePhoto !== this.props.savePhoto
         ) {
-            return true // Рендер компонента
+            return true
         }
-        return false // Пропускаем рендер компонента
+        return false
     }
 
     render() {
@@ -94,10 +93,3 @@ export const ProfileContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps),
 )(ProfileAPIContainer)
-
-// withRouter возвращает новую компоненту, в которую закинет данные из url
-// connect -> withRouter -> withAuthRedirect -> ProfileAPIContainer -> Profile
-// withRouter здесь достаем данные из url, закидываем их в ProfileAPIContainer.
-
-// compose - это функция, которая позволяет объединить несколько функций высшего порядка (HOC) в одну. Она принимает несколько HOC в качестве аргументов и возвращает новую функцию, которая последовательно применяет эти HOC к компоненте, переданной в последний аргумент.
-// В ProfileContainer, compose используется для объединения 3 HOC: withAuthRedirect, withRouter и connect. Порядок применения HOC определяется порядком их передачи в compose. В итоге, ProfileAPIContainer оборачивается в withAuthRedirect, затем в withRouter, и, наконец, в connect, который обеспечивает связь компонента с Redux store.
